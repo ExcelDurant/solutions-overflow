@@ -16,6 +16,7 @@
 	--column-width: 42rem;
 	--column-margin-top: 4rem;
 	--grayish:rgb(219, 219, 219);
+	--lightgray:#F2F2F2;
 	--bluish:#2D6FF7;
 }
 
@@ -90,6 +91,11 @@ h2 {
 	font-size: 1rem;
 }
 
+h1,h2,h3,h4,h5,h6 {
+	margin: 0;
+	padding: 0;
+}
+
 pre {
 	font-size: 16px;
 	font-family: var(--font-mono);
@@ -119,6 +125,28 @@ i {
 
 button:focus:not(:focus-visible) {
 	outline: none;
+}
+
+.flex-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.avatar {
+	border-radius: 50%;
+				border: 2px solid var(--bluish);
+				padding: 5px;
+				overflow: hidden;
+}
+
+.no-overflow {
+	overflow: hidden;
+}
+
+.full-width {
+	width: 100%;
+	height: 100%;
 }
 
 @media (min-width: 720px) {

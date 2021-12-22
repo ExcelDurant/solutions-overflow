@@ -24,6 +24,7 @@
 		width: 100%;
 		margin: 0 auto;
 		box-sizing: border-box;
+		background-color: #F2F2F2;
 	}
 
 	footer {
