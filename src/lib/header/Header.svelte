@@ -53,6 +53,7 @@
 </header>
 
 <style lang="scss">
+	
 	@import '../../styles';
 	.header {
 		width: 100%;

@@ -2,6 +2,7 @@
 	import Header from '$lib/header/Header.svelte';
 	import Sidebar from '$lib/Sidebar.svelte';
 	import Rightbar from '$lib/Rightbar.svelte';
+	import Footer from '$lib/Footer.svelte';
 	import '../app.css';
 </script>
 
@@ -9,13 +10,13 @@
 
 <main>
 	<Sidebar />
-	<slot />
+	<div class="content">
+		<slot />
+	</div>
 	<Rightbar />
 </main>
 
-<footer>
-	<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
-</footer>
+<Footer />
 
 <style>
 	main {
@@ -27,21 +28,9 @@
 		background-color: #F2F2F2;
 	}
 
-	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 40px;
+	.content {
+		width: 64%;
 	}
 
-	footer a {
-		font-weight: bold;
-	}
-
-	@media (min-width: 480px) {
-		footer {
-			padding: 40px 0;
-		}
-	}
+	
 </style>

@@ -161,7 +161,7 @@
 		background-color: white;
 	}
 	.home-container {
-		width: 64%;
+		width: 100%;
 	}
 
 	section {

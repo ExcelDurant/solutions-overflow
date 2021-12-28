@@ -17,7 +17,11 @@
 	--column-margin-top: 4rem;
 	--grayish:rgb(219, 219, 219);
 	--lightgray:#F2F2F2;
+	--darkgray:#34363D;
 	--bluish:#2D6FF7;
+	--redish:#F05555;
+	--greenish:#62C68C;
+	--orangish:#FF6935;
 }
 
 body {
@@ -79,7 +83,7 @@ a {
 }
 
 a:hover {
-	text-decoration: underline;
+	text-decoration: none;
 }
 
 h1 {
