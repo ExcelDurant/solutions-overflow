@@ -1,6 +1,15 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { showLogin, showSignup } from "$lib/store.js";
 	import logo from './svelte-logo.svg';
+	function showLoginForm() {
+		showLogin.set(true);
+		showSignup.set(false);
+	}
+	function showSignupForm() {
+		showLogin.set(false);
+		showSignup.set(true);
+	}
 </script>
 
 <header class="header">
@@ -23,7 +32,8 @@
 				<button class="btn"><i class="fas fa-mail-bulk"></i></button>
 				<button class="btn profile-btn"><i class="fas fa-user-circle"></i></button>
 			</div>
-			<button class="question-btn btn">ask a question</button>
+			<button class="auth-btn login-btn" on:click={showLoginForm}>Sign in</button>
+			<button class="auth-btn reg-btn" on:click={showSignupForm}>Sign up</button>
 		</div>
 
 	</nav>
@@ -139,12 +149,26 @@
 			}
 		}
 
-		.question-btn {
-			padding: 5px 5px;
-			background-color: #2D6FF7;
-			color: white;
+		.question-btn, .auth-btn {
+			padding: 5px 10px;
+			border-radius: 5px;
 			font-weight: 600;
 			margin-right: 20px;
+		}
+		.reg-btn {
+			background-color: #2D6FF7;
+			color: white;
+			&:hover {
+				background-color: black;
+			}
+		}
+		.login-btn {
+			color: gray;
+			background-color: white;
+			&:hover {
+				background-color: var(--redish);
+				color: white;
+			}
 		}
 	}
 </style>
