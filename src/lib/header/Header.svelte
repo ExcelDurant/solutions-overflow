@@ -1,7 +1,12 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { showLogin, showSignup } from "$lib/store.js";
+	import { isLoggedIn } from "$lib/auth.js"
 	import logo from './svelte-logo.svg';
+	let isLogged = false;
+	isLoggedIn.subscribe((value) => {
+		isLogged = value;
+	})
 	function showLoginForm() {
 		showLogin.set(true);
 		showSignup.set(false);
@@ -32,8 +37,13 @@
 				<button class="btn"><i class="fas fa-mail-bulk"></i></button>
 				<button class="btn profile-btn"><i class="fas fa-user-circle"></i></button>
 			</div>
+			{#if isLogged}
+			<a href="/ask-question" class="auth-btn reg-btn">Ask A Question</a>
+			{:else}
 			<button class="auth-btn login-btn" on:click={showLoginForm}>Sign in</button>
 			<button class="auth-btn reg-btn" on:click={showSignupForm}>Sign up</button>
+			{/if}
+			
 		</div>
 
 	</nav>

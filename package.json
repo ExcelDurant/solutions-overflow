@@ -22,8 +22,10 @@
   },
   "type": "module",
   "dependencies": {
+    "@ckeditor/ckeditor5-build-decoupled-document": "^31.1.0",
     "@fontsource/fira-mono": "^4.5.0",
     "@lukeed/uuid": "^2.0.0",
+    "ckeditor5-svelte": "^0.0.10",
     "cookie": "^0.4.1"
   }
 }
