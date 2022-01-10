@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	export const prerender = true;
+	// export const prerender = true;
 </script>
 
 <script lang="ts">
@@ -15,10 +15,10 @@
 	<section class="ask-sec white-bg">
 		<div class="ask-container">
 			<i class="fas fa-user-circle profile-icon"></i>
-			<button class="ask-btn">
+			<a href="/ask-question" class="ask-btn">
 				<i class="fas fa-comments"></i>
 				What's your question?
-			</button>
+			</a>
 		</div>
 	</section>
 	<section class="buttons-sec">

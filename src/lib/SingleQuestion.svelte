@@ -41,16 +41,20 @@
 </div>
 
 <style lang="scss">
+	@import "../styles.scss";
     .question-container {
 		background-color: white;
 		width: 100%;
 		padding: 30px;
 		margin-bottom: 2px;
+		@include mqx(1200px) {
+			padding: 30px 5px;
+        }
 		.top-container {
 			display: flex;
 			margin-bottom: 10px;
 			.profile-container {
-				width: 60px;
+				min-width: 60px;
 				height: 60px;
 				border-radius: 50%;
 				border: 2px solid var(--bluish);

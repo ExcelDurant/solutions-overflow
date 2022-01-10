@@ -128,6 +128,9 @@
 			margin-right: 10px;
 			position: relative;
 			display: flex;
+			@include mqx(1000px) {
+            display: none;
+        }
 			
 			.search-box {
 				height: 30px;

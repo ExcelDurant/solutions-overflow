@@ -57,6 +57,7 @@ body {
 	border: 0;
 	padding: 0;
 	box-sizing: border-box;
+	font-family: 'Roboto', sans-serif;
 }
 
 #svelte {
@@ -162,3 +163,4 @@ button:focus:not(:focus-visible) {
 		font-size: 2.4rem;
 	}
 }
+

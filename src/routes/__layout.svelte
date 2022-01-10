@@ -37,7 +37,8 @@
 
 <Footer />
 
-<style>
+<style lang="scss">
+	@import '../styles.scss';
 	main {
 		flex: 1;
 		display: flex;
@@ -46,9 +47,20 @@
 		box-sizing: border-box;
 		background-color: #f2f2f2;
 		position: relative;
+		@include mqx(900px) {
+            flex-direction: column;
+        }
 	}
 
 	.content {
 		width: 64%;
+		@include mqx(1200px) {
+            width: 82%;
+        }
+		@include mqx(900px) {
+            width: 98%;
+			margin: 0 auto;
+        }
 	}
+	
 </style>

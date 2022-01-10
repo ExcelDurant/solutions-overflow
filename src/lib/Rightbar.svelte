@@ -80,13 +80,20 @@
 </aside>
 
 <style lang="scss">
+    @import "../styles.scss";
     .rightbar {
-        width: 18%;
+        width: 250px;
         background-color: #F2F2F2;
+        @include mqx(900px) {
+            width: 100%;
+        }
     }
     .rightbar-container {
         width: 90%;
         margin: 0 auto;
+        @include mqx(900px) {
+            width: 100%;
+        }
         
         .stats-container {
             padding: 20px 20px;

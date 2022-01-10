@@ -3,6 +3,7 @@
 </script> -->
 
 <script>
+    import { onMount } from "svelte";
     import CKEditor from "ckeditor5-svelte";
     import DecoupledEditor from "@ckeditor/ckeditor5-build-decoupled-document/build/ckeditor";
     let editor = DecoupledEditor;
@@ -40,6 +41,9 @@
                 editor.ui.view.toolbar.element,
                 editor.ui.getEditableElement()
             );
+    }
+    function showCkresults() {
+        console.log(editorData);
     }
     let subjects = [
         "mathematics",
@@ -80,7 +84,7 @@
     </section>
     <section class="quest-sec">
         <div class="form-container">
-            <form action="" class="quest-form">
+            <form action="" class="quest-form" on:submit|preventDefault={showCkresults}>
                 <!-- question name -->
                 <div class="mb-4 in-container">
                     <label for="name" class="form-label">question name</label>
@@ -246,7 +250,7 @@
                         bind:value={editorData}
                     />
                 </div>
-                <button class="submit-btn">publish your question</button>
+                <button class="submit-btn" type="submit">publish your question</button>
             </form>
         </div>
     </section>
@@ -283,6 +287,11 @@
         }
         .in-container {
             margin-bottom: 50px;
+        }
+
+        .hint {
+            font-weight: 400;
+            color: gray;
         }
         .reference {
             width: 100%;
