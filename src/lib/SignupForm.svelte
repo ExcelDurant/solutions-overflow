@@ -1,12 +1,41 @@
 <script>
+    import {goto} from '$app/navigation';
     import { showSignup } from "$lib/store.js";
+    import { post,apiUrl } from "$lib/utils.js";
+    import {appUser,bearerToken, isLoggedIn} from "$lib/auth.js";
     function closeSignup() {
         showSignup.set(false);
+    }
+    let signupUrl = apiUrl+"auth/register";
+    let username;
+    let email;
+    let password;
+    let confirmedPass;
+    function signUp() {
+        if(confirmedPass === password) {
+            let formData = {
+                username,
+                email,
+                password
+            }
+            console.log(formData);
+            post(signupUrl, formData).then((value) => {
+                console.log(value);
+                bearerToken.set(value.token);
+                appUser.set(value.user);
+                isLoggedIn.set(true);
+                closeSignup();
+                goto("/profile");
+            }).catch((err) => {
+                console.log(err);
+                window.alert("an error occured");
+            })
+        }
     }
 </script>
 
 <div class="form-overlay">
-    <form action="" class="signup-form">
+    <form action="" class="signup-form" on:submit|preventDefault={signUp}>
         <button class="close-btn" on:click={closeSignup}>X</button>
         <div class="form-head flex-center">
             <h2 class="title">Sign Up</h2>
@@ -21,21 +50,23 @@
                     class="form-control"
                     id="username"
                     placeholder="John Doe"
+                    bind:value={username}
+                    required
                 />
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                <input type="email" class="form-control" id="email" placeholder="name@example.com" bind:value={email} required>
               </div>
               <div class="mb-3">
                 <label for="password" class="form-label">password</label>
-                <input type="password" class="form-control" id="password" placeholder="">
+                <input type="password" class="form-control" id="password" placeholder="" bind:value={password} required>
               </div>
             <div class="mb-3">
                 <label for="password-confirm" class="form-label">Confirm password</label>
-                <input type="password" class="form-control" id="password-confirm" placeholder="">
+                <input type="password" class="form-control" id="password-confirm" placeholder="" bind:value={confirmedPass} required>
               </div>
-              <button class="signup-btn">Signup</button>
+              <button class="signup-btn" type="submit">Signup</button>
         </div>
     </form>
 </div>

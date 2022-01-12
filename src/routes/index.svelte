@@ -5,6 +5,11 @@
 <script lang="ts">
 	import Counter from '$lib/Counter.svelte';
 	import SingleQuestion from "$lib/SingleQuestion.svelte";
+	import { isLoggedIn } from "$lib/auth.js";
+	let isLogged = false;
+	isLoggedIn.subscribe((value) => {
+		isLogged = value;
+	})
 </script>
 
 <svelte:head>
@@ -13,6 +18,7 @@
 
 <div class="home-container">
 	<section class="ask-sec white-bg">
+		{#if isLogged}
 		<div class="ask-container">
 			<i class="fas fa-user-circle profile-icon"></i>
 			<a href="/ask-question" class="ask-btn">
@@ -20,6 +26,8 @@
 				What's your question?
 			</a>
 		</div>
+		{/if}
+		
 	</section>
 	<section class="buttons-sec">
 		<div class="btns-container">

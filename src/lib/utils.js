@@ -4,6 +4,8 @@ bearerToken.subscribe((value) => {
     token = value;
 })
 
+export const apiUrl = 'http://127.0.0.1:8000/api/'
+
 export async function authenticatedPost(url, body) {
     const requestOptions = {
         method: "POST",
@@ -22,6 +24,7 @@ export async function post(url, body) {
         body: JSON.stringify(body),
       };
       let res = await fetch(url, requestOptions);
+      console.log(res);
       let data = await res.json()
       return data;
 }
