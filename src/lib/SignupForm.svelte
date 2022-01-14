@@ -2,7 +2,7 @@
     import {goto} from '$app/navigation';
     import { showSignup } from "$lib/store.js";
     import { post,apiUrl } from "$lib/utils.js";
-    import {appUser,bearerToken, isLoggedIn} from "$lib/auth.js";
+    import {appUser,bearerToken, isLoggedIn, setAuth} from "$lib/auth.js";
     function closeSignup() {
         showSignup.set(false);
     }
@@ -21,9 +21,7 @@
             console.log(formData);
             post(signupUrl, formData).then((value) => {
                 console.log(value);
-                bearerToken.set(value.token);
-                appUser.set(value.user);
-                isLoggedIn.set(true);
+                setAuth(value.user, true, value.token);
                 closeSignup();
                 goto("/profile");
             }).catch((err) => {

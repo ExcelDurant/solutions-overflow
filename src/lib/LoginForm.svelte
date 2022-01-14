@@ -1,12 +1,34 @@
 <script>
     import { showLogin } from "$lib/store.js";
+    import { post, apiUrl } from "$lib/utils.js";
+    import {goto} from '$app/navigation';
+    import {setAuth} from "$lib/auth.js";
     function closeLogin() {
         showLogin.set(false);
+    }
+    let loginUrl = apiUrl + "auth/login";
+    let email;
+    let password;
+    function login() {
+        let formData = {
+            email,
+            password,
+        };
+        console.log(formData);
+        post(loginUrl, formData).then((value) => {
+                console.log(value);
+                setAuth(value.user, true, value.token);
+                closeLogin();
+                goto("/profile");
+            }).catch((err) => {
+                console.log(err);
+                window.alert("an error occured");
+            })
     }
 </script>
 
 <div class="form-overlay">
-    <form action="" class="login-form">
+    <form action="" class="login-form" on:submit|preventDefault={login}>
         <button class="close-btn" on:click={closeLogin}>X</button>
         <div class="form-head flex-center">
             <h2 class="title">Login</h2>
@@ -14,13 +36,27 @@
         <div class="inputs-container">
             <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="email" placeholder="name@example.com">
-              </div>
-              <div class="mb-3">
+                <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="name@example.com"
+                    bind:value={email}
+                    required
+                />
+            </div>
+            <div class="mb-3">
                 <label for="password" class="form-label">password</label>
-                <input type="password" class="form-control" id="password" placeholder="">
-              </div>
-              <button class="login-btn">login</button>
+                <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    placeholder=""
+                    bind:value={password}
+                    required
+                />
+            </div>
+            <button class="login-btn" type="submit">login</button>
         </div>
     </form>
 </div>
