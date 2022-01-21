@@ -4,22 +4,25 @@
 <script>
     import { onMount } from "svelte";
     import { quill } from "svelte-quill";
+    import { authenticatedPost, apiUrl } from "$lib/utils.js";
+    // backend url to post to
+    let askQuestionUrl = apiUrl + "questions/ask";
     const options = {
-  modules: {
-    toolbar: [
-      [{ header: [1, 2, 3, false] }],
-      ["bold", "italic", "underline", "strike","script"],
-      ["link", "code-block","header","blockquote","list"],
-      ["image","formula"]
-    ]
-  },
-  placeholder: "Type something...",
-  theme: "snow"
-}
- 
-  let content;
-  let showContent = false;
-   
+        modules: {
+            toolbar: [
+                [{ header: [1, 2, 3, false] }],
+                ["bold", "italic", "underline", "strike", "script"],
+                ["link", "code-block", "header", "blockquote", "list"],
+                ["image", "formula"],
+            ],
+        },
+        placeholder: "Type something...",
+        theme: "snow",
+    };
+
+    let content;
+    let showContent = false;
+
     let subjects = [
         "mathematics",
         "english",
@@ -32,7 +35,7 @@
     let examTypes = ["gce", "mock", "miscellaneous"];
     let mocks = ["south-west", "north-west", "west", "littoral", "central"];
     let papers = [1, 2, 3, 4, 5];
-    let selectedType = "";
+    let selectedType = "gce";
     let years = [];
     let isGce = true;
     let isMock = false;
@@ -55,10 +58,42 @@
         console.log(content);
         showContent = true;
     }
+    let name;
+    let selectedSubject;
+    let details;
+    let selectedLevel;
+    let selectedYear;
+    let region;
+    let selectedPaper;
+    let selectedQuestionNumber;
+    let reference;
+    function postQuestion() {
+        let formData = {
+            name,
+            subject: selectedSubject,
+            details: content,
+            level: selectedLevel,
+            examType: selectedType,
+            year: selectedYear,
+            region,
+            paper: selectedPaper,
+            questionNumber: selectedQuestionNumber,
+            reference,
+        };
+        // console.log(formData);
+        authenticatedPost(askQuestionUrl, formData)
+            .then((value) => {
+                console.log(value);
+            })
+            .catch((err) => {
+                console.log(err);
+                window.alert("an error occured");
+            });
+    }
 </script>
 
 <svelte:head>
-    <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
 </svelte:head>
 
 <div class="question-page">
@@ -70,7 +105,7 @@
             <form
                 action=""
                 class="quest-form"
-                on:submit|preventDefault={showResults}
+                on:submit|preventDefault={postQuestion}
             >
                 <!-- question name -->
                 <div class="mb-4 in-container">
@@ -80,6 +115,8 @@
                         id="name"
                         rows="2"
                         placeholder="name a dinausor type"
+                        bind:value={name}
+                        required
                     />
                     <h6 class="hint">
                         please enter an appropriate name for the question so it
@@ -94,6 +131,8 @@
                         class="form-select"
                         name="subject"
                         aria-label="Default select example"
+                        bind:value={selectedSubject}
+                        required
                     >
                         {#each subjects as subject}
                             <option value={subject}>{subject}</option>
@@ -112,6 +151,8 @@
                         class="form-select"
                         name="level"
                         aria-label="Default select example"
+                        bind:value={selectedLevel}
+                        required
                     >
                         {#each levels as level}
                             <option value={level}>{level}</option>
@@ -132,6 +173,7 @@
                                 type="radio"
                                 name="flexRadioDefault"
                                 id={type}
+                                checked={selectedType === type}
                                 bind:value={type}
                                 on:change={() => (selectedType = type)}
                             />
@@ -156,6 +198,7 @@
                                         class="form-select"
                                         name="mock"
                                         aria-label="Default select example"
+                                        bind:value={region}
                                     >
                                         {#each mocks as mock}
                                             <option value={mock}>{mock}</option>
@@ -171,6 +214,7 @@
                                     class="form-select"
                                     name="years"
                                     aria-label="Default select example"
+                                    bind:value={selectedYear}
                                 >
                                     {#each generateYears() as year}
                                         <option value={year}>{year}</option>
@@ -185,6 +229,7 @@
                                     class="form-select"
                                     name="paper"
                                     aria-label="Default select example"
+                                    bind:value={selectedPaper}
                                 >
                                     {#each papers as paper}
                                         <option value={paper}>{paper}</option>
@@ -199,6 +244,7 @@
                                     class="form-select"
                                     name="number"
                                     aria-label="Default select example"
+                                    bind:value={selectedQuestionNumber}
                                 >
                                     {#each generateQuestionNumbers() as number}
                                         <option value={number}>{number}</option>
@@ -223,6 +269,8 @@
                         name="reference"
                         id="reference"
                         placeholder="GCE O-level 2009 paper 1 question 10 b"
+                        bind:value={reference}
+                        required
                     />
                     <h6 class="hint">
                         please enter the accurate question reference
@@ -230,16 +278,19 @@
                 </div>
                 <div class="mb-3 in-container">
                     <h5 class="in-label">question details</h5>
-                    <div class="editor" use:quill={options} on:text-change={e => content =
-                        e.detail}/>
+                    <div
+                        class="editor"
+                        use:quill={options}
+                        on:text-change={(e) => (content = e.detail)}
+                    />
                 </div>
                 <button class="submit-btn" type="submit"
                     >publish your question</button
                 >
                 {#if showContent}
-                <div class="mb-3 in-container">
-                    {@html content.html}
-                </div>
+                    <div class="mb-3 in-container">
+                        {@html content.html}
+                    </div>
                 {/if}
             </form>
         </div>
