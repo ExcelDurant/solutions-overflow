@@ -1,38 +1,46 @@
+<script>
+    import {appUser} from "$lib/auth.js";
+    let user;
+    appUser.subscribe((value) => {
+        user = value;
+    })
+</script>
+
 <section class="basic-sec">
     <div class="basic-container">
         <div class="info-card">
             <div class="icon-container">
-                <i class="fas fa-book blue"></i>
+                <i class="fas fa-book blue" />
             </div>
             <div class="info-container">
-                <h3 class="info-num">0</h3>
+                <h3 class="info-num">{user.questionsAsked}</h3>
                 <h5 class="info-title">questions</h5>
             </div>
         </div>
         <div class="info-card">
             <div class="icon-container">
-                <i class="fas fa-comment-alt red"></i>
+                <i class="fas fa-comment-alt red" />
             </div>
             <div class="info-container">
-                <h3 class="info-num">0</h3>
+                <h3 class="info-num">{user.answersGiven}</h3>
                 <h5 class="info-title">answers</h5>
             </div>
         </div>
         <div class="info-card">
             <div class="icon-container">
-                <i class="fas fa-comments green"></i>
+                <i class="fas fa-comments green" />
             </div>
             <div class="info-container">
-                <h3 class="info-num">0</h3>
+                <h3 class="info-num">{user.comments}</h3>
                 <h5 class="info-title">comments</h5>
             </div>
         </div>
         <div class="info-card">
             <div class="icon-container">
-                <i class="fas fa-medal orange"></i>
+                <i class="fas fa-medal orange" />
             </div>
             <div class="info-container">
-                <h3 class="info-num">20</h3>
+                <h3 class="info-num">{user.points}</h3>
                 <h5 class="info-title">points</h5>
             </div>
         </div>

@@ -4,6 +4,28 @@
 	import Rightbar from '$lib/Rightbar.svelte';
     import { page } from '$app/stores';
 	import '../../app.css';
+    import { onMount } from 'svelte';
+    import {setUser, appUser} from "$lib/auth.js";
+    import { apiUrl, authenticatedGet } from "$lib/utils";
+    let user;
+    appUser.subscribe((value) => {
+        user = value;
+    })
+    let profileUrl = apiUrl + "profile/me";
+    function getUser() {
+        authenticatedGet(profileUrl)
+            .then((value) => {
+                // setUser(value.user);
+                console.log(value);
+            })
+            .catch((err) => {
+                console.log(err);
+                window.alert("an error occured");
+            });
+    }
+    onMount(() => {
+		getUser();
+	});
 </script>
 
 <Header />
@@ -14,12 +36,14 @@
             <div class="info-container">
                 <div class="user-container">
                     <div class="profile-img-container no-overflow">
-
+                        <img src={user.photoUrl} alt="" class="full-img">
                     </div>
-                    <h5 class="username">Excel Durant</h5>
+                    
+                    <h5 class="username">{user.username}</h5>
                     <div class="status-container flex-center">
-                        <h6 class="status">beginner</h6>
+                        <h6 class="status">{user.status}</h6>
                     </div>
+                    
                 </div>
                 <div class="misc-container">
 
@@ -39,6 +63,7 @@
                 <li><a href="profile/edit" class="navlink" class:active={$page.path === '/profile/edit'}>edit profile</a></li>
             </ul>
         </nav>
+
         <slot />
     </div>
     <Rightbar />

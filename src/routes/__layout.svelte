@@ -5,14 +5,17 @@
 	import { isLoggedIn } from "$lib/auth.js";
 
 	let currentRoute = "";
-	if (browser && currentRoute === "/profile") {
+	if (browser) {
 		isLoggedIn.set(JSON.parse(sessionStorage.getItem('isLoggedIn') || 'false'));
 		page.subscribe((value) => {
 			currentRoute = value.path;
+			if(currentRoute === "/profile" && JSON.parse(sessionStorage.getItem("isLoggedIn")) != true) {
+				goto("/");
+			}
 		});
-		if (JSON.parse(sessionStorage.getItem("isLoggedIn")) != true) {
-			goto("/");
-		}
+		// if (JSON.parse(sessionStorage.getItem("isLoggedIn")) != true) {
+		// 	goto("/");
+		// }
 	}
 </script>
 

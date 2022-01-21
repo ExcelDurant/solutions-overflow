@@ -1,5 +1,10 @@
 <script lang="ts">
     import { page } from "$app/stores";
+    import { isLoggedIn } from "$lib/auth.js";
+    let isLogged = false;
+	isLoggedIn.subscribe((value) => {
+		isLogged = value;
+	});
 </script>
 
 <aside class="sidebar">
@@ -15,6 +20,7 @@
                     ><i class="fas fa-rss-square" />Add post</a
                 >
             </li>
+            {#if isLogged}
             <li>
                 <a
                     href="/profile"
@@ -23,6 +29,8 @@
                     ><i class="fas fa-id-badge" />user profile</a
                 >
             </li>
+            {/if}
+            
             <li>
                 <a href="/" class="sidelink"
                     ><i class="fas fa-users" />communities</a

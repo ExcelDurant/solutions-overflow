@@ -18,27 +18,8 @@
 }
  
   let content;
-    // import Header from "@editorjs/header";
-    // import List from "@editorjs/list";
-    // import { createEditor } from "svelte-editorjs";
-
-    // const { editor, data, isReady } = createEditor({
-    //     tools: {
-    //         header: {
-    //             class: Header,
-    //             inlineToolbar: ["link"],
-    //         },
-    //         list: {
-    //             class: List,
-    //             inlineToolbar: true,
-    //         },
-    //         // header:Header,
-    //         // list:List
-    //         // headers: {
-    //         //     inlineToolbar: true,
-    //         // }
-    //     },
-    // });
+  let showContent = false;
+   
     let subjects = [
         "mathematics",
         "english",
@@ -72,6 +53,7 @@
     }
     function showResults() {
         console.log(content);
+        showContent = true;
     }
 </script>
 
@@ -254,6 +236,11 @@
                 <button class="submit-btn" type="submit"
                     >publish your question</button
                 >
+                {#if showContent}
+                <div class="mb-3 in-container">
+                    {@html content.html}
+                </div>
+                {/if}
             </form>
         </div>
     </section>

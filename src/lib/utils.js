@@ -44,11 +44,19 @@ export async function authenticatedGet(url, body) {
     const requestOptions = {
         method: "GET",
         headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
-        body: JSON.stringify(body),
+        // body: JSON.stringify(body),
     };
     let res = await fetch(url, requestOptions);
-    let data = await res.json()
-    return data;
+    if (res.ok) {
+        console.log(res);
+        let data = await res.json();
+        return data;
+    }
+    console.log(res);
+    const { message } = await res.json();
+    console.log(message);
+    throw new Error(message);
+
 }
 
 export async function get(url, body) {
