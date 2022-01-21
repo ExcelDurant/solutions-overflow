@@ -1,50 +1,44 @@
 <!-- <script context="module">
     export const prerender = true;
 </script> -->
-
 <script>
     import { onMount } from "svelte";
-    import CKEditor from "ckeditor5-svelte";
-    import DecoupledEditor from "@ckeditor/ckeditor5-build-decoupled-document/build/ckeditor";
-    let editor = DecoupledEditor;
-    let editorInstance = null;
-    let editorData = "Hello World";
-    let editorConfig = {
-        toolbar: {
-            items: [
-                "heading",
-                "|",
-                "superscript",
-                "subscript",
-                "fontFamily",
-                "fontSize",
-                "bold",
-                "italic",
-                "underline",
-                "uploadImage",
-                "bulletedList",
-                "numberedList",
-                "insertTable",
-                "underline",
-                "undo",
-                "redo"
-            ],
-            shouldNotGroupWhenFull: true
-        },
-    };
-    function onReady({ detail: editor }) {
-        // Insert the toolbar before the editable area.
-        editorInstance = editor;
-        editor.ui
-            .getEditableElement()
-            .parentElement.insertBefore(
-                editor.ui.view.toolbar.element,
-                editor.ui.getEditableElement()
-            );
-    }
-    function showCkresults() {
-        console.log(editorData);
-    }
+    import { quill } from "svelte-quill";
+    const options = {
+  modules: {
+    toolbar: [
+      [{ header: [1, 2, 3, false] }],
+      ["bold", "italic", "underline", "strike","script"],
+      ["link", "code-block","header","blockquote","list"],
+      ["image","formula"]
+    ]
+  },
+  placeholder: "Type something...",
+  theme: "snow"
+}
+ 
+  let content;
+    // import Header from "@editorjs/header";
+    // import List from "@editorjs/list";
+    // import { createEditor } from "svelte-editorjs";
+
+    // const { editor, data, isReady } = createEditor({
+    //     tools: {
+    //         header: {
+    //             class: Header,
+    //             inlineToolbar: ["link"],
+    //         },
+    //         list: {
+    //             class: List,
+    //             inlineToolbar: true,
+    //         },
+    //         // header:Header,
+    //         // list:List
+    //         // headers: {
+    //         //     inlineToolbar: true,
+    //         // }
+    //     },
+    // });
     let subjects = [
         "mathematics",
         "english",
@@ -76,7 +70,14 @@
         }
         return numbers;
     }
+    function showResults() {
+        console.log(content);
+    }
 </script>
+
+<svelte:head>
+    <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+</svelte:head>
 
 <div class="question-page">
     <section class="top-sec flex-center">
@@ -84,7 +85,11 @@
     </section>
     <section class="quest-sec">
         <div class="form-container">
-            <form action="" class="quest-form" on:submit|preventDefault={showCkresults}>
+            <form
+                action=""
+                class="quest-form"
+                on:submit|preventDefault={showResults}
+            >
                 <!-- question name -->
                 <div class="mb-4 in-container">
                     <label for="name" class="form-label">question name</label>
@@ -243,14 +248,12 @@
                 </div>
                 <div class="mb-3 in-container">
                     <h5 class="in-label">question details</h5>
-                    <CKEditor
-                        bind:editor
-                        on:ready={onReady}
-                        bind:config={editorConfig}
-                        bind:value={editorData}
-                    />
+                    <div class="editor" use:quill={options} on:text-change={e => content =
+                        e.detail}/>
                 </div>
-                <button class="submit-btn" type="submit">publish your question</button>
+                <button class="submit-btn" type="submit"
+                    >publish your question</button
+                >
             </form>
         </div>
     </section>
@@ -276,7 +279,8 @@
     }
     .quest-form {
         width: 100%;
-        label,.in-label {
+        label,
+        .in-label {
             text-transform: capitalize;
             font-size: 18px;
             font-weight: 600;

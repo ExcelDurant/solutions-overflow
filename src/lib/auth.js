@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/env';
 
-export const isLoggedIn = writable(browser? JSON.parse(sessionStorage.getItem('isLoggedIn') || 'false'):false);
+export const isLoggedIn = writable(browser? JSON.parse(sessionStorage.getItem('isLoggedIn') || 'true'):false);
 export const appUser = writable(browser? JSON.parse(sessionStorage.getItem('user') || '{}') : {});
 export const bearerToken = writable(browser? sessionStorage.getItem('token'):'');
 export function setAuth(user, loggedIn, token) {
