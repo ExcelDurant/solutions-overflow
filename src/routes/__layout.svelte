@@ -3,20 +3,6 @@
 	import { page } from "$app/stores";
 	import { browser } from "$app/env";
 	import { isLoggedIn } from "$lib/auth";
-
-	let currentRoute = "";
-	if (browser) {
-		isLoggedIn.set(JSON.parse(sessionStorage.getItem('isLoggedIn') || 'false'));
-		page.subscribe((value) => {
-			currentRoute = value.path;
-			if(currentRoute === "/profile" && JSON.parse(sessionStorage.getItem("isLoggedIn")) != true) {
-				goto("/");
-			}
-		});
-		// if (JSON.parse(sessionStorage.getItem("isLoggedIn")) != true) {
-		// 	goto("/");
-		// }
-	}
 </script>
 
 <script lang="ts">
@@ -28,6 +14,16 @@
 	import LoginForm from "$lib/LoginForm.svelte";
 	import { showLogin, showSignup } from "$lib/store.js";
 	import "../app.css";
+	let currentRoute = "";
+	if (browser) {
+		isLoggedIn.set(JSON.parse(sessionStorage.getItem('isLoggedIn') || 'false'));
+		page.subscribe((value) => {
+			currentRoute = value.path;
+			if(currentRoute === "/profile" && JSON.parse(sessionStorage.getItem("isLoggedIn")) != true) {
+				goto("/");
+			}
+		});
+	}
 	let login = false;
 	let signup = false;
 	showLogin.subscribe((value) => {

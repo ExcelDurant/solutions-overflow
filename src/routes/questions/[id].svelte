@@ -1,6 +1,25 @@
-<script>
+<script context="module" lang="ts">
+    // export const prerender = true;
+    import { get, authenticatedPost, apiUrl, Question } from "$lib/utils";
+    export const load = async ({  page,fetch, session, stuff }) => {
+        console.log(page.params);
+		let questionssUrl = apiUrl+"questions/"+page.params.id;
+		const question = await get(questionssUrl);
+        return {
+            props: { question }
+        }
+	}
+</script>
+
+<script lang="ts">
     import SingleQuestion from "$lib/SingleQuestion.svelte";
     import SingleAnswer from "$lib/SingleAnswer.svelte";
+    import { onMount } from "svelte";
+
+    export let question:Question;
+	// onMount(() => {
+	// 	console.log(question);
+	// });
 </script>
 
 <section class="top-sec" />
@@ -8,58 +27,44 @@
     <div class="question-container">
         <div class="top-container">
             <div class="profile-container">
-                <img src="avatar1.png" alt="" class="full-img" />
+                <img src={question.askerDetail.photoUrl} alt="" class="full-img" />
             </div>
             <div class="basic-container">
                 <div class="mini-info-container">
-                    <h3 class="username">Martin Hope</h3>
+                    <h3 class="username">{question.askerDetail.username}</h3>
                     <div class="status-container flex-center">
-                        <h6 class="status">beginner</h6>
+                        <h6 class="status">{question.askerDetail.status}</h6>
                     </div>
                     <h5 class="datetext">
-                        Asked on: <span class="date">December 22, 2021</span>
+                        Asked on: <span class="date">{question.created_at}</span>
                     </h5>
                 </div>
                 <div class="title-container">
-                    <a href="/questions/1" class="quest-title">
-                        Is this statement, “i see him last night” can be
-                        understood as “I saw him last night”?
-                    </a>
+                    <h2 href="/questions/1" class="quest-title">
+                        {question.name}
+                    </h2>
                 </div>
             </div>
         </div>
         <div class="middle-container">
             <div class="actions-container">
                 <button class="up-btn btn"><i class="fas fa-sort-up" /></button>
-                <h6 class="upvotes">132</h6>
+                <h6 class="upvotes">{question.upvotes.length - question.downvotes.length}</h6>
                 <button class="down-btn btn"
                     ><i class="fas fa-sort-down" /></button
                 >
             </div>
             <div class="quest-details-container">
-                <p class="quest-details">
-                    In my local language (Bahasa Indonesia) there are no verb-2
-                    or past tense form as time tracker. So, I often forget to
-                    use the past form of verb when speaking english. I saw him
-                    last night (correct) I see him last night (incorrect) But i
-                    think both has the same meaning and are understandable,
-                    Isn't it? Lorem ipsum dolor, sit amet consectetur
-                    adipisicing elit. Quisquam laudantium est necessitatibus
-                    ratione iusto laboriosam nobis, animi beatae mollitia
-                    consequatur earum molestiae dolorum. Placeat excepturi vel,
-                    nostrum culpa voluptatibus mollitia. Lorem ipsum dolor sit,
-                    amet consectetur adipisicing elit. Cumque molestias minima,
-                    explicabo aut impedit dolores vel omnis quo sequi atque
-                    voluptate ab quisquam quis ea doloremque, maxime accusamus.
-                    Cupiditate, cumque.
-                </p>
+                <div class="quest-details">
+                    {@html question.details.html}
+                </div>
                 <div class="tags-container">
-                    <div class="tag">mathematics</div>
+                    <div class="tag">{question.subject}</div>
                 </div>
                 <div class="bottom-container">
-                    <h6 class="answers"><i class="fas fa-book" />4 answers</h6>
+                    <h6 class="answers"><i class="fas fa-book" />{question.answers.length} answers</h6>
                     <h6 class="answers">
-                        <i class="fas fa-comment-dots" />8 comments
+                        <i class="fas fa-comment-dots" />{question.comments.length} comments
                     </h6>
                 </div>
             </div>
@@ -141,7 +146,6 @@
                         font-size: 20px;
                         font-weight: 700;
                         color: black;
-                        cursor: pointer;
                         &:hover {
                             color: var(--bluish);
                         }
@@ -171,8 +175,9 @@
             }
             .quest-details-container {
                 .quest-details {
-                    line-height: 1.8;
-                    font-size: 16px;
+                    width: 100%;
+                    max-height: 500px;
+                    overflow: auto;
                 }
                 .tags-container {
                     display: flex;

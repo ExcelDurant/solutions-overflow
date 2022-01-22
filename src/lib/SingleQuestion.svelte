@@ -1,19 +1,25 @@
+<script lang="ts">
+import type { Question } from "./utils";
+	export let question:Question;
+</script>
+
+
 <div class="question-container">
     <div class="top-container">
         <div class="profile-container">
-            <img src="avatar1.png" alt="" class="full-img">
+            <img src={question.askerDetail.photoUrl} alt="" class="full-img">
         </div>
         <div class="basic-container">
             <div class="mini-info-container">
-                <h3 class="username">Martin Hope</h3>
+                <h3 class="username">{question.askerDetail.username}</h3>
                 <div class="status-container flex-center">
-                    <h6 class="status">beginner</h6>
+                    <h6 class="status">{question.askerDetail.status}</h6>
                 </div>
-                <h5 class="datetext">Asked on: <span class="date">December 22, 2021</span></h5>
+                <h5 class="datetext">Asked on: <span class="date">{question.created_at}</span></h5>
             </div>
             <div class="title-container">
-                <a href="/questions/1" class="quest-title">
-                    Is this statement, “i see him last night” can be understood as “I saw him last night”?
+                <a href="questions/{question._id}" class="quest-title">
+                    {question.name}
                 </a>
             </div>
         </div>
@@ -21,19 +27,19 @@
     <div class="middle-container">
         <div class="actions-container">
             <button class="up-btn btn"><i class="fas fa-sort-up"></i></button>
-            <h6 class="upvotes">132</h6>
+            <h6 class="upvotes">{question.upvotes.length - question.downvotes.length}</h6>
             <button class="down-btn btn"><i class="fas fa-sort-down"></i></button>
         </div>
         <div class="quest-details-container">
-            <p class="quest-details">
-                In my local language (Bahasa Indonesia) there are no verb-2 or past tense form as time tracker. So, I often forget to use the past form of verb when speaking english. I saw him last night (correct) I see him last night ...
-            </p>
+            <div class="quest-details">
+				{@html question.details.html}
+			</div>
             <div class="tags-container">
-                <div class="tag">mathematics</div>
+                <div class="tag">{question.subject}</div>
             </div>
             <div class="bottom-container">
-                <h6 class="answers"><i class="fas fa-book"></i>4 answers</h6>
-                <h6 class="answers"><i class="fas fa-comment-dots"></i>8 comments</h6>
+                <h6 class="answers"><i class="fas fa-book"></i>{question.answers.length} answers</h6>
+                <h6 class="answers"><i class="fas fa-comment-dots"></i>{question.comments.length} comments</h6>
             </div>
         </div>
     </div>
@@ -124,8 +130,9 @@
 			}
 			.quest-details-container {
 				.quest-details {
-					line-height: 1.8;
-					font-size: 16px;
+					width: 100%;
+					max-height: 150px;
+					overflow: auto;
 				}
 				.tags-container {
 					display: flex;

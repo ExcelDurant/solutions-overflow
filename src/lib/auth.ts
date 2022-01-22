@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/env';
+import type { User } from './utils';
 
 export const isLoggedIn = writable(browser? JSON.parse(sessionStorage.getItem('isLoggedIn') || 'false'):false);
 export const appUser = writable(browser? JSON.parse(sessionStorage.getItem('user') || '{}') : {}  as User);
@@ -17,17 +18,4 @@ export function setUser(user:User) {
     appUser.set(user);
 }
 
-export interface User {
-    _id:string;
-    username:string;
-    email:string;
-    status:string;
-    photoUrl:string;
-    points:number;
-    level:string;
-    isAdmin:boolean;
-    questionsAsked:number;
-    answersGiven:number;
-    comments:number;
-    created_at:Date;
-}
+

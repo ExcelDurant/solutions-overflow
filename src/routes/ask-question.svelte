@@ -1,10 +1,18 @@
-<!-- <script context="module">
-    export const prerender = true;
-</script> -->
+<script context="module" lang="ts">
+    // export const prerender = true;
+    import type { Load } from '@sveltejs/kit';
+    import { get, authenticatedPost, apiUrl } from "$lib/utils";
+    export const load: Load = async ({ fetch }) => {
+        let subjectsUrl = apiUrl+"subjects/all";
+		const subjects = await get(subjectsUrl);
+        return {
+            props: { subjects }
+        }
+	};
+</script>
 <script>
     import { onMount } from "svelte";
     import { quill } from "svelte-quill";
-    import { authenticatedPost, apiUrl } from "$lib/utils";
     // backend url to post to
     let askQuestionUrl = apiUrl + "questions/ask";
     const options = {
@@ -23,14 +31,10 @@
     let content;
     let showContent = false;
 
-    let subjects = [
-        "mathematics",
-        "english",
-        "french",
-        "geography",
-        "chemistry",
-        "physics",
-    ];
+    export let subjects;
+    onMount(() => {
+		console.log(subjects);
+	});
     let levels = ["ordinary level", "advanced level"];
     let examTypes = ["gce", "mock", "miscellaneous"];
     let mocks = ["south-west", "north-west", "west", "littoral", "central"];
@@ -135,7 +139,7 @@
                         required
                     >
                         {#each subjects as subject}
-                            <option value={subject}>{subject}</option>
+                            <option value={subject.name}>{subject.name}</option>
                         {/each}
                     </select>
                     <h6 class="hint">

@@ -1,4 +1,4 @@
-import { bearerToken } from "./auth";
+import { bearerToken } from "$lib/auth";
 import { browser } from '$app/env';
 let token = "";
 if (browser) {
@@ -59,17 +59,37 @@ export async function authenticatedGet(url:string) {
 
 }
 
-export async function get(url:string, body) {
+export async function get(url:string) {
     const requestOptions = {
         method: "GET",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
+        headers: { "Content-Type": "application/json" }
     };
     let res = await fetch(url, requestOptions);
-    let data = await res.json()
-    return data;
+    if (res.ok) {
+        console.log(res);
+        let data = await res.json();
+        return data;
+    }
+    console.log(res);
+    const { message } = await res.json();
+    console.log(message);
+    throw new Error(message);
 }
 
+export interface User {
+    _id:string;
+    username:string;
+    email:string;
+    status:string;
+    photoUrl:string;
+    points:number;
+    level:string;
+    isAdmin:boolean;
+    questionsAsked:number;
+    answersGiven:number;
+    comments:number;
+    created_at:Date;
+}
 export interface Question {
     _id:string;
     name:string;
@@ -86,6 +106,7 @@ export interface Question {
     upvotes:[];
     downvotes:[];
     asker:string;
+    askerDetail:User;
     isVerified:boolean;
     created_at:Date;
     paper?:number;

@@ -1,11 +1,26 @@
 <script context="module" lang="ts">
-	// export const prerender = true;
+    // export const prerender = true;
+    import type { Load } from '@sveltejs/kit';
+    import { get, authenticatedPost, apiUrl, Question } from "$lib/utils";
+    export const load: Load = async ({ fetch }) => {
+        let questionssUrl = apiUrl+"questions/all";
+		const questions = await get(questionssUrl);
+        return {
+            props: { questions }
+        }
+	};
 </script>
 
 <script lang="ts">
 	import Counter from '$lib/Counter.svelte';
 	import SingleQuestion from "$lib/SingleQuestion.svelte";
 	import { isLoggedIn } from "$lib/auth";
+	import { onMount } from "svelte";
+
+	export let questions:Question[];
+	onMount(() => {
+		console.log(questions);
+	});
 	let isLogged = false;
 	isLoggedIn.subscribe((value) => {
 		isLogged = value;
@@ -39,9 +54,9 @@
 		</div>
 	</section>
 	<section class="questions-sec">
-		<SingleQuestion />
-		<SingleQuestion />
-		<SingleQuestion />
+		{#each questions as question}
+			<SingleQuestion question={question} />
+		{/each}
 	</section>
 </div>
 
