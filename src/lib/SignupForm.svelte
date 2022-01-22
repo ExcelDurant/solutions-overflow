@@ -1,8 +1,8 @@
 <script>
     import {goto} from '$app/navigation';
     import { showSignup } from "$lib/store.js";
-    import { post,apiUrl } from "$lib/utils.js";
-    import {appUser,bearerToken, isLoggedIn, setAuth} from "$lib/auth.js";
+    import { post,apiUrl } from "$lib/utils";
+    import {appUser,bearerToken, isLoggedIn, setAuth} from "$lib/auth";
     function closeSignup() {
         showSignup.set(false);
     }

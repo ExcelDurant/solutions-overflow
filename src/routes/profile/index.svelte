@@ -1,5 +1,5 @@
 <script>
-    import {appUser} from "$lib/auth.js";
+    import {appUser} from "$lib/auth";
     let user;
     appUser.subscribe((value) => {
         user = value;

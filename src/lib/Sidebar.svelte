@@ -1,6 +1,6 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import { isLoggedIn } from "$lib/auth.js";
+    import { isLoggedIn } from "$lib/auth";
     let isLogged = false;
 	isLoggedIn.subscribe((value) => {
 		isLogged = value;

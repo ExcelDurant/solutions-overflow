@@ -5,7 +5,7 @@
     import { page } from '$app/stores';
 	import '../../app.css';
     import { onMount } from 'svelte';
-    import {setUser, appUser} from "$lib/auth.js";
+    import {setUser, appUser} from "$lib/auth";
     import { apiUrl, authenticatedGet } from "$lib/utils";
     let user;
     appUser.subscribe((value) => {

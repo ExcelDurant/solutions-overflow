@@ -2,7 +2,7 @@
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
 	import { browser } from "$app/env";
-	import { isLoggedIn } from "$lib/auth.js";
+	import { isLoggedIn } from "$lib/auth";
 
 	let currentRoute = "";
 	if (browser) {

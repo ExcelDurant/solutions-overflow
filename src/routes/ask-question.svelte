@@ -4,7 +4,7 @@
 <script>
     import { onMount } from "svelte";
     import { quill } from "svelte-quill";
-    import { authenticatedPost, apiUrl } from "$lib/utils.js";
+    import { authenticatedPost, apiUrl } from "$lib/utils";
     // backend url to post to
     let askQuestionUrl = apiUrl + "questions/ask";
     const options = {

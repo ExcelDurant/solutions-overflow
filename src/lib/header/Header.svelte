@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { showLogin, showSignup } from "$lib/store.js";
-	import { isLoggedIn } from "$lib/auth.js";
+	import { isLoggedIn } from "$lib/auth";
 	import logo from './svelte-logo.svg';
 	let isLogged = false;
 	isLoggedIn.subscribe((value) => {

@@ -5,7 +5,7 @@
 <script lang="ts">
 	import Counter from '$lib/Counter.svelte';
 	import SingleQuestion from "$lib/SingleQuestion.svelte";
-	import { isLoggedIn } from "$lib/auth.js";
+	import { isLoggedIn } from "$lib/auth";
 	let isLogged = false;
 	isLoggedIn.subscribe((value) => {
 		isLogged = value;

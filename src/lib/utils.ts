@@ -9,7 +9,7 @@ if (browser) {
 
 export const apiUrl = 'http://127.0.0.1:8000/api/'
 
-export async function authenticatedPost(url, body) {
+export async function authenticatedPost(url:string, body) {
     const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
@@ -20,7 +20,7 @@ export async function authenticatedPost(url, body) {
     return data;
 }
 
-export async function post(url, body) {
+export async function post(url:string, body) {
     const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -40,7 +40,7 @@ export async function post(url, body) {
     // };
 }
 
-export async function authenticatedGet(url, body) {
+export async function authenticatedGet(url:string) {
     const requestOptions = {
         method: "GET",
         headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
@@ -59,7 +59,7 @@ export async function authenticatedGet(url, body) {
 
 }
 
-export async function get(url, body) {
+export async function get(url:string, body) {
     const requestOptions = {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -68,4 +68,27 @@ export async function get(url, body) {
     let res = await fetch(url, requestOptions);
     let data = await res.json()
     return data;
+}
+
+export interface Question {
+    _id:string;
+    name:string;
+    subject:string;
+    details:{
+        html:string;
+        text?:string;
+    }
+    level:string;
+    examType:string;
+    reference:string;
+    answers:[];
+    comments:[];
+    upvotes:[];
+    downvotes:[];
+    asker:string;
+    isVerified:boolean;
+    created_at:Date;
+    paper?:number;
+    questionNumber?:number;
+    year?:number;
 }

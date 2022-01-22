@@ -1,8 +1,8 @@
 <script>
     import { showLogin } from "$lib/store.js";
-    import { post, apiUrl } from "$lib/utils.js";
+    import { post, apiUrl } from "$lib/utils";
     import {goto} from '$app/navigation';
-    import {setAuth} from "$lib/auth.js";
+    import {setAuth} from "$lib/auth";
     function closeLogin() {
         showLogin.set(false);
     }
