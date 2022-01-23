@@ -1,40 +1,71 @@
+<script lang="ts">
+    import type { Answer } from "./utils";
+    import { get, authenticatedPost, apiUrl, Question } from "$lib/utils";
+
+    export let answer: Answer;
+    let commentForm = false;
+    function toggleCommentForm() {
+        commentForm = !commentForm;
+    }
+
+    let comment;
+    function postComment() {
+        let commentUrl = apiUrl + "answers/comment";
+        let formData = {
+            comment,
+            answer: answer._id,
+        };
+        console.log(formData);
+        authenticatedPost(commentUrl, formData)
+            .then((value) => {
+                console.log(value);
+            })
+            .catch((err) => {
+                console.log(err);
+                window.alert("an error occured");
+            });
+    }
+</script>
+
 <div class="answer-container">
     <div class="top-container">
         <div class="profile-container">
-            <img src="avatar1.png" alt="" class="full-img" />
+            <img
+                src={answer.answererDetails.photoUrl}
+                alt=""
+                class="full-img"
+            />
         </div>
         <div class="basic-container">
             <div class="mini-info-container">
-                <h3 class="username">Martin Hope</h3>
+                <h3 class="username">{answer.answererDetails.username}</h3>
                 <div class="status-container flex-center">
-                    <h6 class="status">beginner</h6>
+                    <h6 class="status">{answer.answererDetails.status}</h6>
                 </div>
                 <h5 class="datetext">
-                    Aswered on: <span class="date">December 22, 2021</span>
+                    Aswered on: <span class="date">{answer.created_at}</span>
                 </h5>
             </div>
         </div>
     </div>
     <div class="middle-container">
         <div class="answer-details-container">
-            <p class="answer-details">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cum
-                adipisci sunt vel, numquam quos aliquam, ullam eum pariatur
-                dolor perferendis explicabo illum hic. Fugit corporis architecto
-                in quasi deserunt fuga laborum vero autem excepturi cupiditate
-                enim, iure non voluptatibus consectetur?
-            </p>
+            <div class="answer-details">
+                {@html answer.details.html}
+            </div>
             <div class="bottom-container">
                 <div class="actions-container">
                     <button class="up-btn btn"
                         ><i class="fas fa-sort-up" /></button
                     >
-                    <h6 class="upvotes">132</h6>
+                    <h6 class="upvotes">
+                        {answer.upvotes.length - answer.downvotes.length}
+                    </h6>
                     <button class="down-btn btn invert"
                         ><i class="fas fa-sort-down" /></button
                     >
                 </div>
-                <button class="reply-btn"
+                <button class="reply-btn" on:click={toggleCommentForm}
                     ><i class="fas fa-reply" />reply</button
                 >
                 <button class="share-btn"
@@ -43,6 +74,30 @@
             </div>
         </div>
     </div>
+    {#if commentForm == true}
+        <div class="form-container">
+            <form
+                action=""
+                class="comment-form"
+                on:submit|preventDefault={postComment}
+            >
+                <h5 class="title">
+                    Reply to {answer.answererDetails.username}
+                </h5>
+                <button class="cancel-btn" on:click={toggleCommentForm}
+                    >cancel reply</button
+                >
+                <textarea
+                    name="comment"
+                    placeholder="your comment"
+                    class="in form-control"
+                    bind:value={comment}
+                    required
+                />
+                <button type="submit" class="submit-btn">submit</button>
+            </form>
+        </div>
+    {/if}
 </div>
 
 <style lang="scss">
@@ -99,8 +154,9 @@
 
             .answer-details-container {
                 .answer-details {
-                    line-height: 1.8;
-                    font-size: 16px;
+                    width: 100%;
+                    max-height: 150px;
+                    overflow: auto;
                 }
                 .bottom-container {
                     display: flex;
@@ -138,6 +194,37 @@
                             margin-top: -10px;
                         }
                     }
+                }
+            }
+        }
+        .form-container {
+            width: 100%;
+            margin-top: 20px;
+            background-color: #f7f7f7;
+            padding: 20px 30px;
+            .comment-form {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                .title {
+                    margin-bottom: 20px;
+                }
+                .cancel-btn {
+                    width: fit-content;
+                    background-color: transparent;
+                    margin-bottom: 20px;
+                }
+
+                .in {
+                    margin-bottom: 20px;
+                }
+                .submit-btn {
+                    display: block;
+                    width: 100%;
+                    margin: 0 auto;
+                    background-color: var(--bluish);
+                    padding: 5px 0;
+                    color: white;
                 }
             }
         }

@@ -16,8 +16,16 @@ export async function authenticatedPost(url:string, body) {
         body: JSON.stringify(body),
     };
     let res = await fetch(url, requestOptions);
-    let data = await res.json()
-    return data;
+    if (res.ok) {
+        console.log(res);
+        let data = await res.json();
+        return data;
+    }
+
+    console.log(res);
+    const { message } = await res.json();
+    console.log(message);
+    throw new Error(message);
 }
 
 export async function post(url:string, body) {
@@ -33,11 +41,10 @@ export async function post(url:string, body) {
         return data;
     }
 
+    console.log(res);
     const { message } = await res.json();
+    console.log(message);
     throw new Error(message);
-    // return {
-    //     error: new Error(message)
-    // };
 }
 
 export async function authenticatedGet(url:string) {
@@ -101,6 +108,7 @@ export interface Question {
     level:string;
     examType:string;
     reference:string;
+    region?:string;
     answers:[];
     comments:[];
     upvotes:[];
@@ -112,4 +120,31 @@ export interface Question {
     paper?:number;
     questionNumber?:number;
     year?:number;
+    all_answers?:Answer[];
+    all_comments?:Comment[];
+}
+
+export interface Answer {
+    _id:string;
+    answer:string;
+    asnwerer:string;
+    details:{
+        html:string;
+        text?:string;
+    }
+    question:string;
+    comments:[];
+    upvotes:[];
+    downvotes:[];
+    answererDetails:User;
+    created_at:Date;
+}
+
+export interface Comment {
+    _id:string;
+    comment:string;
+    commenter:string;
+    question:string;
+    answer:string;
+    created_at:Date;
 }

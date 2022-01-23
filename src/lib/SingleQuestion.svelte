@@ -16,9 +16,10 @@ import type { Question } from "./utils";
                     <h6 class="status">{question.askerDetail.status}</h6>
                 </div>
                 <h5 class="datetext">Asked on: <span class="date">{question.created_at}</span></h5>
+                <h5 class="reference">Reference: <span class="ref">{question.reference}</span></h5>
             </div>
             <div class="title-container">
-                <a href="questions/{question._id}" class="quest-title">
+                <a sveltekit:prefetch href="questions/{question._id}" class="quest-title">
                     {question.name}
                 </a>
             </div>
@@ -36,6 +37,18 @@ import type { Question } from "./utils";
 			</div>
             <div class="tags-container">
                 <div class="tag">{question.subject}</div>
+				{#if question.examType == "gce"}
+				<div class="tag">GCE</div>
+				{/if}
+				{#if question.examType == "mock"}
+				<div class="tag">MOCK</div>
+				<div class="tag">{question.region}</div>
+				{/if}
+				{#if question.examType == "gce" || question.examType == "mock"}
+				<div class="tag">year: {question.year}</div>
+				<div class="tag">paper: {question.paper}</div>
+				{/if}
+                <div class="tag">question number: {question.questionNumber}</div>
             </div>
             <div class="bottom-container">
                 <h6 class="answers"><i class="fas fa-book"></i>{question.answers.length} answers</h6>
@@ -88,11 +101,15 @@ import type { Question } from "./utils";
 							font-size: 10px;
 						}
 					}
-					.datetext {
+					.datetext,.reference {
 						font-size: 12px;
 						.date {
 							color: var(--bluish);
 						}
+					}
+					.reference {
+						margin-left: 5px;
+						color: var(--greenish);
 					}
 				}
 				.title-container {
