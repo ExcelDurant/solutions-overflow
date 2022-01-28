@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
     // export const prerender = true;
-    import { get, authenticatedPost, apiUrl, Question } from "$lib/utils";
+    import { get, authenticatedPost, apiUrl, Question, User } from "$lib/utils";
     export const load = async ({ page, fetch, session, stuff }) => {
         console.log(page.params);
         let questionssUrl = apiUrl + "questions/" + page.params.id;
@@ -14,13 +14,18 @@
 <script lang="ts">
     import SingleQuestion from "$lib/SingleQuestion.svelte";
     import SingleAnswer from "$lib/SingleAnswer.svelte";
+    import SingleComment from "$lib/SingleComment.svelte";
     import { goto } from "$app/navigation";
     import { onMount } from "svelte";
     import { quill } from "svelte-quill";
-    import { isLoggedIn } from "$lib/auth";
+    import { isLoggedIn, appUser } from "$lib/auth";
     let isLogged = false;
+    let user:User;
     isLoggedIn.subscribe((value) => {
         isLogged = value;
+    });
+    appUser.subscribe((value) => {
+        user = value;
     });
     let commentForm = false;
     function toggleCommentForm() {
@@ -60,8 +65,7 @@
         authenticatedPost(answerUrl, formData)
             .then((value) => {
                 console.log(value);
-                let questionssUrl = apiUrl + "questions/" + question._id;
-                goto("/questions/"+question._id);
+                question = value.question;
             })
             .catch((err) => {
                 console.log(err);
@@ -73,10 +77,36 @@
         let formData = {
             comment,
             question: question._id,
-        }
+        };
         authenticatedPost(commentUrl, formData)
+            .then((value) => {
+                console.log(value);
+                question = value.question;
+            })
+            .catch((err) => {
+                console.log(err);
+                window.alert("an error occured");
+            });
+    }
+
+    function upvote() {
+        let upvoteUrl = apiUrl + "questions/upvote/"+question._id;
+        authenticatedPost(upvoteUrl, {})
         .then((value) => {
                 console.log(value);
+                question = value;
+            })
+            .catch((err) => {
+                console.log(err);
+                window.alert("an error occured");
+            });
+    }
+    function downvote() {
+        let downvoteUrl = apiUrl + "questions/downvote/"+question._id;
+        authenticatedPost(downvoteUrl, {})
+        .then((value) => {
+                console.log(value);
+                question = value;
             })
             .catch((err) => {
                 console.log(err);
@@ -127,11 +157,11 @@
         </div>
         <div class="middle-container">
             <div class="actions-container">
-                <button class="up-btn btn"><i class="fas fa-sort-up" /></button>
+                <button class="up-btn btn" class:blue={question.upvotes.includes(user._id)} on:click={upvote}><i class="fas fa-sort-up" /></button>
                 <h6 class="upvotes">
                     {question.upvotes.length - question.downvotes.length}
                 </h6>
-                <button class="down-btn btn"
+                <button class="down-btn btn" class:blue={question.downvotes.includes(user._id)} on:click={downvote}
                     ><i class="fas fa-sort-down" /></button
                 >
             </div>
@@ -172,10 +202,24 @@
                 </div>
             </div>
         </div>
+        {#if question.all_comments.length > 0}
+            <div class="comments-container">
+                <h3 class="title">comments</h3>
+                {#each question.all_comments as comment}
+                    <SingleComment {comment} />
+                {/each}
+            </div>
+        {/if}
         {#if commentForm == true && isLogged == true}
             <div class="form-container">
-                <form action="" class="comment-form" on:submit|preventDefault={postComment}>
-                    <h5 class="title">Reply to {question.askerDetail.username}</h5>
+                <form
+                    action=""
+                    class="comment-form"
+                    on:submit|preventDefault={postComment}
+                >
+                    <h5 class="title">
+                        Reply to {question.askerDetail.username}
+                    </h5>
                     <button class="cancel-btn" on:click={toggleCommentForm}
                         >cancel reply</button
                     >
@@ -197,7 +241,7 @@
 </div>
 <section class="answers-sec">
     {#each question.all_answers as answer}
-        <SingleAnswer answer={answer} />
+        <SingleAnswer {answer} />
     {/each}
 </section>
 
@@ -330,6 +374,9 @@
                         color: var(--bluish);
                     }
                 }
+                .blue {
+                    color: var(--bluish);
+                }
             }
             .quest-details-container {
                 .quest-details {
@@ -372,6 +419,14 @@
                         }
                     }
                 }
+            }
+        }
+
+        .comments-container {
+            width: 90%;
+            margin: 10px auto;
+            .title {
+                font-size: 1.2rem;
             }
         }
         .form-container {

@@ -147,4 +147,5 @@ export interface Comment {
     question:string;
     answer:string;
     created_at:Date;
+    commenterDetails:User;
 }

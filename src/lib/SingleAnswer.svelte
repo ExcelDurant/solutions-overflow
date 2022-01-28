@@ -1,6 +1,15 @@
 <script lang="ts">
-    import type { Answer } from "./utils";
+    import type { Answer, User } from "./utils";
     import { get, authenticatedPost, apiUrl, Question } from "$lib/utils";
+    import { appUser, isLoggedIn } from "$lib/auth";
+    let isLogged = false;
+    let user: User;
+    isLoggedIn.subscribe((value) => {
+        isLogged = value;
+    });
+    appUser.subscribe((value) => {
+        user = value;
+    });
 
     export let answer: Answer;
     let commentForm = false;
@@ -24,6 +33,34 @@
                 console.log(err);
                 window.alert("an error occured");
             });
+    }
+    function upvote() {
+        let upvoteUrl = apiUrl + "answers/upvote/" + answer._id;
+        if (isLogged == true) {
+            authenticatedPost(upvoteUrl, {})
+                .then((value) => {
+                    console.log(value);
+                    answer = value;
+                })
+                .catch((err) => {
+                    console.log(err);
+                    window.alert("an error occured");
+                });
+        }
+    }
+    function downvote() {
+        let downvoteUrl = apiUrl + "answers/downvote/" + answer._id;
+        if (isLogged == true) {
+            authenticatedPost(downvoteUrl, {})
+                .then((value) => {
+                    console.log(value);
+                    answer = value;
+                })
+                .catch((err) => {
+                    console.log(err);
+                    window.alert("an error occured");
+                });
+        }
     }
 </script>
 
@@ -55,26 +92,33 @@
             </div>
             <div class="bottom-container">
                 <div class="actions-container">
-                    <button class="up-btn btn"
-                        ><i class="fas fa-sort-up" /></button
+                    <button
+                        class="up-btn btn"
+                        class:blue={answer.upvotes.includes(user._id)}
+                        on:click={upvote}><i class="fas fa-sort-up" /></button
                     >
                     <h6 class="upvotes">
                         {answer.upvotes.length - answer.downvotes.length}
                     </h6>
-                    <button class="down-btn btn invert"
+                    <button
+                        class="down-btn btn invert"
+                        class:blue={answer.downvotes.includes(user._id)}
+                        on:click={downvote}
                         ><i class="fas fa-sort-down" /></button
                     >
                 </div>
-                <button class="reply-btn" on:click={toggleCommentForm}
-                    ><i class="fas fa-reply" />reply</button
-                >
+                {#if isLogged == true}
+                    <button class="reply-btn" on:click={toggleCommentForm}
+                        ><i class="fas fa-reply" />reply</button
+                    >
+                {/if}
                 <button class="share-btn"
                     ><i class="fas fa-share-alt" />share</button
                 >
             </div>
         </div>
     </div>
-    {#if commentForm == true}
+    {#if commentForm == true && isLogged == true}
         <div class="form-container">
             <form
                 action=""
@@ -189,6 +233,10 @@
                             &:hover {
                                 color: var(--bluish);
                             }
+                        }
+
+                        .blue {
+                            color: var(--bluish);
                         }
                         .invert {
                             margin-top: -10px;
