@@ -86,35 +86,11 @@ import { apiUrl, authenticatedGet, getReadableDate, Question } from "$lib/utils"
 		.top-container {
 			display: flex;
 			margin-bottom: 10px;
-			.profile-container {
-				min-width: 60px;
-				height: 60px;
-				border-radius: 50%;
-				border: 2px solid var(--bluish);
-				padding: 5px;
-				margin-right: 10px;
-				overflow: hidden;
-			}
 			.basic-container {
 				.mini-info-container {
 					display: flex;
 					align-items: center;
 					margin-bottom: 5px;
-					.username {
-						font-size: 15px;
-						font-weight: 600;
-						color: var(--bluish);
-						margin-right: 10px;
-					}
-					.status-container {
-						padding: 3px 10px;
-						background-color: blueviolet;
-						margin-right: 10px;
-						.status {
-							color: white;
-							font-size: 10px;
-						}
-					}
 					.datetext,.reference {
 						font-size: 12px;
 						.date {

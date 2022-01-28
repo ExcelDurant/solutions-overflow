@@ -57,10 +57,10 @@
         <nav class="profile-nav">
             <ul class="navlist">
                 <li><a href="/profile" class="navlink" class:active={$page.path === '/profile'}>info</a></li>
-                <li><a href="profile/questions" class="navlink" class:active={$page.path === '/profile/questions'}>questions</a></li>
-                <li><a href="profile/questions" class="navlink" class:active={$page.path === '/profile/waiting'}>waiting questions</a></li>
-                <li><a href="profile/answers" class="navlink" class:active={$page.path === '/profile/answers'}>answers</a></li>
-                <li><a href="profile/edit" class="navlink" class:active={$page.path === '/profile/edit'}>edit profile</a></li>
+                <li><a href="/profile/questions" class="navlink" class:active={$page.path === '/profile/questions'}>questions</a></li>
+                <li><a href="/profile/progression" class="navlink" class:active={$page.path === '/profile/progression'}>progression</a></li>
+                <li><a href="/profile/answers" class="navlink" class:active={$page.path === '/profile/answers'}>answers</a></li>
+                <li><a href="/profile/edit" class="navlink" class:active={$page.path === '/profile/edit'}>edit profile</a></li>
             </ul>
         </nav>
 

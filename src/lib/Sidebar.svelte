@@ -41,6 +41,11 @@
                     ><i class="fas fa-question-circle" />questions</a
                 >
             </li>
+            <li>
+                <a href="/badges" class="sidelink" class:active={$page.path === "/badges"}
+                    ><i class="fas fa-home" />badges</a
+                >
+            </li>
         </ul>
     </div>
 </aside>
