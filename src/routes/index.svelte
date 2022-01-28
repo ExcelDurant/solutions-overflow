@@ -4,9 +4,11 @@
     import { get, authenticatedPost, apiUrl, Question } from "$lib/utils";
     export const load: Load = async ({ fetch }) => {
         let questionssUrl = apiUrl+"questions/all";
+		let subjectsUrl = apiUrl+"subjects/all";
+		const subjects = await get(subjectsUrl);
 		const questions = await get(questionssUrl);
         return {
-            props: { questions }
+            props: { questions,subjects }
         }
 	};
 </script>
@@ -18,6 +20,8 @@
 	import { onMount } from "svelte";
 
 	export let questions:Question[];
+	export let subjects;
+	let examTypes = ["gce", "mock", "miscellaneous"];
 	onMount(() => {
 		console.log(questions);
 	});
@@ -25,6 +29,18 @@
 	isLoggedIn.subscribe((value) => {
 		isLogged = value;
 	})
+
+	function generateYears() {
+        let years = [];
+        for (let index = 1970; index < 2023; index++) {
+            years.push(index);
+        }
+        return years;
+    }
+
+	let selectedYear;
+	let selectedSubject;
+	let selectedExam;
 </script>
 
 <svelte:head>
@@ -51,6 +67,59 @@
 			<button class="quest-btn">most answered</button>
 			<button class="quest-btn">unanswered questions</button>
 			<button class="quest-btn">recent questions</button>
+		</div>
+	</section>
+	<section class="filter-sec">
+		<h2 class="title">filter</h2>
+		<div class="filters-container">
+			<div class="select-container">
+				<label for="years" class="form-label"
+					>year</label
+				>
+				<select
+					class="form-select"
+					name="years"
+					aria-label="Default select example"
+					bind:value={selectedYear}
+				>
+					{#each generateYears() as year}
+						<option value={year}>{year}</option>
+					{/each}
+				</select>
+			</div>
+			<div class="select-container">
+				<label for="subject" class="form-label"
+					>subject</label
+				>
+				<select
+				class="form-select"
+				name="subject"
+				aria-label="Default select example"
+				bind:value={selectedSubject}
+				required
+			>
+				{#each subjects as subject}
+					<option value={subject.name}>{subject.name}</option>
+				{/each}
+			</select>
+			</div>
+			<div class="select-container">
+				<label for="exam" class="form-label"
+					>exam type</label
+				>
+				<select
+				class="form-select"
+				name="exam"
+				aria-label="Default select example"
+				bind:value={selectedExam}
+				required
+			>
+				{#each examTypes as exam}
+					<option value={exam}>{exam}</option>
+				{/each}
+			</select>
+			</div>
+			<button type="button" class="btn btn-primary">filter</button>
 		</div>
 	</section>
 	<section class="questions-sec">
@@ -133,6 +202,33 @@
 
 	.questions-sec {
 		background-color: #F2F2F2;
+	}
+
+	.filter-sec {
+		margin-bottom: 3px;
+		padding: 20px 10px;
+		.title {
+			font-size: 1.5rem;
+			margin-bottom: 5px;
+		}
+	}
+	.filters-container {
+		width: 90%;
+		margin: 0 auto;
+		display: flex;
+		flex-wrap: wrap;
+                .select-container {
+					display: flex;
+					align-items: center;
+					margin-right: 10px;
+					label {
+						margin-right: 3px;
+					}
+                    .form-select {
+                        width: 150px;
+                    }
+                }
+            
 	}
 	
 </style>

@@ -83,6 +83,11 @@ export async function get(url:string) {
     throw new Error(message);
 }
 
+export function getReadableDate(date:Date) {
+    let newDate = new Date(date);
+    return newDate.toDateString();
+}
+
 export interface User {
     _id:string;
     username:string;

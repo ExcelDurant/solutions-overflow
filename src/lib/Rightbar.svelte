@@ -1,5 +1,30 @@
 <script lang="ts">
     import { page } from '$app/stores';
+    import { onMount } from "svelte";
+import { apiUrl, get, User } from './utils';
+    onMount(() => {
+		getInfo();
+	});
+
+    function getInfo() {
+        let infoUrl = apiUrl+"system/info"
+        get(infoUrl).then((value) => {
+            system.questions = value.questions;
+            system.answers = value.answers;
+            system.users = value.users;
+            system.highestUsers = value.highestUsers
+        }).catch((err) => {
+            console.log(err);
+            window.alert("an error occured");
+        })
+    }
+    let system = {
+        questions:0,
+        answers:0,
+        users:0,
+        communities:0,
+        highestUsers:[] as User[]
+    }
 </script>
 
 <aside class="rightbar">
@@ -9,19 +34,19 @@
             <div class="stats-boxes">
                 <div class="stat-box">
                     <h4 class="heading">questions</h4>
-                    <h5 class="stat">21</h5>
+                    <h5 class="stat">{system.questions}</h5>
                 </div>
                 <div class="stat-box">
                     <h4 class="heading">answers</h4>
-                    <h5 class="stat">75</h5>
+                    <h5 class="stat">{system.answers}</h5>
                 </div>
                 <div class="stat-box">
                     <h4 class="heading">users</h4>
-                    <h5 class="stat">105</h5>
+                    <h5 class="stat">{system.users}</h5>
                 </div>
                 <div class="stat-box">
                     <h4 class="heading">communities</h4>
-                    <h5 class="stat">5</h5>
+                    <h5 class="stat">{system.communities}</h5>
                 </div>
             </div>
         </div>
@@ -32,48 +57,23 @@
         <div class="members-container">
             <h2 class="title"><i class="fas fa-user-friends"></i>top members</h2>
             <div class="top-members">
+                {#each system.highestUsers as user}
                 <div class="member">
                     <div class="profile-container avatar">
-                        <img src="https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/137409052/original/d472c30361632da1c8d8fa780f572807d78abd9f/cartoon-profile-picture-or-avatar.png" alt="" class="full-img">
+                        <img src={user.photoUrl} alt="" class="full-img">
                     </div>
                     <div class="info-container">
-                        <h3 class="username">Excel Durant</h3>
-                        <h4 class="questions">5 questions</h4>
-                        <h4 class="questions">20 answers</h4>
-                        <h4 class="points">550 points</h4>
+                        <h3 class="username">{user.username}</h3>
+                        <h4 class="questions">{user.questionsAsked} questions</h4>
+                        <h4 class="questions">{user.answersGiven} answers</h4>
+                        <h4 class="points">{user.points} points</h4>
                         <div class="status-container">
-                            <h6 class="status">enlightened</h6>
+                            <h6 class="status">{user.status}</h6>
                         </div>
                     </div>
                 </div>
-                <div class="member">
-                    <div class="profile-container avatar">
-                        <img src="https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/137409052/original/d472c30361632da1c8d8fa780f572807d78abd9f/cartoon-profile-picture-or-avatar.png" alt="" class="full-img">
-                    </div>
-                    <div class="info-container">
-                        <h3 class="username">Excel Durant</h3>
-                        <h4 class="questions">5 questions</h4>
-                        <h4 class="questions">20 answers</h4>
-                        <h4 class="points">550 points</h4>
-                        <div class="status-container">
-                            <h6 class="status">enlightened</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="member">
-                    <div class="profile-container avatar">
-                        <img src="https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/137409052/original/d472c30361632da1c8d8fa780f572807d78abd9f/cartoon-profile-picture-or-avatar.png" alt="" class="full-img">
-                    </div>
-                    <div class="info-container">
-                        <h3 class="username">Marko Smith</h3>
-                        <h4 class="questions">5 questions</h4>
-                        <h4 class="questions">20 answers</h4>
-                        <h4 class="points">550 points</h4>
-                        <div class="status-container">
-                            <h6 class="status">enlightened</h6>
-                        </div>
-                    </div>
-                </div>
+                {/each}
+
             </div>
         </div>
     </div>

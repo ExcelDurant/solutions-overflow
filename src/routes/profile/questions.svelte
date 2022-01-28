@@ -1,58 +1,35 @@
 <script lang="ts">
-import { apiUrl, authenticatedPost, Question, User, getReadableDate } from "./utils";
-import { appUser, isLoggedIn } from "$lib/auth";
-    let isLogged = false;
-    let user: User;
-    isLoggedIn.subscribe((value) => {
-        isLogged = value;
-    });
-    appUser.subscribe((value) => {
-        user = value;
-    });
-	export let question:Question;
+import { apiUrl, authenticatedGet, getReadableDate, Question } from "$lib/utils";
 
-	function upvote() {
-        let upvoteUrl = apiUrl + "questions/upvote/" + question._id;
-        if (isLogged == true) {
-            authenticatedPost(upvoteUrl, {})
-                .then((value) => {
-                    console.log(value);
-                    question = value;
-                })
-                .catch((err) => {
-                    console.log(err);
-                    window.alert("an error occured");
-                });
-        }
-    }
-    function downvote() {
-        let downvoteUrl = apiUrl + "questions/downvote/" + question._id;
-        if (isLogged == true) {
-            authenticatedPost(downvoteUrl, {})
-                .then((value) => {
-                    console.log(value);
-                    question = value;
-                })
-                .catch((err) => {
-                    console.log(err);
-                    window.alert("an error occured");
-                });
-        }
+    import { onMount } from "svelte";
+    onMount(() => {
+		getQuestions();
+	});
+    let questions = [] as Question[];
+    function getQuestions() {
+        let questionsUrl = apiUrl+"profile/questions";
+        authenticatedGet(questionsUrl).then((value) => {
+            questions = value;
+            console.log(value)
+        }).catch((err) => {
+            console.log(err);
+            window.alert("an error occured");
+        })
     }
 </script>
 
-
+{#each questions as question}
 <div class="question-container">
     <div class="top-container">
-        <div class="profile-container">
+        <!-- <div class="profile-container">
             <img src={question.askerDetail.photoUrl} alt="" class="full-img">
-        </div>
+        </div> -->
         <div class="basic-container">
             <div class="mini-info-container">
-                <h3 class="username">{question.askerDetail.username}</h3>
+                <!-- <h3 class="username">{question.askerDetail.username}</h3>
                 <div class="status-container flex-center">
                     <h6 class="status">{question.askerDetail.status}</h6>
-                </div>
+                </div> -->
                 <h5 class="datetext">Asked on: <span class="date">{getReadableDate(question.created_at)}</span></h5>
                 <h5 class="reference">Reference: <span class="ref">{question.reference}</span></h5>
             </div>
@@ -64,11 +41,6 @@ import { appUser, isLoggedIn } from "$lib/auth";
         </div>
     </div>
     <div class="middle-container">
-        <div class="actions-container">
-            <button class="up-btn btn" class:blue={question.upvotes.includes(user._id)} on:click={upvote}><i class="fas fa-sort-up"></i></button>
-            <h6 class="upvotes">{question.upvotes.length - question.downvotes.length}</h6>
-            <button class="down-btn btn" class:blue={question.downvotes.includes(user._id)} on:click={downvote}><i class="fas fa-sort-down"></i></button>
-        </div>
         <div class="quest-details-container">
             <div class="quest-details">
 				{@html question.details.html}
@@ -91,14 +63,18 @@ import { appUser, isLoggedIn } from "$lib/auth";
             <div class="bottom-container">
                 <h6 class="answers"><i class="fas fa-book"></i>{question.answers.length} answers</h6>
                 <h6 class="answers"><i class="fas fa-comment-dots"></i>{question.comments.length} comments</h6>
+                {#if question.answers.length < 1}
+                <button type="button" class="btn btn-danger">delete</button>
+                {/if}
             </div>
         </div>
     </div>
 
 </div>
+{/each}
 
 <style lang="scss">
-	@import "../styles.scss";
+    @import "../../styles.scss";
     .question-container {
 		background-color: white;
 		width: 100%;
@@ -206,6 +182,7 @@ import { appUser, isLoggedIn } from "$lib/auth";
 				}
 				.bottom-container {
 					display: flex;
+                    align-items: center;
 					.answers {
 						margin-right: 10px;
 						font-weight: 300;
