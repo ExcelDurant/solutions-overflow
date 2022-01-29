@@ -12,8 +12,10 @@
 	};
 </script>
 <script>
-    import { onMount } from "svelte";
+    import BasicSpinner from "$lib/BasicSpinner.svelte";
+// import { onMount } from "svelte";
     import { quill } from "svelte-quill";
+import { showSuccess, successMessage } from '$lib/store';
     // backend url to post to
     let askQuestionUrl = apiUrl + "questions/ask";
     const options = {
@@ -33,9 +35,9 @@
     let showContent = false;
 
     export let subjects;
-    onMount(() => {
-		console.log(subjects);
-	});
+    // onMount(() => {
+	// 	console.log(subjects);
+	// });
     let levels = ["ordinary level", "advanced level"];
     let examTypes = ["gce", "mock", "miscellaneous"];
     let mocks = ["south-west", "north-west", "west", "littoral", "central"];
@@ -59,10 +61,6 @@
         }
         return numbers;
     }
-    function showResults() {
-        console.log(content);
-        showContent = true;
-    }
     let name;
     let selectedSubject;
     let details;
@@ -72,7 +70,9 @@
     let selectedPaper;
     let selectedQuestionNumber;
     let reference;
+    let spin = false;
     function postQuestion() {
+        spin = true;
         let formData = {
             name,
             subject: selectedSubject,
@@ -88,12 +88,14 @@
         // console.log(formData);
         authenticatedPost(askQuestionUrl, formData)
             .then((value) => {
-                console.log(value);
-                goto("/questions/"+value._id);
+                spin = false;
+                showSuccess.set(true);
+                successMessage.set(value.message);
+                goto("/questions/"+value.question._id);
             })
             .catch((err) => {
+                spin = false;
                 console.log(err);
-                window.alert("an error occured");
             });
     }
 </script>
@@ -292,6 +294,9 @@
                         on:text-change={(e) => (content = e.detail)}
                     />
                 </div>
+                {#if spin == true}
+                <BasicSpinner />
+                {/if}
                 <button class="submit-btn" type="submit"
                     >publish your question</button
                 >

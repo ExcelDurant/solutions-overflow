@@ -1,4 +1,5 @@
 <script lang="ts">
+import BasicSpinner from "$lib/BasicSpinner.svelte";
 import { apiUrl, authenticatedGet, getReadableDate, Question } from "$lib/utils";
 
     import { onMount } from "svelte";
@@ -6,30 +7,29 @@ import { apiUrl, authenticatedGet, getReadableDate, Question } from "$lib/utils"
 		getQuestions();
 	});
     let questions = [] as Question[];
+	let spin = false;
     function getQuestions() {
+		spin = true;
         let questionsUrl = apiUrl+"profile/questions";
         authenticatedGet(questionsUrl).then((value) => {
+			spin = false;
             questions = value;
-            console.log(value)
+            console.log(value);
         }).catch((err) => {
+			spin = false;
             console.log(err);
             window.alert("an error occured");
         })
     }
 </script>
-
+{#if spin}
+	<BasicSpinner />
+{/if}
 {#each questions as question}
 <div class="question-container">
     <div class="top-container">
-        <!-- <div class="profile-container">
-            <img src={question.askerDetail.photoUrl} alt="" class="full-img">
-        </div> -->
         <div class="basic-container">
             <div class="mini-info-container">
-                <!-- <h3 class="username">{question.askerDetail.username}</h3>
-                <div class="status-container flex-center">
-                    <h6 class="status">{question.askerDetail.status}</h6>
-                </div> -->
                 <h5 class="datetext">Asked on: <span class="date">{getReadableDate(question.created_at)}</span></h5>
                 <h5 class="reference">Reference: <span class="ref">{question.reference}</span></h5>
             </div>

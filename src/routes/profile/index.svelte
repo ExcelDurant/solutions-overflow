@@ -1,9 +1,26 @@
 <script>
-    import {appUser} from "$lib/auth";
+    import {appUser, setUser} from "$lib/auth";
+import { apiUrl, authenticatedGet } from "$lib/utils";
+import { onMount } from "svelte";
     let user;
     appUser.subscribe((value) => {
         user = value;
     })
+    let profileUrl = apiUrl + "profile/me";
+    function getUser() {
+        authenticatedGet(profileUrl)
+            .then((value) => {
+                setUser(value.user);
+                console.log(value);
+            })
+            .catch((err) => {
+                console.log(err);
+                window.alert("an error occured");
+            });
+    }
+    onMount(() => {
+		getUser();
+	});
 </script>
 
 <section class="basic-sec">

@@ -12,8 +12,10 @@
 	import Footer from "$lib/Footer.svelte";
 	import SignupForm from "$lib/SignupForm.svelte";
 	import LoginForm from "$lib/LoginForm.svelte";
-	import { showLogin, showSignup } from "$lib/store.js";
+	import { showFailure, showLogin, showSignup, showSuccess } from "$lib/store.js";
 	import "../app.css";
+import SuccessPopup from "$lib/SuccessPopup.svelte";
+import FailurePopup from "$lib/FailurePopup.svelte";
 	let currentRoute = "";
 	if (browser) {
 		isLoggedIn.set(JSON.parse(sessionStorage.getItem('isLoggedIn') || 'false'));
@@ -26,12 +28,20 @@
 	}
 	let login = false;
 	let signup = false;
+	let success = false;
+	let failure = false;
 	showLogin.subscribe((value) => {
 		login = value;
 	});
 	showSignup.subscribe((value) => {
 		signup = value;
 	});
+	showSuccess.subscribe((value) => {
+		success = value;
+	})
+	showFailure.subscribe((value) => {
+		failure = value;
+	})
 </script>
 
 <Header />
@@ -44,7 +54,12 @@
 	{#if login}
 		<LoginForm />
 	{/if}
-
+	{#if success}
+	<SuccessPopup />
+	{/if}
+	{#if failure}
+	<FailurePopup />
+	{/if}
 	<Sidebar />
 	<div class="content">
 		<slot />

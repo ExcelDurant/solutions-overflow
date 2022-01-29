@@ -4,28 +4,12 @@
 	import Rightbar from '$lib/Rightbar.svelte';
     import { page } from '$app/stores';
 	import '../../app.css';
-    import { onMount } from 'svelte';
-    import {setUser, appUser} from "$lib/auth";
-    import { apiUrl, authenticatedGet } from "$lib/utils";
+    import { appUser} from "$lib/auth";
     let user;
     appUser.subscribe((value) => {
         user = value;
     })
-    let profileUrl = apiUrl + "profile/me";
-    function getUser() {
-        authenticatedGet(profileUrl)
-            .then((value) => {
-                // setUser(value.user);
-                console.log(value);
-            })
-            .catch((err) => {
-                console.log(err);
-                window.alert("an error occured");
-            });
-    }
-    onMount(() => {
-		getUser();
-	});
+
 </script>
 
 <Header />

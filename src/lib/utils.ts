@@ -1,5 +1,6 @@
 import { bearerToken } from "$lib/auth";
 import { browser } from '$app/env';
+import { failureMessage, showFailure } from "./store";
 let token = "";
 if (browser) {
     bearerToken.subscribe((value) => {
@@ -24,6 +25,8 @@ export async function authenticatedPost(url:string, body) {
 
     console.log(res);
     const { message } = await res.json();
+    showFailure.set(true);
+    failureMessage.set(message);
     console.log(message);
     throw new Error(message);
 }
@@ -44,6 +47,8 @@ export async function post(url:string, body) {
     console.log(res);
     const { message } = await res.json();
     console.log(message);
+    showFailure.set(true);
+    failureMessage.set(message);
     throw new Error(message);
 }
 
@@ -62,6 +67,8 @@ export async function authenticatedGet(url:string) {
     console.log(res);
     const { message } = await res.json();
     console.log(message);
+    showFailure.set(true);
+    failureMessage.set(message);
     throw new Error(message);
 
 }
