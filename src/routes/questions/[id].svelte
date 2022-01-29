@@ -326,6 +326,7 @@ import BasicSpinner from "$lib/BasicSpinner.svelte";
 </section>
 
 <style lang="scss">
+    @import "../../styles";
     .top-sec {
         width: 100%;
         background-color: white;
@@ -346,6 +347,9 @@ import BasicSpinner from "$lib/BasicSpinner.svelte";
         width: 100%;
         padding: 30px;
         margin-bottom: 2px;
+        @include mqx(800px) {
+            padding: 5px;
+        }
         .top-container {
             display: flex;
             margin-bottom: 10px;

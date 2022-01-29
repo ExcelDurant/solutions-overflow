@@ -221,6 +221,7 @@
 					display: flex;
 					align-items: center;
 					margin-right: 10px;
+					margin-bottom: 10px;
 					label {
 						margin-right: 3px;
 					}
