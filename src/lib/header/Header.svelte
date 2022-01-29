@@ -26,7 +26,7 @@
 			<ul class="navlist">
 				<li><a href="/" class="navlink" class:active={$page.path === '/'}>Home</a></li>
 				<li><a href="/about" class="navlink" class:active={$page.path === '/about'}>About Us</a></li>
-				<li><a href="/" class="navlink" class:active={$page.path === '/contact'}>Contact Us</a></li>
+				<li><a href="/contact" class="navlink" class:active={$page.path === '/contact'}>Contact Us</a></li>
 			</ul>
 			<div class="search-container">
 				<input type="search" name="" id="" placeholder="search for something" class="search-box">

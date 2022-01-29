@@ -43,7 +43,7 @@
             </li>
             <li>
                 <a href="/badges" class="sidelink" class:active={$page.path === "/badges"}
-                    ><i class="fas fa-home" />badges</a
+                    ><i class="fas fa-medal"></i>badges</a
                 >
             </li>
         </ul>

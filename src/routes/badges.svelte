@@ -11,7 +11,7 @@
 <section class="points-sec">
     <div class="points-container">
         <div class="txt-container">
-            <h5 class="title">Points System</h5>
+            <h5 class="title"><i class="fas fa-medal"></i>Points System</h5>
             <p class="txt">
                 Besides gaining reputation with your questions and answers, you receive badges for being especially helpful. Badges appears on your profile page, questions & answers
             </p>
@@ -29,7 +29,7 @@
 <section class="badge-system-sec">
     <div class="system-container">
         <div class="txt-container">
-            <h5 class="title">Reward System</h5>
+            <h5 class="title"><i class="fas fa-medal"></i>Reward System</h5>
             <p class="txt">
                 Besides gaining reputation with your questions and answers, you receive badges for being especially helpful. Badges appears on your profile page, questions & answers
             </p>
@@ -45,6 +45,10 @@
 
 
 <style lang="scss">
+
+    i {
+        margin-right: 15px;
+    }
     section {
         width: 100%;
         background-color: white;

@@ -7,7 +7,7 @@
 <div class="reward-container">
     <div class="colu-1 colu">
         <h5 class="status">{status}</h5>
-        <h4 class="points">{points} Points</h4>
+        <h4 class="points"><i class="fas fa-medal"></i>{points} Points</h4>
     </div>
     <div class="colu-2 colu">
         <p class="txt">{text}</p>
@@ -35,6 +35,10 @@
             }
             .points {
                 font-size: 0.8rem;
+                i {
+                margin-right: 5px;
+                color: #FF6F3D;
+            }
             }
         }
         .colu-2 {
