@@ -1,4 +1,5 @@
 <script lang="ts">
+import BasicSpinner from "$lib/BasicSpinner.svelte";
 import { Answer, apiUrl, authenticatedGet, getReadableDate } from "$lib/utils";
 
 
@@ -7,18 +8,23 @@ import { onMount } from "svelte";
 		getAnswers();
 	});
     let answers = [] as Answer[];
-
+    let spin = false;
     function getAnswers() {
+        spin = true;
         let answersUrl = apiUrl+"profile/answers";
         authenticatedGet(answersUrl).then((value) => {
             answers = value;
+            spin = false;
         }).catch((err) => {
             console.log(err);
-            window.alert("an error occcured");
+            spin = false;
         })
     }
 </script>
 
+{#if spin}
+    <BasicSpinner />
+{/if}
 {#each answers as answer}
 <div class="answer-container">
     <div class="top-container">

@@ -14,7 +14,7 @@ import { failureMessage, showFailure } from "./store";
 
 <div class="failure-overlay">
     <div class="popup-container">
-        <button class="close-btn">X</button>
+        <button class="close-btn" on:click={closePopup}>X</button>
         <div class="tick-container">
             <i class="fas fa-bomb"></i>
         </div>

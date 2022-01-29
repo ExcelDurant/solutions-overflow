@@ -1,112 +1,156 @@
 <script lang="ts">
-import { apiUrl, authenticatedPost, Question, User, getReadableDate } from "./utils";
-import { appUser, isLoggedIn } from "$lib/auth";
-    let isLogged = false;
-    let user: User;
-    isLoggedIn.subscribe((value) => {
-        isLogged = value;
-    });
-    appUser.subscribe((value) => {
-        user = value;
-    });
-	export let question:Question;
-
+	import {
+		apiUrl,
+		authenticatedPost,
+		Question,
+		User,
+		getReadableDate,
+		showErrorPop,
+showSuccessPop,
+	} from "./utils";
+	import { appUser, isLoggedIn } from "$lib/auth";
+	import MiniSpinner from "./MiniSpinner.svelte";
+	let isLogged = false;
+	let user: User;
+	isLoggedIn.subscribe((value) => {
+		isLogged = value;
+	});
+	appUser.subscribe((value) => {
+		user = value;
+	});
+	export let question: Question;
+	let miniSpin = false;
 	function upvote() {
-        let upvoteUrl = apiUrl + "questions/upvote/" + question._id;
-        if (isLogged == true) {
-            authenticatedPost(upvoteUrl, {})
-                .then((value) => {
-                    console.log(value);
-                    question = value;
-                })
-                .catch((err) => {
-                    console.log(err);
-                    window.alert("an error occured");
-                });
-        }
-    }
-    function downvote() {
-        let downvoteUrl = apiUrl + "questions/downvote/" + question._id;
-        if (isLogged == true) {
-            authenticatedPost(downvoteUrl, {})
-                .then((value) => {
-                    console.log(value);
-                    question = value;
-                })
-                .catch((err) => {
-                    console.log(err);
-                    window.alert("an error occured");
-                });
-        }
-    }
+		let upvoteUrl = apiUrl + "questions/upvote/" + question._id;
+		if (isLogged == true) {
+			miniSpin = true;
+			authenticatedPost(upvoteUrl, {})
+				.then((value) => {
+					question = value;
+					miniSpin = false;
+				})
+				.catch((err) => {
+					console.log(err);
+					miniSpin = false;
+				});
+		} else {
+			showErrorPop("you are not logged in");
+		}
+	}
+	function downvote() {
+		let downvoteUrl = apiUrl + "questions/downvote/" + question._id;
+		if (isLogged == true) {
+			miniSpin = true;
+			authenticatedPost(downvoteUrl, {})
+				.then((value) => {
+					question = value;
+					miniSpin = false;
+				})
+				.catch((err) => {
+					console.log(err);
+					miniSpin = false;
+				});
+		} else {
+			showErrorPop("you are not logged in");
+		}
+	}
 </script>
 
-
 <div class="question-container">
-    <div class="top-container">
-        <div class="profile-container">
-            <img src={question.askerDetail.photoUrl} alt="" class="full-img">
-        </div>
-        <div class="basic-container">
-            <div class="mini-info-container">
-                <h3 class="username">{question.askerDetail.username}</h3>
-                <div class="status-container flex-center">
-                    <h6 class="status">{question.askerDetail.status}</h6>
-                </div>
-                <h5 class="datetext">Asked on: <span class="date">{getReadableDate(question.created_at)}</span></h5>
-                <h5 class="reference">Reference: <span class="ref">{question.reference}</span></h5>
-            </div>
-            <div class="title-container">
-                <a sveltekit:prefetch href="questions/{question._id}" class="quest-title">
-                    {question.name}
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="middle-container">
-        <div class="actions-container">
-            <button class="up-btn btn" class:blue={question.upvotes.includes(user._id)} on:click={upvote}><i class="fas fa-sort-up"></i></button>
-            <h6 class="upvotes">{question.upvotes.length - question.downvotes.length}</h6>
-            <button class="down-btn btn" class:blue={question.downvotes.includes(user._id)} on:click={downvote}><i class="fas fa-sort-down"></i></button>
-        </div>
-        <div class="quest-details-container">
-            <div class="quest-details">
+	<div class="top-container">
+		<div class="profile-container">
+			<img src={question.askerDetail.photoUrl} alt="" class="full-img" />
+		</div>
+		<div class="basic-container">
+			<div class="mini-info-container">
+				<h3 class="username">{question.askerDetail.username}</h3>
+				<div class="status-container flex-center">
+					<h6 class="status">{question.askerDetail.status}</h6>
+				</div>
+				<h5 class="datetext">
+					Asked on: <span class="date"
+						>{getReadableDate(question.created_at)}</span
+					>
+				</h5>
+				<h5 class="reference">
+					Reference: <span class="ref">{question.reference}</span>
+				</h5>
+			</div>
+			<div class="title-container">
+				<a
+					sveltekit:prefetch
+					href="questions/{question._id}"
+					class="quest-title"
+				>
+					{question.name}
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="middle-container">
+		<div class="actions-container">
+			<button
+				class="up-btn btn"
+				class:blue={question.upvotes.includes(user._id)}
+				on:click={upvote}><i class="fas fa-sort-up" /></button
+			>
+			{#if miniSpin}
+				<MiniSpinner />
+			{:else}
+				<h6 class="upvotes">
+					{question.upvotes.length - question.downvotes.length}
+				</h6>
+			{/if}
+
+			<button
+				class="down-btn btn"
+				class:blue={question.downvotes.includes(user._id)}
+				on:click={downvote}><i class="fas fa-sort-down" /></button
+			>
+		</div>
+		<div class="quest-details-container">
+			<div class="quest-details">
 				{@html question.details.html}
 			</div>
-            <div class="tags-container">
-                <div class="tag">{question.subject}</div>
+			<div class="tags-container">
+				<div class="tag">{question.subject}</div>
 				{#if question.examType == "gce"}
-				<div class="tag">GCE</div>
+					<div class="tag">GCE</div>
 				{/if}
 				{#if question.examType == "mock"}
-				<div class="tag">MOCK</div>
-				<div class="tag">{question.region}</div>
+					<div class="tag">MOCK</div>
+					<div class="tag">{question.region}</div>
 				{/if}
 				{#if question.examType == "gce" || question.examType == "mock"}
-				<div class="tag">year: {question.year}</div>
-				<div class="tag">paper: {question.paper}</div>
+					<div class="tag">year: {question.year}</div>
+					<div class="tag">paper: {question.paper}</div>
 				{/if}
-                <div class="tag">question number: {question.questionNumber}</div>
-            </div>
-            <div class="bottom-container">
-                <h6 class="answers"><i class="fas fa-book"></i>{question.answers.length} answers</h6>
-                <h6 class="answers"><i class="fas fa-comment-dots"></i>{question.comments.length} comments</h6>
-            </div>
-        </div>
-    </div>
-
+				<div class="tag">
+					question number: {question.questionNumber}
+				</div>
+			</div>
+			<div class="bottom-container">
+				<h6 class="answers">
+					<i class="fas fa-book" />{question.answers.length} answers
+				</h6>
+				<h6 class="answers">
+					<i class="fas fa-comment-dots" />{question.comments.length} comments
+				</h6>
+			</div>
+		</div>
+	</div>
 </div>
 
 <style lang="scss">
 	@import "../styles.scss";
-    .question-container {
+	.question-container {
 		background-color: white;
 		width: 100%;
 		padding: 30px;
 		margin-bottom: 2px;
 		@include mqx(1200px) {
 			padding: 30px 5px;
-        }
+		}
 		.top-container {
 			display: flex;
 			margin-bottom: 10px;
@@ -139,7 +183,8 @@ import { appUser, isLoggedIn } from "$lib/auth";
 							font-size: 10px;
 						}
 					}
-					.datetext,.reference {
+					.datetext,
+					.reference {
 						font-size: 12px;
 						.date {
 							color: var(--bluish);

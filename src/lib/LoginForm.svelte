@@ -67,12 +67,14 @@
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.753);
+        z-index: 100;
     }
     .login-form {
         width: 40%;
         margin: 30px auto;
         background-color: white;
         position: relative;
+        z-index: 100;
         .close-btn {
             position: absolute;
             top: 0;

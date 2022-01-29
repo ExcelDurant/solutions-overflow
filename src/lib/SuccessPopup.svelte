@@ -32,13 +32,15 @@ import { showSuccess, successMessage } from "./store";
     }
     .popup-container {
         width: 40%;
-        margin: 30px auto;
         padding: 20px 40px;
         background-color: white;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
+        position: absolute;
+        top: 10%;
+        left: 30%;
     }
     .close-btn {
         align-self: flex-end;

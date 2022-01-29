@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
     // export const prerender = true;
-    import { get, authenticatedPost, apiUrl, Question, User, getReadableDate } from "$lib/utils";
+    import { get, authenticatedPost, apiUrl, Question, User, getReadableDate, showErrorPop, showSuccessPop } from "$lib/utils";
     export const load = async ({ page, fetch, session, stuff }) => {
         console.log(page.params);
         let questionssUrl = apiUrl + "questions/" + page.params.id;
@@ -19,6 +19,8 @@
     // import { onMount } from "svelte";
     import { quill } from "svelte-quill";
     import { isLoggedIn, appUser } from "$lib/auth";
+import MiniSpinner from "$lib/MiniSpinner.svelte";
+import BasicSpinner from "$lib/BasicSpinner.svelte";
     let isLogged = false;
     let user:User;
     isLoggedIn.subscribe((value) => {
@@ -58,8 +60,11 @@
     let details;
     let answer;
     let comment;
+    let answerSpin = false;
     function postAnswer() {
         let answerUrl = apiUrl + "questions/answer";
+        answerSpin = true;
+        answerForm = false;
         let formData = {
             answer,
             details,
@@ -67,10 +72,14 @@
         };
         authenticatedPost(answerUrl, formData)
             .then((value) => {
-                console.log(value);
+                // console.log(value);
+                answerSpin = false;
                 question = value.question;
+                document.body.scrollIntoView();
+                showSuccessPop(value.message);
             })
             .catch((err) => {
+                answerSpin = false;
                 console.log(err);
                 window.alert("an error occured");
             });
@@ -85,43 +94,65 @@
             .then((value) => {
                 console.log(value);
                 question = value.question;
+                showSuccessPop(value.message);
             })
             .catch((err) => {
                 console.log(err);
                 window.alert("an error occured");
             });
     }
-
+    let miniSpin = false;
     function upvote() {
         let upvoteUrl = apiUrl + "questions/upvote/"+question._id;
-        authenticatedPost(upvoteUrl, {})
-        .then((value) => {
-                console.log(value);
-                question = value;
-            })
-            .catch((err) => {
-                console.log(err);
-                window.alert("an error occured");
-            });
+        if (isLogged == true) {
+			miniSpin = true;
+			authenticatedPost(upvoteUrl, {})
+				.then((value) => {
+					question = value;
+					miniSpin = false;
+				})
+				.catch((err) => {
+					console.log(err);
+					miniSpin = false;
+				});
+		} else {
+			showErrorPop("you are not logged in");
+		}
     }
     function downvote() {
         let downvoteUrl = apiUrl + "questions/downvote/"+question._id;
-        authenticatedPost(downvoteUrl, {})
-        .then((value) => {
-                console.log(value);
-                question = value;
-            })
-            .catch((err) => {
-                console.log(err);
-                window.alert("an error occured");
-            });
+        if (isLogged == true) {
+			miniSpin = true;
+			authenticatedPost(downvoteUrl, {})
+				.then((value) => {
+					question = value;
+					miniSpin = false;
+				})
+				.catch((err) => {
+					console.log(err);
+					miniSpin = false;
+				});
+		} else {
+			showErrorPop("you are not logged in");
+		}
+    }
+
+    async function removeAnswer(event) {
+        let questionssUrl = apiUrl + "questions/" + question._id;
+        question = await get(questionssUrl);
     }
 </script>
 
 <svelte:head>
     <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=61f5a75f61edda00194ec254&product=inline-share-buttons" async="async"></script>
     <title>{question.name}</title>
     <meta name="description" content={question.details.text}>
+    <meta property="og:title" content={question.name}/>
+  <!-- <meta property="og:url" content="http://www.sharethis.com" /> -->
+  <!-- <meta property="og:image" content="http://sharethis.com/images/logo.jpg" /> -->
+  <meta property="og:description" content={question.details.text} />
+  <meta property="og:site_name" content="SolutionsOverflow" />
 </svelte:head>
 
 <section class="top-sec">
@@ -163,9 +194,13 @@
         <div class="middle-container">
             <div class="actions-container">
                 <button class="up-btn btn" class:blue={question.upvotes.includes(user._id)} on:click={upvote}><i class="fas fa-sort-up" /></button>
-                <h6 class="upvotes">
-                    {question.upvotes.length - question.downvotes.length}
-                </h6>
+                {#if miniSpin}
+                    <MiniSpinner />
+                    {:else}
+                    <h6 class="upvotes">
+                        {question.upvotes.length - question.downvotes.length}
+                    </h6>
+                {/if}
                 <button class="down-btn btn" class:blue={question.downvotes.includes(user._id)} on:click={downvote}
                     ><i class="fas fa-sort-down" /></button
                 >
@@ -204,6 +239,7 @@
                             ><i class="fas fa-reply" />leave a comment</button
                         >
                     {/if}
+                    <div class="sharethis-inline-share-buttons"></div>
                 </div>
             </div>
         </div>
@@ -246,11 +282,14 @@
 </div>
 <section class="answers-sec">
     {#each question.all_answers as answer}
-        <SingleAnswer {answer} />
+        <SingleAnswer {answer} on:delete={removeAnswer}/>
     {/each}
 </section>
 
 <section class="answer-sec">
+    {#if answerSpin}
+        <BasicSpinner />
+    {/if}
     {#if isLogged == true}
         <button class="answer-btn" on:click={toggleAnswerForm}
             >leave an answer</button
@@ -421,6 +460,13 @@
                         }
                         i {
                             margin-right: 5px;
+                        }
+                    }
+                    .sharethis-inline-share-buttons {
+                        position: relative;
+                        z-index: 1;
+                        .st-btn {
+                            z-index: 1;
                         }
                     }
                 }

@@ -1,8 +1,18 @@
 <script lang="ts">
-    import { Answer, getReadableDate, User } from "./utils";
+    import {
+        Answer,
+        getReadableDate,
+        showErrorPop,
+        showSuccessPop,
+        User,
+    } from "./utils";
     import { get, authenticatedPost, apiUrl, Question } from "$lib/utils";
     import { appUser, isLoggedIn } from "$lib/auth";
-import SingleComment from "./SingleComment.svelte";
+    import SingleComment from "./SingleComment.svelte";
+    import MiniSpinner from "./MiniSpinner.svelte";
+    import { createEventDispatcher } from "svelte";
+
+    const dispatch = createEventDispatcher();
     let isLogged = false;
     let user: User;
     isLoggedIn.subscribe((value) => {
@@ -29,40 +39,68 @@ import SingleComment from "./SingleComment.svelte";
         commentForm = false;
         authenticatedPost(commentUrl, formData)
             .then((value) => {
-                console.log(value);
+                // console.log(value);
+                document.body.scrollIntoView();
+                showSuccessPop(value.message);
             })
             .catch((err) => {
                 console.log(err);
                 window.alert("an error occured");
             });
     }
+    let miniSpin = false;
     function upvote() {
         let upvoteUrl = apiUrl + "answers/upvote/" + answer._id;
         if (isLogged == true) {
+            miniSpin = true;
             authenticatedPost(upvoteUrl, {})
                 .then((value) => {
-                    console.log(value);
                     answer = value;
+                    miniSpin = false;
                 })
                 .catch((err) => {
                     console.log(err);
-                    window.alert("an error occured");
+                    miniSpin = false;
                 });
+        } else {
+            showErrorPop("you are not logged in");
         }
     }
     function downvote() {
         let downvoteUrl = apiUrl + "answers/downvote/" + answer._id;
         if (isLogged == true) {
+            miniSpin = true;
             authenticatedPost(downvoteUrl, {})
                 .then((value) => {
-                    console.log(value);
                     answer = value;
+                    miniSpin = false;
                 })
                 .catch((err) => {
                     console.log(err);
-                    window.alert("an error occured");
+                    miniSpin = false;
                 });
+        } else {
+            showErrorPop("you are not logged in");
         }
+    }
+
+    let deleteSpin = false;
+    function deleteAnswer() {
+        deleteSpin = true;
+        let deleteUrl = apiUrl + "answers/delete/" + answer._id;
+        authenticatedPost(deleteUrl, {})
+            .then((value) => {
+                deleteSpin = false;
+                document.body.scrollIntoView();
+                dispatch('delete', {
+                    answer:answer
+                });
+                showSuccessPop(value.message);
+            })
+            .catch((err) => {
+                deleteSpin = false;
+                console.log(err);
+            });
     }
 </script>
 
@@ -82,7 +120,9 @@ import SingleComment from "./SingleComment.svelte";
                     <h6 class="status">{answer.answererDetails.status}</h6>
                 </div>
                 <h5 class="datetext">
-                    Aswered on: <span class="date">{getReadableDate(answer.created_at)}</span>
+                    Aswered on: <span class="date"
+                        >{getReadableDate(answer.created_at)}</span
+                    >
                 </h5>
             </div>
         </div>
@@ -100,9 +140,13 @@ import SingleComment from "./SingleComment.svelte";
                         class:blue={answer.upvotes.includes(user._id)}
                         on:click={upvote}><i class="fas fa-sort-up" /></button
                     >
-                    <h6 class="upvotes">
-                        {answer.upvotes.length - answer.downvotes.length}
-                    </h6>
+                    {#if miniSpin}
+                        <MiniSpinner />
+                    {:else}
+                        <h6 class="upvotes">
+                            {answer.upvotes.length - answer.downvotes.length}
+                        </h6>
+                    {/if}
                     <button
                         class="down-btn btn invert"
                         class:blue={answer.downvotes.includes(user._id)}
@@ -119,21 +163,26 @@ import SingleComment from "./SingleComment.svelte";
                     ><i class="fas fa-share-alt" />share</button
                 >
                 {#if answer.answerer === user._id}
-                <button type="button" class="btn btn-danger">delete</button>
+                    <button
+                        type="button"
+                        class="btn btn-danger"
+                        on:click={deleteAnswer}>delete your answer</button
+                    >
+                    {#if deleteSpin}
+                        <MiniSpinner />
+                    {/if}
                 {/if}
             </div>
-            
         </div>
-        
     </div>
     {#if answer.all_comments.length > 0}
-            <div class="comments-container">
-                <h3 class="title">comments</h3>
-                {#each answer.all_comments as comment}
-                    <SingleComment {comment} />
-                {/each}
-            </div>
-        {/if}
+        <div class="comments-container">
+            <h3 class="title">comments</h3>
+            {#each answer.all_comments as comment}
+                <SingleComment {comment} />
+            {/each}
+        </div>
+    {/if}
     {#if commentForm == true && isLogged == true}
         <div class="form-container">
             <form
@@ -213,10 +262,16 @@ import SingleComment from "./SingleComment.svelte";
             display: flex;
 
             .answer-details-container {
+                width: 100%;
+
+                .answer {
+                    margin-bottom: 10px;
+                }
                 .answer-details {
                     width: 100%;
-                    max-height: 150px;
+                    max-height: 350px;
                     overflow: auto;
+                    margin-bottom: 30px;
                 }
                 .bottom-container {
                     display: flex;

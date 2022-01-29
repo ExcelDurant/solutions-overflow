@@ -158,6 +158,10 @@ button:focus:not(:focus-visible) {
 	height: 100%;
 }
 
+.st-btn {
+	z-index: 1;
+}
+
 @media (min-width: 720px) {
 	h1 {
 		font-size: 2.4rem;

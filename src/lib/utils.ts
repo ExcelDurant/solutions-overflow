@@ -1,6 +1,6 @@
 import { bearerToken } from "$lib/auth";
 import { browser } from '$app/env';
-import { failureMessage, showFailure } from "./store";
+import { failureMessage, showFailure, showSuccess, successMessage } from "./store";
 let token = "";
 if (browser) {
     bearerToken.subscribe((value) => {
@@ -70,7 +70,6 @@ export async function authenticatedGet(url:string) {
     showFailure.set(true);
     failureMessage.set(message);
     throw new Error(message);
-
 }
 
 export async function get(url:string) {
@@ -93,6 +92,16 @@ export async function get(url:string) {
 export function getReadableDate(date:Date) {
     let newDate = new Date(date);
     return newDate.toDateString();
+}
+
+export function showErrorPop(message:string) {
+    showFailure.set(true);
+    failureMessage.set(message);
+}
+
+export function showSuccessPop(message:string) {
+    showSuccess.set(true);
+    successMessage.set(message);
 }
 
 export interface User {
