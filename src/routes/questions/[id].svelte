@@ -94,6 +94,7 @@ import BasicSpinner from "$lib/BasicSpinner.svelte";
             .then((value) => {
                 console.log(value);
                 question = value.question;
+                document.body.scrollIntoView();
                 showSuccessPop(value.message);
             })
             .catch((err) => {

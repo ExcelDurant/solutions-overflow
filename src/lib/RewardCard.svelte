@@ -15,6 +15,7 @@
 </div>
 
 <style lang="scss">
+    @import "../styles.scss";
     .reward-container {
         width: 100%;
         display: flex;
@@ -46,6 +47,16 @@
             padding: 20px;
             .txt {
                 font-size: 0.9rem;
+            }
+        }
+        @include mqx(800px) {
+            flex-direction: column;
+            .colu-1 {
+                border: none;
+                border-bottom: 1px solid var(--grayish);
+            }
+            .colu-1,.colu-2 {
+                width: 100%;
             }
         }
     }

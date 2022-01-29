@@ -9,6 +9,7 @@
 </div>
 
 <style lang="scss">
+    @import "../styles.scss";
     .badge-container {
         width: 170px;
         border: 1px solid var(--grayish);
@@ -16,6 +17,9 @@
         text-align: left;
         // margin-right: 20px;
         margin-bottom: 20px;
+        @include mqx(600px) {
+            width: 100%;
+        }
         .title {
             font-size: 1rem;
             margin-bottom: 10px;

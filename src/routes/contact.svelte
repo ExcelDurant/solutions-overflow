@@ -16,6 +16,14 @@
 
 <svelte:head>
     <title>Contact Us</title>
+    <meta
+        name="description"
+        content="We understand the importance of approaching each work integrally
+    and believe in the power of simple and easy communication. Feel
+    free to contact us for any questions or if you need any help or
+    services ! Please provide a detailed explanation of your
+    problem."
+    />
 </svelte:head>
 
 <section class="top-sec">
