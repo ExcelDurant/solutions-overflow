@@ -132,7 +132,7 @@ export interface Question {
 export interface Answer {
     _id:string;
     answer:string;
-    asnwerer:string;
+    answerer:string;
     details:{
         html:string;
         text?:string;
@@ -143,6 +143,7 @@ export interface Answer {
     downvotes:[];
     answererDetails:User;
     created_at:Date;
+    all_comments?:Comment[];
 }
 
 export interface Comment {

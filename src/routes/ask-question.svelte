@@ -2,6 +2,7 @@
     // export const prerender = true;
     import type { Load } from '@sveltejs/kit';
     import { get, authenticatedPost, apiUrl } from "$lib/utils";
+    import { goto } from "$app/navigation";
     export const load: Load = async ({ fetch }) => {
         let subjectsUrl = apiUrl+"subjects/all";
 		const subjects = await get(subjectsUrl);
@@ -88,6 +89,7 @@
         authenticatedPost(askQuestionUrl, formData)
             .then((value) => {
                 console.log(value);
+                goto("/questions/"+value._id);
             })
             .catch((err) => {
                 console.log(err);
@@ -98,6 +100,8 @@
 
 <svelte:head>
     <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
+    <title>ask a question</title>
+    <meta name="description" content="ask a question on any GCE subject or any exercise you need solutions in">
 </svelte:head>
 
 <div class="question-page">

@@ -32,12 +32,13 @@
 				<input type="search" name="" id="" placeholder="search for something" class="search-box">
 				<i class="fas fa-search"></i>
 			</div>
+			
+			{#if isLogged}
 			<div class="actions-container">
 				<button class="btn"><i class="fas fa-bell"></i></button>
 				<button class="btn"><i class="fas fa-mail-bulk"></i></button>
-				<button class="btn profile-btn"><i class="fas fa-user-circle"></i></button>
+				<a href="/profile" class="btn profile-btn"><i class="fas fa-user-circle"></i></a>
 			</div>
-			{#if isLogged}
 			<a href="/ask-question" class="auth-btn reg-btn">Ask A Question</a>
 			{:else}
 			<button class="auth-btn login-btn" on:click={showLoginForm}>Sign in</button>

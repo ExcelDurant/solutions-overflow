@@ -32,6 +32,7 @@ import { onMount } from "svelte";
     </div>
     <div class="middle-container">
         <div class="answer-details-container">
+            <a href="/questions/{answer.question}" class="answer">{answer.answer}</a>
             <div class="answer-details">
                 {@html answer.details.html}
             </div>

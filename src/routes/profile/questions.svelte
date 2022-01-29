@@ -34,7 +34,7 @@ import { apiUrl, authenticatedGet, getReadableDate, Question } from "$lib/utils"
                 <h5 class="reference">Reference: <span class="ref">{question.reference}</span></h5>
             </div>
             <div class="title-container">
-                <a sveltekit:prefetch href="questions/{question._id}" class="quest-title">
+                <a sveltekit:prefetch href="/questions/{question._id}" class="quest-title">
                     {question.name}
                 </a>
             </div>

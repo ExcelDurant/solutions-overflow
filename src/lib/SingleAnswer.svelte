@@ -1,7 +1,8 @@
 <script lang="ts">
-    import type { Answer, User } from "./utils";
+    import { Answer, getReadableDate, User } from "./utils";
     import { get, authenticatedPost, apiUrl, Question } from "$lib/utils";
     import { appUser, isLoggedIn } from "$lib/auth";
+import SingleComment from "./SingleComment.svelte";
     let isLogged = false;
     let user: User;
     isLoggedIn.subscribe((value) => {
@@ -25,6 +26,7 @@
             answer: answer._id,
         };
         console.log(formData);
+        commentForm = false;
         authenticatedPost(commentUrl, formData)
             .then((value) => {
                 console.log(value);
@@ -80,13 +82,14 @@
                     <h6 class="status">{answer.answererDetails.status}</h6>
                 </div>
                 <h5 class="datetext">
-                    Aswered on: <span class="date">{answer.created_at}</span>
+                    Aswered on: <span class="date">{getReadableDate(answer.created_at)}</span>
                 </h5>
             </div>
         </div>
     </div>
     <div class="middle-container">
         <div class="answer-details-container">
+            <h5 class="answer">{answer.answer}</h5>
             <div class="answer-details">
                 {@html answer.details.html}
             </div>
@@ -115,9 +118,22 @@
                 <button class="share-btn"
                     ><i class="fas fa-share-alt" />share</button
                 >
+                {#if answer.answerer === user._id}
+                <button type="button" class="btn btn-danger">delete</button>
+                {/if}
             </div>
+            
         </div>
+        
     </div>
+    {#if answer.all_comments.length > 0}
+            <div class="comments-container">
+                <h3 class="title">comments</h3>
+                {#each answer.all_comments as comment}
+                    <SingleComment {comment} />
+                {/each}
+            </div>
+        {/if}
     {#if commentForm == true && isLogged == true}
         <div class="form-container">
             <form
@@ -204,6 +220,7 @@
                 }
                 .bottom-container {
                     display: flex;
+                    align-items: center;
                     .share-btn,
                     .reply-btn {
                         background-color: transparent;
@@ -243,6 +260,15 @@
                         }
                     }
                 }
+            }
+        }
+        .comments-container {
+            width: 90%;
+            margin: 10px auto;
+            .title {
+                font-size: 1.2rem;
+                color: var(--text-color);
+                margin-bottom: 10px;
             }
         }
         .form-container {

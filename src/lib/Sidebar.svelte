@@ -16,7 +16,7 @@
                 >
             </li>
             <li>
-                <a href="/" class="sidelink"
+                <a href="/posts" class="sidelink" class:active={$page.path === "/posts"}
                     ><i class="fas fa-rss-square" />Add post</a
                 >
             </li>
@@ -32,7 +32,7 @@
             {/if}
             
             <li>
-                <a href="/" class="sidelink"
+                <a href="/communities" class="sidelink" class:active={$page.path === "/communities"}
                     ><i class="fas fa-users" />communities</a
                 >
             </li>
@@ -44,6 +44,11 @@
             <li>
                 <a href="/badges" class="sidelink" class:active={$page.path === "/badges"}
                     ><i class="fas fa-medal"></i>badges</a
+                >
+            </li>
+            <li>
+                <a href="/leaderboard" class="sidelink" class:active={$page.path === "/leaderboard"}
+                    ><i class="fas fa-clipboard-list"></i>leaderboard</a
                 >
             </li>
         </ul>

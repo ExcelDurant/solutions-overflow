@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
     // export const prerender = true;
-    import { get, authenticatedPost, apiUrl, Question, User } from "$lib/utils";
+    import { get, authenticatedPost, apiUrl, Question, User, getReadableDate } from "$lib/utils";
     export const load = async ({ page, fetch, session, stuff }) => {
         console.log(page.params);
         let questionssUrl = apiUrl + "questions/" + page.params.id;
@@ -16,7 +16,7 @@
     import SingleAnswer from "$lib/SingleAnswer.svelte";
     import SingleComment from "$lib/SingleComment.svelte";
     import { goto } from "$app/navigation";
-    import { onMount } from "svelte";
+    // import { onMount } from "svelte";
     import { quill } from "svelte-quill";
     import { isLoggedIn, appUser } from "$lib/auth";
     let isLogged = false;
@@ -31,6 +31,9 @@
     function toggleCommentForm() {
         commentForm = !commentForm;
     }
+    // onMount(() => {
+	// 	console.log(question);
+	// });
     // backend url to post to
     let askQuestionUrl = apiUrl + "questions/ask";
     const options = {
@@ -117,6 +120,8 @@
 
 <svelte:head>
     <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
+    <title>{question.name}</title>
+    <meta name="description" content={question.details.text}>
 </svelte:head>
 
 <section class="top-sec">
@@ -141,7 +146,7 @@
                         <h6 class="status">{question.askerDetail.status}</h6>
                     </div>
                     <h5 class="datetext">
-                        Asked on: <span class="date">{question.created_at}</span
+                        Asked on: <span class="date">{getReadableDate(question.created_at)}</span
                         >
                     </h5>
                     <h5 class="reference">
@@ -427,6 +432,7 @@
             margin: 10px auto;
             .title {
                 font-size: 1.2rem;
+                color: var(--text-color);
             }
         }
         .form-container {
