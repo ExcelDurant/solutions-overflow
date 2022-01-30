@@ -9,6 +9,7 @@ if (browser) {
 }
 
 export const apiUrl = 'http://127.0.0.1:8000/api/'
+export const appName = 'Solutions Overflow'
 
 export async function authenticatedPost(url:string, body) {
     const requestOptions = {
