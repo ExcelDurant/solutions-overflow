@@ -118,6 +118,16 @@ export interface User {
     answersGiven:number;
     comments:number;
     created_at:Date;
+    phoneNumber:string;
+    city:string;
+    country:string;
+    birthday:any;
+    bannerUrl:string;
+    isVerified:boolean;
+    facebookUrl:string;
+    twitterUrl:string;
+    instagramUrl:string;
+    youtubeUrl:string;
 }
 export interface Question {
     _id:string;
