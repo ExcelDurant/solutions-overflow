@@ -24,10 +24,10 @@ import { showSuccess, successMessage } from "./store";
 
 <style lang="scss">
     .success-overlay {
-        position: absolute;
+        position: fixed;
         top: 0;
         width: 100%;
-        height: 100%;
+        height: 100vh;
         background-color: rgba(0, 0, 0, 0.753);
     }
     .popup-container {

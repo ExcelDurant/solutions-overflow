@@ -63,11 +63,12 @@
 
 <style lang="scss">
     .form-overlay {
-        position: absolute;
+        position: fixed;
         width: 100%;
-        height: 100%;
+        height: 100vh;
         background-color: rgba(0, 0, 0, 0.753);
         z-index: 100;
+        top: 0;
     }
     .login-form {
         width: 40%;

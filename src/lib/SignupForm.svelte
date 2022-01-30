@@ -71,10 +71,10 @@
 
 <style lang="scss">
     .form-overlay {
-        position: absolute;
+        position: fixed;
         top: 0;
         width: 100%;
-        height: 100%;
+        height: 100vh;
         background-color: rgba(0, 0, 0, 0.753);
     }
     .signup-form {
