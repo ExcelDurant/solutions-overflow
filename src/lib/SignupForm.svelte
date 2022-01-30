@@ -3,6 +3,7 @@
     import { showSignup } from "$lib/store.js";
     import { post,apiUrl } from "$lib/utils";
     import {appUser,bearerToken, isLoggedIn, setAuth} from "$lib/auth";
+import BasicSpinner from './BasicSpinner.svelte';
     function closeSignup() {
         showSignup.set(false);
     }
@@ -11,8 +12,10 @@
     let email;
     let password;
     let confirmedPass;
+    let spin = false;
     function signUp() {
         if(confirmedPass === password) {
+            spin = true;
             let formData = {
                 username,
                 email,
@@ -20,13 +23,14 @@
             }
             console.log(formData);
             post(signupUrl, formData).then((value) => {
+                spin = false;
                 console.log(value);
                 setAuth(value.user, true, value.token);
                 closeSignup();
                 goto("/profile");
             }).catch((err) => {
+                spin = false;
                 console.log(err);
-                window.alert("an error occured");
             })
         }
     }
@@ -64,6 +68,9 @@
                 <label for="password-confirm" class="form-label">Confirm password</label>
                 <input type="password" class="form-control" id="password-confirm" placeholder="" bind:value={confirmedPass} required>
               </div>
+              {#if spin}
+                <BasicSpinner />
+            {/if}
               <button class="signup-btn" type="submit">Signup</button>
         </div>
     </form>

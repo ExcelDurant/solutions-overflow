@@ -5,15 +5,48 @@
     import { page } from '$app/stores';
 	import '../../app.css';
     import { appUser} from "$lib/auth";
+import { showFailure, showLogin, showSignup, showSuccess } from '$lib/store';
+import SignupForm from '$lib/SignupForm.svelte';
+import LoginForm from '$lib/LoginForm.svelte';
+import SuccessPopup from '$lib/SuccessPopup.svelte';
+import FailurePopup from '$lib/FailurePopup.svelte';
     let user;
     appUser.subscribe((value) => {
         user = value;
     })
+    let login = false;
+	let signup = false;
+	let success = false;
+	let failure = false;
+	showLogin.subscribe((value) => {
+		login = value;
+	});
+	showSignup.subscribe((value) => {
+		signup = value;
+	});
+	showSuccess.subscribe((value) => {
+		success = value;
+	})
+	showFailure.subscribe((value) => {
+		failure = value;
+	})
 
 </script>
 
 <Header />
+{#if signup}
+		<SignupForm />
+	{/if}
 
+	{#if login}
+		<LoginForm />
+	{/if}
+	{#if success}
+	<SuccessPopup />
+	{/if}
+	{#if failure}
+	<FailurePopup />
+	{/if}
 <main>
     <section class="banner-sec">
         <div class="banner-container">

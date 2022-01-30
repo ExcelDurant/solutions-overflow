@@ -1,17 +1,46 @@
 <script lang="ts">
-    import { appUser } from "$lib/auth";
-    import type { User } from "$lib/utils";
+    import { appUser, setUser } from "$lib/auth";
+    import BasicSpinner from "$lib/BasicSpinner.svelte";
+    import {
+        apiUrl,
+        authenticatedPost,
+        showErrorPop,
+        showSuccessPop,
+        User,
+    } from "$lib/utils";
 
     let user: User;
     appUser.subscribe((value) => {
         user = value;
     });
+
+    let spin = false;
+    function editProfile() {
+        spin = true;
+        let editUrl = apiUrl + "profile/update";
+        // console.log(user)
+        authenticatedPost(editUrl, user)
+            .then((value) => {
+                spin = false;
+                console.log(value.user);
+                setUser(value.user);
+                showSuccessPop(value.message);
+            })
+            .catch((err) => {
+                spin = false;
+                showErrorPop(err);
+            });
+    }
 </script>
 
 <section class="edit-sec">
     <div class="edit-sec-container">
         <div class="form-container">
-            <form action="" class="edit-form">
+            <form
+                action=""
+                class="edit-form"
+                on:submit|preventDefault={editProfile}
+            >
                 <h3 class="title">
                     <i class="fas fa-info-circle" />Basic Information
                 </h3>
@@ -34,17 +63,49 @@
                     required
                 />
                 <label for="phone">Phone Number</label>
-                <input type="tel" name="phone" id="" class="in phone-in" bind:value={user.phoneNumber}/>
+                <input
+                    type="tel"
+                    name="phone"
+                    id=""
+                    class="in phone-in"
+                    bind:value={user.phoneNumber}
+                />
                 <label for="city">city</label>
-                <input type="text" name="city" id="" class="in city-in" bind:value={user.city}/>
+                <input
+                    type="text"
+                    name="city"
+                    id=""
+                    class="in city-in"
+                    bind:value={user.city}
+                />
+                <label for="birthday">Birthday</label>
+                <input
+                    type="date"
+                    name="birthday"
+                    id=""
+                    class="in birth-in"
+                    bind:value={user.birthday}
+                />
                 <div class="seperator" />
                 <h3 class="title">
                     <i class="fas fa-info-circle" />Social Profiles
                 </h3>
                 <label for="facbook">Facebook (put the full URL)</label>
-                <input type="text" name="facebook" id="" class="in face-in" bind:value={user.facebookUrl} />
+                <input
+                    type="text"
+                    name="facebook"
+                    id=""
+                    class="in face-in"
+                    bind:value={user.facebookUrl}
+                />
                 <label for="twitter">twitter (put the full URL)</label>
-                <input type="text" name="twitter" id="" class="in twitter-in" bind:value={user.twitterUrl} />
+                <input
+                    type="text"
+                    name="twitter"
+                    id=""
+                    class="in twitter-in"
+                    bind:value={user.twitterUrl}
+                />
                 <label for="instagram">instagram (put the full URL)</label>
                 <input
                     type="text"
@@ -54,7 +115,16 @@
                     bind:value={user.instagramUrl}
                 />
                 <label for="youtube">youtube (put the full URL)</label>
-                <input type="text" name="youtube" id="" class="in youtube-in" bind:value={user.youtubeUrl} />
+                <input
+                    type="text"
+                    name="youtube"
+                    id=""
+                    class="in youtube-in"
+                    bind:value={user.youtubeUrl}
+                />
+                {#if spin}
+                    <BasicSpinner />
+                {/if}
                 <button type="submit" class="submit-btn">save</button>
             </form>
         </div>

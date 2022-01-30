@@ -3,26 +3,30 @@
     import { post, apiUrl } from "$lib/utils";
     import {goto} from '$app/navigation';
     import {setAuth} from "$lib/auth";
+import BasicSpinner from "./BasicSpinner.svelte";
     function closeLogin() {
         showLogin.set(false);
     }
+    let spin = false;
     let loginUrl = apiUrl + "auth/login";
     let email;
     let password;
     function login() {
+        spin = true;
         let formData = {
             email,
             password,
         };
         console.log(formData);
         post(loginUrl, formData).then((value) => {
+            spin = false;
                 console.log(value);
                 setAuth(value.user, true, value.token);
                 closeLogin();
                 goto("/profile");
             }).catch((err) => {
+                spin = false;
                 console.log(err);
-                window.alert("an error occured");
             })
     }
 </script>
@@ -56,6 +60,9 @@
                     required
                 />
             </div>
+            {#if spin}
+                <BasicSpinner />
+            {/if}
             <button class="login-btn" type="submit">login</button>
         </div>
     </form>

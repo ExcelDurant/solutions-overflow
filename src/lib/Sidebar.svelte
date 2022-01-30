@@ -51,6 +51,7 @@
                     ><i class="fas fa-clipboard-list"></i>leaderboard</a
                 >
             </li>
+            <h4 class="beta-txt"><i class="fas fa-grin-beam-sweat"></i> currently in BETA....</h4>
         </ul>
     </div>
 </aside>
@@ -88,6 +89,10 @@
             .active {
                 text-decoration: none;
                 color: var(--bluish);
+            }
+            .beta-txt {
+                text-align: left;
+                color: var(--redish);
             }
         }
     }

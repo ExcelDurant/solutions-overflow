@@ -26,8 +26,7 @@ export async function authenticatedPost(url:string, body) {
 
     console.log(res);
     const { message } = await res.json();
-    showFailure.set(true);
-    failureMessage.set(message);
+    showErrorPop(message);
     console.log(message);
     throw new Error(message);
 }
@@ -98,6 +97,7 @@ export function getReadableDate(date:Date) {
 export function showErrorPop(message:string) {
     showFailure.set(true);
     failureMessage.set(message);
+    console.log("showing error");
 }
 
 export function showSuccessPop(message:string) {
@@ -118,16 +118,16 @@ export interface User {
     answersGiven:number;
     comments:number;
     created_at:Date;
-    phoneNumber:string;
-    city:string;
-    country:string;
-    birthday:any;
-    bannerUrl:string;
-    isVerified:boolean;
-    facebookUrl:string;
-    twitterUrl:string;
-    instagramUrl:string;
-    youtubeUrl:string;
+    phoneNumber?:string;
+    city?:string;
+    country?:string;
+    birthday?:any;
+    bannerUrl?:string;
+    isVerified?:boolean;
+    facebookUrl?:string;
+    twitterUrl?:string;
+    instagramUrl?:string;
+    youtubeUrl?:string;
 }
 export interface Question {
     _id:string;
