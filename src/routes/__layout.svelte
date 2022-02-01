@@ -1,6 +1,6 @@
 <script context="module">
 	import { goto } from "$app/navigation";
-	import { page } from "$app/stores";
+	import { page, navigating} from "$app/stores";
 	import { browser } from "$app/env";
 	import { isLoggedIn } from "$lib/auth";
 </script>
@@ -16,6 +16,8 @@
 	import "../app.css";
 import SuccessPopup from "$lib/SuccessPopup.svelte";
 import FailurePopup from "$lib/FailurePopup.svelte";
+import BasicSpinner from "$lib/BasicSpinner.svelte";
+import PageLoader from "$lib/PageLoader.svelte";
 	let currentRoute = "";
 	if (browser) {
 		isLoggedIn.set(JSON.parse(sessionStorage.getItem('isLoggedIn') || 'false'));
@@ -60,8 +62,12 @@ import FailurePopup from "$lib/FailurePopup.svelte";
 	{#if failure}
 	<FailurePopup />
 	{/if}
+	
 	<Sidebar />
 	<div class="content">
+		{#if $navigating}
+			<BasicSpinner />
+		{/if}
 		<slot />
 	</div>
 	<Rightbar />

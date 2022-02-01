@@ -214,6 +214,9 @@ showSuccessPop,
 						&:hover {
 							color: var(--bluish);
 						}
+						@include mqx(800px) {
+							font-size: 0.9rem;
+		}
 					}
 				}
 			}

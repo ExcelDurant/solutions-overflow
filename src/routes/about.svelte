@@ -1,5 +1,6 @@
 <script context="module">
 	import { browser, dev } from '$app/env';
+	import { appName } from "$lib/utils";
 
 	// we don't need any JS on this page, though we'll load
 	// it in dev so that we get hot module replacement...
@@ -16,6 +17,7 @@
 
 <svelte:head>
 	<title>About</title>
+	<meta name="description" content="{appName} is a social questions & Answers Engine which will help you solve exam related questions and permit you to help others answer their questions">
 </svelte:head>
 
 <div class="content">

@@ -194,7 +194,7 @@
 
 		.menu-btn {
 			background-color: transparent;
-			font-size: 1rem;
+			font-size: 1.5rem;
 			display: none;
 			@include mqx(650px) {
 				display: inline-block;
