@@ -163,7 +163,7 @@ showSuccessPop,
 				margin-right: 10px;
 				overflow: hidden;
 				@include mqx(800px) {
-					min-width: 40px;
+					width: 40px;
 				height: 40px;
 		}
 			}
