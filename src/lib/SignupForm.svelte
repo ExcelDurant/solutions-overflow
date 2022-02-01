@@ -77,6 +77,7 @@ import BasicSpinner from './BasicSpinner.svelte';
 </div>
 
 <style lang="scss">
+    @import "../styles";
     .form-overlay {
         position: fixed;
         top: 0;
@@ -97,6 +98,10 @@ import BasicSpinner from './BasicSpinner.svelte';
             background-color: transparent;
             font-weight: 900;
             font-size: 1.5rem;
+            @include mqx(700px) {
+            right: 2%;
+            color: white;
+        }
         }
         .form-head {
             width: 100%;
@@ -120,6 +125,9 @@ import BasicSpinner from './BasicSpinner.svelte';
                 color: white;
                 margin: 0 auto;
             }
+        }
+        @include mqx(700px) {
+            width: 95%;
         }
     }
 </style>
