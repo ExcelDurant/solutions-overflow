@@ -19,7 +19,7 @@ import { appName } from "./utils";
 				<h3 class="title">About Us</h3>
 				<ul class="footer-list">
 					<li><a href="/" class="footer-link">Meet The Team</a></li>
-					<li><a href="/blog" class="footer-link">Blog</a></li>
+					<li><a href="/posts" class="footer-link">Blog</a></li>
 					<li><a href="/about" class="footer-link">About Us</a></li>
 					<li><a href="/contact" class="footer-link">Contact Us</a></li>
 				</ul>
