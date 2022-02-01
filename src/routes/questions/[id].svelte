@@ -16,8 +16,10 @@
     import SingleAnswer from "$lib/SingleAnswer.svelte";
     import SingleComment from "$lib/SingleComment.svelte";
     import { goto } from "$app/navigation";
-    // import { onMount } from "svelte";
-    import { quill } from "svelte-quill";
+    import { onMount, onDestroy } from "svelte";
+    // import { quill } from "../../../node_modules/svelte-quill/dist/index.cjs.js";
+    import { Editor } from "@tiptap/core";
+    import StarterKit from "@tiptap/starter-kit";
     import { isLoggedIn, appUser } from "$lib/auth";
 import MiniSpinner from "$lib/MiniSpinner.svelte";
 import BasicSpinner from "$lib/BasicSpinner.svelte";
@@ -51,6 +53,25 @@ import BasicSpinner from "$lib/BasicSpinner.svelte";
         theme: "snow",
     };
 
+    let element;
+    let editor;
+    onMount(() => {
+        editor = new Editor({
+            element: element,
+            extensions: [StarterKit],
+            content: "<p>Hello World! 🌍️ </p>",
+            onTransaction: () => {
+                // force re-render so `editor.isActive` works as expected
+                editor = editor;
+            },
+        });
+    });
+    onDestroy(() => {
+        if (editor) {
+            editor.destroy();
+        }
+    });
+
     export let question: Question;
     let answerForm: boolean = false;
     function toggleAnswerForm() {
@@ -67,7 +88,10 @@ import BasicSpinner from "$lib/BasicSpinner.svelte";
         answerForm = false;
         let formData = {
             answer,
-            details,
+            details: {
+                html:editor.getHTML(),
+                text:element.textContent
+            },
             question: question._id,
         };
         authenticatedPost(answerUrl, formData)
@@ -314,11 +338,49 @@ import BasicSpinner from "$lib/BasicSpinner.svelte";
                     required
                 />
                 <h5 class="label">details</h5>
-                <div
+                <!-- <div
                     class="editor in"
                     use:quill={options}
                     on:text-change={(e) => (details = e.detail)}
-                />
+                /> -->
+                {#if editor}
+                        <button
+                            on:click={() =>
+                                editor
+                                    .chain()
+                                    .focus()
+                                    .toggleHeading({ level: 1 })
+                                    .run()}
+                            class:active={editor.isActive("heading", {
+                                level: 1,
+                            })}
+                        >
+                            H1
+                        </button>
+                        <button
+                            on:click={() =>
+                                editor
+                                    .chain()
+                                    .focus()
+                                    .toggleHeading({ level: 2 })
+                                    .run()}
+                            class:active={editor.isActive("heading", {
+                                level: 2,
+                            })}
+                        >
+                            H2
+                        </button>
+                        <button
+                            on:click={() =>
+                                editor.chain().focus().setParagraph().run()}
+                            class:active={editor.isActive("paragraph")}
+                        >
+                            P
+                        </button>
+                    {/if}
+
+                    <div bind:this={element} />
+                    
                 <button type="submit" class="submit-btn">submit</button>
             </form>
         </div>

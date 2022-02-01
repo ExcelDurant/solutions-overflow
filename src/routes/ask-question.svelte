@@ -1,21 +1,24 @@
 <script context="module" lang="ts">
     // export const prerender = true;
-    import type { Load } from '@sveltejs/kit';
+    import type { Load } from "@sveltejs/kit";
     import { get, authenticatedPost, apiUrl } from "$lib/utils";
     import { goto } from "$app/navigation";
     export const load: Load = async ({ fetch }) => {
-        let subjectsUrl = apiUrl+"subjects/all";
-		const subjects = await get(subjectsUrl);
+        let subjectsUrl = apiUrl + "subjects/all";
+        const subjects = await get(subjectsUrl);
         return {
-            props: { subjects }
-        }
-	};
+            props: { subjects },
+        };
+    };
 </script>
+
 <script>
     import BasicSpinner from "$lib/BasicSpinner.svelte";
-// import { onMount } from "svelte";
-    import { quill } from "svelte-quill";
-import { showSuccess, successMessage } from '$lib/store';
+    import { onMount, onDestroy } from "svelte";
+    // import { quill } from "svelte-quill";
+    import { Editor } from "@tiptap/core";
+    import StarterKit from "@tiptap/starter-kit";
+    import { showSuccess, successMessage } from "$lib/store";
     // backend url to post to
     let askQuestionUrl = apiUrl + "questions/ask";
     const options = {
@@ -31,13 +34,32 @@ import { showSuccess, successMessage } from '$lib/store';
         theme: "snow",
     };
 
+    let element;
+    let editor;
+    onMount(() => {
+        editor = new Editor({
+            element: element,
+            extensions: [StarterKit],
+            content: "<p>Hello World! 🌍️ </p>",
+            onTransaction: () => {
+                // force re-render so `editor.isActive` works as expected
+                editor = editor;
+            },
+        });
+    });
+    onDestroy(() => {
+        if (editor) {
+            editor.destroy();
+        }
+    });
+
     let content;
     let showContent = false;
 
     export let subjects;
     // onMount(() => {
-	// 	console.log(subjects);
-	// });
+    // 	console.log(subjects);
+    // });
     let levels = ["ordinary level", "advanced level"];
     let examTypes = ["gce", "mock", "miscellaneous"];
     let mocks = ["south-west", "north-west", "west", "littoral", "central"];
@@ -76,7 +98,10 @@ import { showSuccess, successMessage } from '$lib/store';
         let formData = {
             name,
             subject: selectedSubject,
-            details: content,
+            details: {
+                html:editor.getHTML(),
+                text:element.textContent
+            },
             level: selectedLevel,
             examType: selectedType,
             year: selectedYear,
@@ -85,13 +110,13 @@ import { showSuccess, successMessage } from '$lib/store';
             questionNumber: selectedQuestionNumber,
             reference,
         };
-        // console.log(formData);
+        console.log(formData);
         authenticatedPost(askQuestionUrl, formData)
             .then((value) => {
                 spin = false;
                 showSuccess.set(true);
                 successMessage.set(value.message);
-                goto("/questions/"+value.question._id);
+                goto("/questions/" + value.question._id);
             })
             .catch((err) => {
                 spin = false;
@@ -103,7 +128,10 @@ import { showSuccess, successMessage } from '$lib/store';
 <svelte:head>
     <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
     <title>ask a question</title>
-    <meta name="description" content="ask a question on any GCE subject or any exercise you need solutions in">
+    <meta
+        name="description"
+        content="ask a question on any GCE subject or any exercise you need solutions in"
+    />
 </svelte:head>
 
 <div class="question-page">
@@ -288,14 +316,51 @@ import { showSuccess, successMessage } from '$lib/store';
                 </div>
                 <div class="mb-3 in-container">
                     <h5 class="in-label">question details</h5>
-                    <div
+                    <!-- <div
                         class="editor"
                         use:quill={options}
                         on:text-change={(e) => (content = e.detail)}
-                    />
+                    /> -->
+                    {#if editor}
+                        <button
+                            on:click={() =>
+                                editor
+                                    .chain()
+                                    .focus()
+                                    .toggleHeading({ level: 1 })
+                                    .run()}
+                            class:active={editor.isActive("heading", {
+                                level: 1,
+                            })}
+                        >
+                            H1
+                        </button>
+                        <button
+                            on:click={() =>
+                                editor
+                                    .chain()
+                                    .focus()
+                                    .toggleHeading({ level: 2 })
+                                    .run()}
+                            class:active={editor.isActive("heading", {
+                                level: 2,
+                            })}
+                        >
+                            H2
+                        </button>
+                        <button
+                            on:click={() =>
+                                editor.chain().focus().setParagraph().run()}
+                            class:active={editor.isActive("paragraph")}
+                        >
+                            P
+                        </button>
+                    {/if}
+
+                    <div bind:this={element} />
                 </div>
                 {#if spin == true}
-                <BasicSpinner />
+                    <BasicSpinner />
                 {/if}
                 <button class="submit-btn" type="submit"
                     >publish your question</button
