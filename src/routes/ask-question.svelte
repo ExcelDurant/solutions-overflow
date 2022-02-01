@@ -1,5 +1,4 @@
 <script context="module" lang="ts">
-    // export const prerender = true;
     import type { Load } from "@sveltejs/kit";
     import { get, authenticatedPost, apiUrl } from "$lib/utils";
     import { goto } from "$app/navigation";

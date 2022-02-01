@@ -196,6 +196,7 @@
 			background-color: transparent;
 			font-size: 1.5rem;
 			display: none;
+			margin-right: 0px;
 			@include mqx(650px) {
 				display: inline-block;
 			}
@@ -207,7 +208,8 @@
 			margin-left: 20px;
 			overflow: hidden;
 			@include mqx(650px) {
-				margin-left: -80px;
+				// margin-left: -80px;
+				display: none;
 			}
 		}
 

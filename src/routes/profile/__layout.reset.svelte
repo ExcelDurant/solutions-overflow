@@ -1,98 +1,137 @@
 <script lang="ts">
-	import Header from '$lib/header/Header.svelte';
-	import Sidebar from '$lib/Sidebar.svelte';
-	import Rightbar from '$lib/Rightbar.svelte';
-    import { page } from '$app/stores';
-	import '../../app.css';
-    import { appUser} from "$lib/auth";
-import { showFailure, showLogin, showSignup, showSuccess } from '$lib/store';
-import SignupForm from '$lib/SignupForm.svelte';
-import LoginForm from '$lib/LoginForm.svelte';
-import SuccessPopup from '$lib/SuccessPopup.svelte';
-import FailurePopup from '$lib/FailurePopup.svelte';
+    import Header from "$lib/header/Header.svelte";
+    import Sidebar from "$lib/Sidebar.svelte";
+    import Rightbar from "$lib/Rightbar.svelte";
+    import { page } from "$app/stores";
+    import "../../app.css";
+    import { appUser } from "$lib/auth";
+    import {
+        showFailure,
+        showLogin,
+        showSignup,
+        showSuccess,
+    } from "$lib/store";
+    import SignupForm from "$lib/SignupForm.svelte";
+    import LoginForm from "$lib/LoginForm.svelte";
+    import SuccessPopup from "$lib/SuccessPopup.svelte";
+    import FailurePopup from "$lib/FailurePopup.svelte";
+import Footer from "$lib/Footer.svelte";
     let user;
     appUser.subscribe((value) => {
         user = value;
-    })
+    });
     let login = false;
-	let signup = false;
-	let success = false;
-	let failure = false;
-	showLogin.subscribe((value) => {
-		login = value;
-	});
-	showSignup.subscribe((value) => {
-		signup = value;
-	});
-	showSuccess.subscribe((value) => {
-		success = value;
-	})
-	showFailure.subscribe((value) => {
-		failure = value;
-	})
-
+    let signup = false;
+    let success = false;
+    let failure = false;
+    showLogin.subscribe((value) => {
+        login = value;
+    });
+    showSignup.subscribe((value) => {
+        signup = value;
+    });
+    showSuccess.subscribe((value) => {
+        success = value;
+    });
+    showFailure.subscribe((value) => {
+        failure = value;
+    });
 </script>
 
 <Header />
 {#if signup}
-		<SignupForm />
-	{/if}
+    <SignupForm />
+{/if}
 
-	{#if login}
-		<LoginForm />
-	{/if}
-	{#if success}
-	<SuccessPopup />
-	{/if}
-	{#if failure}
-	<FailurePopup />
-	{/if}
+{#if login}
+    <LoginForm />
+{/if}
+{#if success}
+    <SuccessPopup />
+{/if}
+{#if failure}
+    <FailurePopup />
+{/if}
 <main>
     <section class="banner-sec">
         <div class="banner-container">
             <div class="info-container">
                 <div class="user-container">
                     <div class="profile-img-container no-overflow">
-                        <img src={user.photoUrl} alt="" class="full-img">
+                        <img src={user.photoUrl} alt="" class="full-img" />
                     </div>
-                    
+
                     <h5 class="username">{user.username}</h5>
                     <div class="status-container flex-center">
                         <h6 class="status">{user.status}</h6>
                     </div>
-                    
                 </div>
-                <div class="misc-container">
-
-                </div>
+                <div class="misc-container" />
             </div>
         </div>
     </section>
     <div class="body-content">
         <Sidebar />
-	<div class="content">
-        <nav class="profile-nav">
-            <ul class="navlist">
-                <li><a href="/profile" class="navlink" class:active={$page.path === '/profile'}>info</a></li>
-                <li><a href="/profile/questions" class="navlink" class:active={$page.path === '/profile/questions'}>questions</a></li>
-                <li><a href="/profile/progression" class="navlink" class:active={$page.path === '/profile/progression'}>progression</a></li>
-                <li><a href="/profile/answers" class="navlink" class:active={$page.path === '/profile/answers'}>answers</a></li>
-                <li><a href="/profile/edit" class="navlink" class:active={$page.path === '/profile/edit'}>edit profile</a></li>
-            </ul>
-        </nav>
+        <div class="content">
+            <nav class="profile-nav">
+                <ul class="navlist">
+                    <li>
+                        <a
+                            href="/profile"
+                            class="navlink"
+                            class:active={$page.path === "/profile"}>info</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="/profile/questions"
+                            class="navlink"
+                            class:active={$page.path === "/profile/questions"}
+                            >questions</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="/profile/progression"
+                            class="navlink"
+                            class:active={$page.path === "/profile/progression"}
+                            >progression</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="/profile/answers"
+                            class="navlink"
+                            class:active={$page.path === "/profile/answers"}
+                            >answers</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="/profile/edit"
+                            class="navlink"
+                            class:active={$page.path === "/profile/edit"}
+                            >edit profile</a
+                        >
+                    </li>
+                </ul>
+            </nav>
 
-        <slot />
-    </div>
-    <Rightbar />
+            <slot />
+        </div>
+        <Rightbar />
     </div>
 </main>
+<Footer />
+
 <style lang="scss">
-	main {
-		width: 100%;
-		margin: 0 auto;
-		box-sizing: border-box;
-		background-color: #F2F2F2;
-	}
+    @import '../../styles.scss';
+    main {
+        width: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
+        background-color: #f2f2f2;
+    }
 
     .banner-sec {
         width: 98%;
@@ -114,44 +153,51 @@ import FailurePopup from '$lib/FailurePopup.svelte';
                 display: flex;
                 align-items: center;
                 .profile-img-container {
-                width: 70px;
-                height: 70px;
-                border: 2px solid var(--bluish);
-                border-radius: 50%;
-                margin-right: 10px;
-                background-color: white;
-            }
-            .username {
-                color: white;
-                font-weight: 700;
-                margin-right: 10px;
-            }
-            .status-container {
-                background-color: black;
-                padding: 2px 5px;
-                .status {
-                    color: white;
-                    font-size: 12px;
-                    text-transform: capitalize;
+                    width: 70px;
+                    height: 70px;
+                    border: 2px solid var(--bluish);
+                    border-radius: 50%;
+                    margin-right: 10px;
+                    background-color: white;
                 }
-            }
+                .username {
+                    color: white;
+                    font-weight: 700;
+                    margin-right: 10px;
+                }
+                .status-container {
+                    background-color: black;
+                    padding: 2px 5px;
+                    .status {
+                        color: white;
+                        font-size: 12px;
+                        text-transform: capitalize;
+                    }
+                }
             }
         }
     }
 
     .body-content {
         flex: 1;
-		display: flex;
-		width: 100%;
+        display: flex;
+        width: 100%;
+        @include mqx(900px) {
+			flex-direction: column;
+		}
     }
     .content {
         width: 64%;
+        @include mqx(900px) {
+			width: 100%;
+		}
     }
 
     .profile-nav {
         width: 100%;
         background-color: white;
         margin-bottom: 0px;
+        overflow: auto;
         .navlist {
             width: 100%;
             display: flex;
@@ -173,10 +219,8 @@ import FailurePopup from '$lib/FailurePopup.svelte';
             }
             .active {
                 color: black;
-                    border-bottom: 2px solid black;
+                border-bottom: 2px solid black;
             }
         }
     }
-
-	
 </style>
