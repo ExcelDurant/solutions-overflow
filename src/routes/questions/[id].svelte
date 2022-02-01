@@ -23,6 +23,7 @@
     import { isLoggedIn, appUser } from "$lib/auth";
 import MiniSpinner from "$lib/MiniSpinner.svelte";
 import BasicSpinner from "$lib/BasicSpinner.svelte";
+import ProseMirror from "$lib/ProseMirror.svelte";
     let isLogged = false;
     let user:User;
     isLoggedIn.subscribe((value) => {
@@ -82,6 +83,8 @@ import BasicSpinner from "$lib/BasicSpinner.svelte";
     let answer;
     let comment;
     let answerSpin = false;
+    let detailHtml;
+    let detailText;
     function postAnswer() {
         let answerUrl = apiUrl + "questions/answer";
         answerSpin = true;
@@ -89,8 +92,8 @@ import BasicSpinner from "$lib/BasicSpinner.svelte";
         let formData = {
             answer,
             details: {
-                html:editor.getHTML(),
-                text:element.textContent
+                html:detailHtml,
+                text:detailText
             },
             question: question._id,
         };
@@ -343,7 +346,7 @@ import BasicSpinner from "$lib/BasicSpinner.svelte";
                     use:quill={options}
                     on:text-change={(e) => (details = e.detail)}
                 /> -->
-                {#if editor}
+                <!-- {#if editor}
                         <button
                             on:click={() =>
                                 editor
@@ -377,10 +380,10 @@ import BasicSpinner from "$lib/BasicSpinner.svelte";
                         >
                             P
                         </button>
-                    {/if}
+                    {/if} -->
 
-                    <div bind:this={element} />
-                    
+                    <!-- <div bind:this={element} /> -->
+                        <ProseMirror bind:textContent={detailText}  bind:htmlContent={detailHtml} placeholder="any more details? Put it here"/>
                 <button type="submit" class="submit-btn">submit</button>
             </form>
         </div>
