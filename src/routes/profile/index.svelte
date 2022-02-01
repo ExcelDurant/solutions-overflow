@@ -11,12 +11,12 @@ import { onMount } from "svelte";
         authenticatedGet(profileUrl)
             .then((value) => {
                 setUser(value.user);
-                console.log(value);
+                // console.log(value);
             })
-            .catch((err) => {
-                console.log(err);
-                window.alert("an error occured");
-            });
+            // .catch((err) => {
+            //     console.log(err);
+            //     window.alert("an error occured");
+            // });
     }
     onMount(() => {
 		getUser();
