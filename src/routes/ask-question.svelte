@@ -115,17 +115,17 @@ import ProseMirror from "$lib/ProseMirror.svelte";
             reference,
         };
         console.log(formData);
-        // authenticatedPost(askQuestionUrl, formData)
-        //     .then((value) => {
-        //         spin = false;
-        //         showSuccess.set(true);
-        //         successMessage.set(value.message);
-        //         goto("/questions/" + value.question._id);
-        //     })
-        //     .catch((err) => {
-        //         spin = false;
-        //         console.log(err);
-        //     });
+        authenticatedPost(askQuestionUrl, formData)
+            .then((value) => {
+                spin = false;
+                showSuccess.set(true);
+                successMessage.set(value.message);
+                goto("/questions/" + value.question._id);
+            })
+            .catch((err) => {
+                spin = false;
+                console.log(err);
+            });
     }
 </script>
 
