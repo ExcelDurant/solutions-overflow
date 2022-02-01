@@ -6,6 +6,7 @@
    import { createSingleLineEditor, toPlainText,toHTML, createRichTextEditor  } from 'prosemirror-svelte/state';  
    export let textContent;
    export let htmlContent;
+   export let placeholder;
  
    // create the initial editor state
    let editorState = createRichTextEditor(textContent); 
@@ -23,7 +24,7 @@
 
 <div class="editor-container">
     <ProsemirrorEditor
-placeholder={textContent} 
+placeholder={placeholder}
 {editorState} 
 on:change={handleChange}
 />

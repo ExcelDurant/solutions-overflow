@@ -19,7 +19,6 @@
     import { Editor } from "@tiptap/core";
     import StarterKit from "@tiptap/starter-kit";
     import { showSuccess, successMessage } from "$lib/store";
-import Milkdown from "$lib/Milkdown.svelte";
 import ProseMirror from "$lib/ProseMirror.svelte";
     // backend url to post to
     let askQuestionUrl = apiUrl + "questions/ask";
@@ -363,7 +362,7 @@ import ProseMirror from "$lib/ProseMirror.svelte";
 
                     <!-- <div bind:this={element} /> -->
                     <!-- <Milkdown defaultValue="lol" /> -->
-                    <ProseMirror bind:textContent={detailText}  bind:htmlContent={detailHtml}/>
+                    <ProseMirror bind:textContent={detailText}  bind:htmlContent={detailHtml} placeholder="paste your question here"/>
                     <h6 class="hint">
                         you can enter full question details here and even drag an image into the field
                     </h6>
