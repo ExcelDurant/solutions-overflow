@@ -210,6 +210,7 @@
 </div>
 
 <style lang="scss">
+    @import '../styles.scss';
     .answer-container {
         background-color: white;
         width: 100%;
@@ -220,13 +221,17 @@
             margin-bottom: 10px;
             align-items: center;
             .profile-container {
-                width: 60px;
+                min-width: 60px;
                 height: 60px;
                 border-radius: 50%;
                 border: 2px solid var(--bluish);
                 padding: 5px;
                 margin-right: 10px;
                 overflow: hidden;
+                @include mqx(800px) {
+                    min-width: 40px;
+                height: 40px;
+		}
             }
             .basic-container {
                 .mini-info-container {
@@ -238,6 +243,9 @@
                         font-weight: 600;
                         color: var(--bluish);
                         margin-right: 10px;
+                        @include mqx(800px) {
+                    font-size: 0.7rem;
+		}
                     }
                     .status-container {
                         padding: 3px 10px;
@@ -246,6 +254,9 @@
                         .status {
                             color: white;
                             font-size: 10px;
+                            @include mqx(800px) {
+                    font-size: 0.7rem;
+		}
                         }
                     }
                     .datetext {
@@ -253,6 +264,9 @@
                         .date {
                             color: var(--bluish);
                         }
+                        @include mqx(800px) {
+                    font-size: 0.7rem;
+		}
                     }
                 }
             }
@@ -266,6 +280,9 @@
 
                 .answer {
                     margin-bottom: 10px;
+                    @include mqx(800px) {
+                    font-size: 0.9rem;
+		}
                 }
                 .answer-details {
                     width: 100%;
@@ -281,12 +298,20 @@
                         background-color: transparent;
                         color: gray;
                         margin-right: 20px;
+                        @include mqx(800px) {
+                    font-size: 0.7rem;
+		}
                         &:hover {
                             color: var(--bluish);
                         }
                         i {
                             margin-right: 5px;
                         }
+                    }
+                    .btn {
+                        @include mqx(800px) {
+                    font-size: 0.7rem;
+		}
                     }
                     .actions-container {
                         margin-right: 10px;
@@ -301,6 +326,9 @@
                             color: gray;
                             margin: 0;
                             margin-top: 10px;
+                            @include mqx(800px) {
+                    font-size: 0.9rem;
+		}
 
                             &:hover {
                                 color: var(--bluish);

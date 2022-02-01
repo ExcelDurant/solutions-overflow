@@ -419,13 +419,17 @@ import ProseMirror from "$lib/ProseMirror.svelte";
             display: flex;
             margin-bottom: 10px;
             .profile-container {
-                width: 60px;
+                min-width: 60px;
                 height: 60px;
                 border-radius: 50%;
                 border: 2px solid var(--bluish);
                 padding: 5px;
                 margin-right: 10px;
                 overflow: hidden;
+                @include mqx(800px) {
+                    min-width: 40px;
+                height: 40px;
+		}
             }
             .basic-container {
                 .mini-info-container {
@@ -437,6 +441,9 @@ import ProseMirror from "$lib/ProseMirror.svelte";
                         font-weight: 600;
                         color: var(--bluish);
                         margin-right: 10px;
+                        @include mqx(800px) {
+							font-size: 0.7rem;
+		}
                     }
                     .status-container {
                         padding: 3px 10px;
@@ -452,11 +459,17 @@ import ProseMirror from "$lib/ProseMirror.svelte";
                         .date {
                             color: var(--bluish);
                         }
+                        @include mqx(800px) {
+							font-size: 0.7rem;
+		}
                     }
                     .reference {
                         font-size: 12px;
                         margin-left: 5px;
                         color: var(--greenish);
+                        @include mqx(800px) {
+							font-size: 0.5rem;
+		}
                     }
                 }
                 .title-container {
@@ -464,6 +477,9 @@ import ProseMirror from "$lib/ProseMirror.svelte";
                         font-size: 20px;
                         font-weight: 700;
                         color: black;
+                        @include mqx(800px) {
+							font-size: 0.9rem;
+		}
                         // color: var(--bluish);
                     }
                 }
@@ -487,6 +503,7 @@ import ProseMirror from "$lib/ProseMirror.svelte";
                     &:hover {
                         color: var(--bluish);
                     }
+                    
                 }
                 .blue {
                     color: var(--bluish);
@@ -507,6 +524,9 @@ import ProseMirror from "$lib/ProseMirror.svelte";
                         padding: 2px 10px;
                         margin-right: 10px;
                         margin-bottom: 5px;
+                        @include mqx(800px) {
+							font-size: 0.7rem;
+		}
                     }
                 }
                 .bottom-container {
@@ -519,6 +539,9 @@ import ProseMirror from "$lib/ProseMirror.svelte";
                         i {
                             margin-right: 5px;
                         }
+                        @include mqx(800px) {
+							font-size: 0.7rem;
+		}
                     }
                     .reply-btn {
                         background-color: transparent;
@@ -531,6 +554,9 @@ import ProseMirror from "$lib/ProseMirror.svelte";
                         i {
                             margin-right: 5px;
                         }
+                        @include mqx(800px) {
+							font-size: 0.7rem;
+		}
                     }
                     .sharethis-inline-share-buttons {
                         position: relative;

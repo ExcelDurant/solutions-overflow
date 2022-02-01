@@ -162,6 +162,10 @@ showSuccessPop,
 				padding: 5px;
 				margin-right: 10px;
 				overflow: hidden;
+				@include mqx(800px) {
+					min-width: 40px;
+				height: 40px;
+		}
 			}
 			.basic-container {
 				.mini-info-container {
@@ -173,6 +177,9 @@ showSuccessPop,
 						font-weight: 600;
 						color: var(--bluish);
 						margin-right: 10px;
+						@include mqx(800px) {
+							font-size: 0.7rem;
+		}
 					}
 					.status-container {
 						padding: 3px 10px;
@@ -189,6 +196,9 @@ showSuccessPop,
 						.date {
 							color: var(--bluish);
 						}
+						@include mqx(800px) {
+							font-size: 0.5rem;
+		}
 					}
 					.reference {
 						margin-left: 5px;
@@ -247,6 +257,9 @@ showSuccessPop,
 						padding: 2px 10px;
 						margin-right: 10px;
 						margin-bottom: 5px;
+						@include mqx(800px) {
+							font-size: 0.7rem;
+		}
 					}
 				}
 				.bottom-container {
@@ -262,6 +275,9 @@ showSuccessPop,
 						i {
 							margin-right: 5px;
 						}
+						@include mqx(800px) {
+							font-size: 0.8rem;
+		}
 					}
 				}
 			}
