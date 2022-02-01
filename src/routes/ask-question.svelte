@@ -13,53 +13,18 @@
 
 <script>
     import BasicSpinner from "$lib/BasicSpinner.svelte";
-    import { onMount, onDestroy } from "svelte";
     // import { quill } from "svelte-quill";
     import { Editor } from "@tiptap/core";
     import StarterKit from "@tiptap/starter-kit";
     import { showSuccess, successMessage } from "$lib/store";
-import ProseMirror from "$lib/ProseMirror.svelte";
+    import ProseMirror from "$lib/ProseMirror.svelte";
     // backend url to post to
     let askQuestionUrl = apiUrl + "questions/ask";
-    const options = {
-        modules: {
-            toolbar: [
-                [{ header: [1, 2, 3, false] }],
-                ["bold", "italic", "underline", "strike", "script"],
-                ["link", "code-block", "header", "blockquote", "list"],
-                ["image", "formula"],
-            ],
-        },
-        placeholder: "Type something...",
-        theme: "snow",
-    };
-
-    let element;
-    let editor;
-    onMount(() => {
-        editor = new Editor({
-            element: element,
-            extensions: [StarterKit],
-            content: "<p>Hello World! 🌍️ </p>",
-            onTransaction: () => {
-                // force re-render so `editor.isActive` works as expected
-                editor = editor;
-            },
-        });
-    });
-    onDestroy(() => {
-        if (editor) {
-            editor.destroy();
-        }
-    });
 
     let content;
     let showContent = false;
 
     export let subjects;
-    // onMount(() => {
-    // 	console.log(subjects);
-    // });
     let levels = ["ordinary level", "advanced level"];
     let examTypes = ["gce", "mock", "miscellaneous"];
     let mocks = ["south-west", "north-west", "west", "littoral", "central"];
@@ -101,8 +66,8 @@ import ProseMirror from "$lib/ProseMirror.svelte";
             name,
             subject: selectedSubject,
             details: {
-                html:detailHtml,
-                text:detailText
+                html: detailHtml,
+                text: detailText,
             },
             level: selectedLevel,
             examType: selectedType,
@@ -128,7 +93,6 @@ import ProseMirror from "$lib/ProseMirror.svelte";
 </script>
 
 <svelte:head>
-    <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
     <title>ask a question</title>
     <meta
         name="description"
@@ -324,7 +288,7 @@ import ProseMirror from "$lib/ProseMirror.svelte";
                         on:text-change={(e) => (content = e.detail)}
                     /> -->
                     <!-- {#if editor} -->
-                        <!-- <button
+                    <!-- <button
                             on:click={() =>
                                 editor
                                     .chain()
@@ -361,9 +325,14 @@ import ProseMirror from "$lib/ProseMirror.svelte";
 
                     <!-- <div bind:this={element} /> -->
                     <!-- <Milkdown defaultValue="lol" /> -->
-                    <ProseMirror bind:textContent={detailText}  bind:htmlContent={detailHtml} placeholder="paste your question here"/>
+                    <ProseMirror
+                        bind:textContent={detailText}
+                        bind:htmlContent={detailHtml}
+                        placeholder="paste your question here"
+                    />
                     <h6 class="hint">
-                        you can enter full question details here and even drag an image into the field
+                        you can enter full question details here and even drag
+                        an image into the field
                     </h6>
                 </div>
                 {#if spin == true}
