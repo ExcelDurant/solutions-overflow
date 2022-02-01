@@ -112,7 +112,10 @@ import { appName } from "./utils";
 				min-width: 50px;
 				height: 50px;
 				margin-right: 10px;
-
+				@include mqx(900px) {
+					width: 40px;
+					height: 40px;
+				}
 			}
 			.txt {
 				font-size: 0.9rem;
