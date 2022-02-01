@@ -19,6 +19,8 @@
     import { Editor } from "@tiptap/core";
     import StarterKit from "@tiptap/starter-kit";
     import { showSuccess, successMessage } from "$lib/store";
+import Milkdown from "$lib/Milkdown.svelte";
+import ProseMirror from "$lib/ProseMirror.svelte";
     // backend url to post to
     let askQuestionUrl = apiUrl + "questions/ask";
     const options = {
@@ -93,14 +95,16 @@
     let selectedQuestionNumber;
     let reference;
     let spin = false;
+    let detailHtml;
+    let detailText;
     function postQuestion() {
         spin = true;
         let formData = {
             name,
             subject: selectedSubject,
             details: {
-                html:editor.getHTML(),
-                text:element.textContent
+                html:detailHtml,
+                text:detailText
             },
             level: selectedLevel,
             examType: selectedType,
@@ -111,17 +115,17 @@
             reference,
         };
         console.log(formData);
-        authenticatedPost(askQuestionUrl, formData)
-            .then((value) => {
-                spin = false;
-                showSuccess.set(true);
-                successMessage.set(value.message);
-                goto("/questions/" + value.question._id);
-            })
-            .catch((err) => {
-                spin = false;
-                console.log(err);
-            });
+        // authenticatedPost(askQuestionUrl, formData)
+        //     .then((value) => {
+        //         spin = false;
+        //         showSuccess.set(true);
+        //         successMessage.set(value.message);
+        //         goto("/questions/" + value.question._id);
+        //     })
+        //     .catch((err) => {
+        //         spin = false;
+        //         console.log(err);
+        //     });
     }
 </script>
 
@@ -321,8 +325,8 @@
                         use:quill={options}
                         on:text-change={(e) => (content = e.detail)}
                     /> -->
-                    {#if editor}
-                        <button
+                    <!-- {#if editor} -->
+                        <!-- <button
                             on:click={() =>
                                 editor
                                     .chain()
@@ -354,10 +358,15 @@
                             class:active={editor.isActive("paragraph")}
                         >
                             P
-                        </button>
-                    {/if}
+                        </button> -->
+                    <!-- {/if} -->
 
-                    <div bind:this={element} />
+                    <!-- <div bind:this={element} /> -->
+                    <!-- <Milkdown defaultValue="lol" /> -->
+                    <ProseMirror bind:textContent={detailText}  bind:htmlContent={detailHtml}/>
+                    <h6 class="hint">
+                        you can enter full question details here and even drag an image into the field
+                    </h6>
                 </div>
                 {#if spin == true}
                     <BasicSpinner />

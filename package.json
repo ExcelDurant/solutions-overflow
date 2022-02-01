@@ -24,8 +24,13 @@
   "dependencies": {
     "@fontsource/fira-mono": "^4.5.0",
     "@lukeed/uuid": "^2.0.0",
+    "@milkdown/core": "^5.4.1",
+    "@milkdown/plugin-tooltip": "^5.4.1",
+    "@milkdown/preset-commonmark": "^5.4.1",
+    "@milkdown/theme-nord": "^5.4.1",
     "@tiptap/core": "^2.0.0-beta.171",
     "@tiptap/starter-kit": "^2.0.0-beta.180",
-    "cookie": "^0.4.1"
+    "cookie": "^0.4.1",
+    "prosemirror-svelte": "^0.2.4"
   }
 }
