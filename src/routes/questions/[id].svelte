@@ -383,7 +383,7 @@ import ProseMirror from "$lib/ProseMirror.svelte";
                     {/if} -->
 
                     <!-- <div bind:this={element} /> -->
-                        <ProseMirror bind:textContent={detailText}  bind:htmlContent={detailHtml} placeholder="any more details? Put it here"/>
+                        <ProseMirror bind:textContent={detailText}  bind:htmlContent={detailHtml} placeholder="any more details? Put it here. (drag your images here)"/>
                 <button type="submit" class="submit-btn">submit</button>
             </form>
         </div>
@@ -636,6 +636,7 @@ import ProseMirror from "$lib/ProseMirror.svelte";
         }
         .submit-btn {
             width: 100%;
+            margin-top: 10px;
         }
     }
 </style>

@@ -12,7 +12,7 @@ import { appName } from "./utils";
 					<img src="logo.png" alt="logo" class="full-img">
 				</div>
 				<p class="txt">
-					{appName} is a social questions & Answers Engine which will help you establis your community and connect with other people
+					{appName} is a social questions & Answers Engine which will help you solve exam related questions and permit you to help others answer their questions
 				</p>
 			</div>
 			<div class="colu-2 colu">
@@ -51,7 +51,7 @@ import { appName } from "./utils";
 		</div>
 		<div class="bottom-sec">
 			<div class="txt-container">
-				<h4 class="rights">© 2022 Discy. All Rights Reserved</h4>
+				<h4 class="rights">© 2022 Solutions Overflow. All Rights Reserved</h4>
 				<h6 class="author">With love by <a href="https://gnopaexcel.netlify.app/" target="_blank" rel="noopener">Excel</a></h6>
 			</div>
 		</div>

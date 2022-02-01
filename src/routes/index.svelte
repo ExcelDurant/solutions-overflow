@@ -28,6 +28,7 @@
 	import SingleQuestion from "$lib/SingleQuestion.svelte";
 	import { isLoggedIn } from "$lib/auth";
 	import BasicSpinner from "$lib/BasicSpinner.svelte";
+	import { appName } from "$lib/utils";
 	// import { onMount } from "svelte";
 
 	export let questions: Question[];
@@ -119,6 +120,7 @@
 
 <svelte:head>
 	<title>Home</title>
+	<meta name="description" content="{appName} is a social questions & Answers Engine which will help you solve exam related questions and permit you to help others answer their questions">
 </svelte:head>
 
 <div class="home-container">
