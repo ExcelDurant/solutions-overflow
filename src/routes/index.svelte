@@ -8,7 +8,7 @@
 		Question,
 		showErrorPop,
 	} from "$lib/utils";
-	export const load: Load = async ({ fetch }) => {
+	export const load: Load = async () => {
 		let questionssUrl = apiUrl + "questions/all";
 		let subjectsUrl = apiUrl + "subjects/all";
 		const subjects = await get(subjectsUrl);
