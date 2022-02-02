@@ -254,7 +254,7 @@ showSuccessPop,
 				.quest-details {
 					width: 100%;
 					max-height: 150px;
-					overflow: auto;
+					overflow: none;
 				}
 				.tags-container {
 					display: flex;
