@@ -262,7 +262,7 @@
 				.quest-details {
 					width: 100%;
 					max-height: 150px;
-					overflow: none;
+					overflow: hidden;
 				}
 				.tags-container {
 					display: flex;
