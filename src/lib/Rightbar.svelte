@@ -68,9 +68,9 @@
                 <i class="fas fa-chart-line" />recent activities
             </h2>
             {#if spin == true}
-            <h6 class="heading">there are no activities</h6>
+                <h6 class="heading">there are no activities</h6>
             {/if}
-            
+
             {#each system.latestQuestions as question}
                 <div class="question-card">
                     <a href="/questions/{question._id}" class="question"
@@ -174,11 +174,11 @@
                 .question {
                     max-width: 200px;
                     overflow: hidden;
-   text-overflow: ellipsis;
-   display: -webkit-box;
-   -webkit-line-clamp: 2; /* number of lines to show */
-           line-clamp: 2; 
-   -webkit-box-orient: vertical;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2; /* number of lines to show */
+                    line-clamp: 2;
+                    -webkit-box-orient: vertical;
                 }
                 .subject {
                     font-size: 0.7rem;
