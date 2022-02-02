@@ -24,6 +24,7 @@ import { failureMessage, showFailure } from "./store";
 </div>
 
 <style lang="scss">
+    @import "../styles";
     .failure-overlay {
         position: fixed;
         top: 0;
@@ -40,6 +41,9 @@ import { failureMessage, showFailure } from "./store";
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
+        @include mqx(700px) {
+            width: 95%;
+        }
     }
     .close-btn {
         align-self: flex-end;

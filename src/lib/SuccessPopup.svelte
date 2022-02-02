@@ -23,6 +23,7 @@ import { showSuccess, successMessage } from "./store";
 </div>
 
 <style lang="scss">
+    @import "../styles";
     .success-overlay {
         position: fixed;
         top: 0;
@@ -41,6 +42,9 @@ import { showSuccess, successMessage } from "./store";
         position: absolute;
         top: 10%;
         left: 30%;
+        @include mqx(700px) {
+            width: 95%;
+        }
     }
     .close-btn {
         align-self: flex-end;
