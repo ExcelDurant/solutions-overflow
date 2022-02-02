@@ -171,6 +171,7 @@
 						><i class="fas fa-clipboard-list" />contact</a
 					>
 				</li>
+				<h4 class="beta-txt"><i class="fas fa-grin-beam-sweat"></i> currently in BETA....</h4>
 			</ul>
 		</div>
 	</aside>
