@@ -18,7 +18,7 @@ import { apiUrl, authenticatedGet, getReadableDate, Question } from "$lib/utils"
         }).catch((err) => {
 			spin = false;
             console.log(err);
-            window.alert("an error occured");
+            // window.alert("an error occured");
         })
     }
 </script>

@@ -108,7 +108,7 @@ import ProseMirror from "$lib/ProseMirror.svelte";
             .catch((err) => {
                 answerSpin = false;
                 console.log(err);
-                window.alert("an error occured");
+                // window.alert("an error occured");
             });
     }
     function postComment() {
@@ -126,7 +126,7 @@ import ProseMirror from "$lib/ProseMirror.svelte";
             })
             .catch((err) => {
                 console.log(err);
-                window.alert("an error occured");
+                // window.alert("an error occured");
             });
     }
     let miniSpin = false;

@@ -22,7 +22,7 @@
             })
             .catch((err) => {
                 console.log(err);
-                window.alert("an error occured");
+                // window.alert("an error occured");
                 spin = false;
             });
     }
