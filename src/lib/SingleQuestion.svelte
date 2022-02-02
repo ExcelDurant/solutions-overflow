@@ -58,9 +58,15 @@
 
 <div class="question-container">
 	<div class="top-container">
-		<div class="profile-container">
-			<img src={question.askerDetail.photoUrl} alt="" class="full-img" />
-		</div>
+		<section class="profile-sec">
+			<div class="profile-container">
+				<img
+					src={question.askerDetail.photoUrl}
+					alt=""
+					class="full-img"
+				/>
+			</div>
+		</section>
 		<div class="basic-container">
 			<div class="mini-info-container">
 				<h3 class="username">{question.askerDetail.username}</h3>
@@ -76,16 +82,16 @@
 					Reference: <span class="ref">{question.reference}</span>
 				</h5>
 			</div>
-			<div class="title-container">
-				<a
-					sveltekit:prefetch
-					href="questions/{question._id}"
-					class="quest-title"
-				>
-					{question.name}
-				</a>
-			</div>
 		</div>
+	</div>
+	<div class="title-container">
+		<a
+			
+			href="questions/{question._id}"
+			class="quest-title"
+		>
+			{question.name}
+		</a>
 	</div>
 	<div class="middle-container">
 		<div class="actions-container">
@@ -167,17 +173,25 @@
 		.top-container {
 			display: flex;
 			margin-bottom: 10px;
-			.profile-container {
+			align-items: center;
+			.profile-sec {
 				min-width: 60px;
-				height: 60px;
-				border-radius: 50%;
-				border: 2px solid var(--bluish);
-				padding: 5px;
-				margin-right: 10px;
-				overflow: hidden;
+				margin-right: 5px;
+				.profile-container {
+					width: 100%;
+					height: 60px;
+					border-radius: 50%;
+					border: 2px solid var(--bluish);
+					overflow: hidden;
+				}
 				@include mqx(800px) {
-					width: 40px;
-					height: 40px;
+					min-width: 35px;
+					margin-right: 5px;
+					.profile-container {
+						min-width: 35px;
+						max-width: 36px;
+						height: 35px;
+					}
 				}
 			}
 			.basic-container {
@@ -191,7 +205,8 @@
 						color: var(--bluish);
 						margin-right: 10px;
 						@include mqx(800px) {
-							font-size: 0.7rem;
+							font-size: 0.6rem;
+							margin-right: 2px;
 						}
 					}
 					.status-container {
@@ -201,6 +216,10 @@
 						.status {
 							color: white;
 							font-size: 10px;
+						}
+						@include mqx(800px) {
+							padding: 3px;
+							margin-right: 2px;
 						}
 					}
 					.datetext,
@@ -218,23 +237,27 @@
 						color: var(--greenish);
 					}
 				}
-				.title-container {
-					.quest-title {
-						font-size: 20px;
-						font-weight: 700;
-						color: black;
-						cursor: pointer;
-						&:hover {
-							color: var(--bluish);
-						}
-						@include mqx(800px) {
-							font-size: 0.9rem;
-						}
-					}
+			}
+		}
+		.title-container {
+			margin-bottom: 10px;
+			margin-left: 50px;
+			.quest-title {
+				font-size: 1rem;
+				font-weight: 700;
+				color: rgb(37, 37, 37);
+				cursor: pointer;
+				&:hover {
+					color: var(--bluish);
+				}
+			}
+			@include mqx(800px) {
+				margin-left: 0;
+				.quest-title {
+					font-size: 0.8rem;
 				}
 			}
 		}
-
 		.middle-container {
 			display: flex;
 			.actions-container {
@@ -245,12 +268,16 @@
 				align-items: center;
 				justify-content: center;
 				.btn {
-					background-color: white;
+					background-color: transparent;
+					width: fit-content;
 					font-size: 25px;
 					color: gray;
 					margin: 0;
 					&:hover {
 						color: var(--bluish);
+					}
+					@include mqx(800px) {
+						font-size: 1.2rem;
 					}
 				}
 
@@ -263,6 +290,7 @@
 					width: 100%;
 					max-height: 150px;
 					overflow: hidden;
+					margin-bottom: 5px;
 				}
 				.tags-container {
 					display: flex;

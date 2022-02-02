@@ -1,6 +1,15 @@
 <script context="module" lang="ts">
     // export const prerender = true;
-    import { get, authenticatedPost, apiUrl, Question, User, getReadableDate, showErrorPop, showSuccessPop } from "$lib/utils";
+    import {
+        get,
+        authenticatedPost,
+        apiUrl,
+        Question,
+        User,
+        getReadableDate,
+        showErrorPop,
+        showSuccessPop,
+    } from "$lib/utils";
     export const load = async ({ page, fetch, session, stuff }) => {
         console.log(page.params);
         let questionssUrl = apiUrl + "questions/" + page.params.id;
@@ -18,14 +27,12 @@
     import { goto } from "$app/navigation";
     import { onMount, onDestroy } from "svelte";
     // import { quill } from "../../../node_modules/svelte-quill/dist/index.cjs.js";
-    import { Editor } from "@tiptap/core";
-    import StarterKit from "@tiptap/starter-kit";
     import { isLoggedIn, appUser } from "$lib/auth";
-import MiniSpinner from "$lib/MiniSpinner.svelte";
-import BasicSpinner from "$lib/BasicSpinner.svelte";
-import ProseMirror from "$lib/ProseMirror.svelte";
+    import MiniSpinner from "$lib/MiniSpinner.svelte";
+    import BasicSpinner from "$lib/BasicSpinner.svelte";
+    import ProseMirror from "$lib/ProseMirror.svelte";
     let isLogged = false;
-    let user:User;
+    let user: User;
     isLoggedIn.subscribe((value) => {
         isLogged = value;
     });
@@ -38,8 +45,8 @@ import ProseMirror from "$lib/ProseMirror.svelte";
         commentForm = !commentForm;
     }
     // onMount(() => {
-	// 	console.log(question);
-	// });
+    // 	console.log(question);
+    // });
     // backend url to post to
     let askQuestionUrl = apiUrl + "questions/ask";
     const options = {
@@ -57,22 +64,6 @@ import ProseMirror from "$lib/ProseMirror.svelte";
 
     let element;
     let editor;
-    onMount(() => {
-        editor = new Editor({
-            element: element,
-            extensions: [StarterKit],
-            content: "<p>Hello World! 🌍️ </p>",
-            onTransaction: () => {
-                // force re-render so `editor.isActive` works as expected
-                editor = editor;
-            },
-        });
-    });
-    onDestroy(() => {
-        if (editor) {
-            editor.destroy();
-        }
-    });
 
     export let question: Question;
     let answerForm: boolean = false;
@@ -93,8 +84,8 @@ import ProseMirror from "$lib/ProseMirror.svelte";
         let formData = {
             answer,
             details: {
-                html:detailHtml,
-                text:detailText
+                html: detailHtml,
+                text: detailText,
             },
             question: question._id,
         };
@@ -136,38 +127,38 @@ import ProseMirror from "$lib/ProseMirror.svelte";
     }
     let miniSpin = false;
     function upvote() {
-        let upvoteUrl = apiUrl + "questions/upvote/"+question._id;
+        let upvoteUrl = apiUrl + "questions/upvote/" + question._id;
         if (isLogged == true) {
-			miniSpin = true;
-			authenticatedPost(upvoteUrl, {})
-				.then((value) => {
-					question = value;
-					miniSpin = false;
-				})
-				.catch((err) => {
-					console.log(err);
-					miniSpin = false;
-				});
-		} else {
-			showErrorPop("you are not logged in");
-		}
+            miniSpin = true;
+            authenticatedPost(upvoteUrl, {})
+                .then((value) => {
+                    question = value;
+                    miniSpin = false;
+                })
+                .catch((err) => {
+                    console.log(err);
+                    miniSpin = false;
+                });
+        } else {
+            showErrorPop("you are not logged in");
+        }
     }
     function downvote() {
-        let downvoteUrl = apiUrl + "questions/downvote/"+question._id;
+        let downvoteUrl = apiUrl + "questions/downvote/" + question._id;
         if (isLogged == true) {
-			miniSpin = true;
-			authenticatedPost(downvoteUrl, {})
-				.then((value) => {
-					question = value;
-					miniSpin = false;
-				})
-				.catch((err) => {
-					console.log(err);
-					miniSpin = false;
-				});
-		} else {
-			showErrorPop("you are not logged in");
-		}
+            miniSpin = true;
+            authenticatedPost(downvoteUrl, {})
+                .then((value) => {
+                    question = value;
+                    miniSpin = false;
+                })
+                .catch((err) => {
+                    console.log(err);
+                    miniSpin = false;
+                });
+        } else {
+            showErrorPop("you are not logged in");
+        }
     }
 
     async function removeAnswer(event) {
@@ -178,14 +169,17 @@ import ProseMirror from "$lib/ProseMirror.svelte";
 
 <svelte:head>
     <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
-    <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=61f5a75f61edda00194ec254&product=inline-share-buttons" async="async"></script>
+    <script
+        type="text/javascript"
+        src="https://platform-api.sharethis.com/js/sharethis.js#property=61f5a75f61edda00194ec254&product=inline-share-buttons"
+        async="async"></script>
     <title>{question.name}</title>
-    <meta name="description" content={question.details.text}>
-    <meta property="og:title" content={question.name}/>
-  <!-- <meta property="og:url" content="http://www.sharethis.com" /> -->
-  <!-- <meta property="og:image" content="http://sharethis.com/images/logo.jpg" /> -->
-  <meta property="og:description" content={question.details.text} />
-  <meta property="og:site_name" content="SolutionsOverflow" />
+    <meta name="description" content={question.details.text} />
+    <meta property="og:title" content={question.name} />
+    <!-- <meta property="og:url" content="http://www.sharethis.com" /> -->
+    <!-- <meta property="og:image" content="http://sharethis.com/images/logo.jpg" /> -->
+    <meta property="og:description" content={question.details.text} />
+    <meta property="og:site_name" content="SolutionsOverflow" />
 </svelte:head>
 
 <section class="top-sec">
@@ -210,32 +204,39 @@ import ProseMirror from "$lib/ProseMirror.svelte";
                         <h6 class="status">{question.askerDetail.status}</h6>
                     </div>
                     <h5 class="datetext">
-                        Asked on: <span class="date">{getReadableDate(question.created_at)}</span
+                        Asked on: <span class="date"
+                            >{getReadableDate(question.created_at)}</span
                         >
                     </h5>
                     <h5 class="reference">
                         Reference: <span class="ref">{question.reference}</span>
                     </h5>
                 </div>
-                <div class="title-container">
-                    <h2 href="/questions/1" class="quest-title">
-                        {question.name}
-                    </h2>
-                </div>
             </div>
+        </div>
+        <div class="title-container">
+            <h2 href="/questions/1" class="quest-title">
+                {question.name}
+            </h2>
         </div>
         <div class="middle-container">
             <div class="actions-container">
-                <button class="up-btn btn" class:blue={question.upvotes.includes(user._id)} on:click={upvote}><i class="fas fa-sort-up" /></button>
+                <button
+                    class="up-btn btn"
+                    class:blue={question.upvotes.includes(user._id)}
+                    on:click={upvote}><i class="fas fa-sort-up" /></button
+                >
                 {#if miniSpin}
                     <MiniSpinner />
-                    {:else}
+                {:else}
                     <h6 class="upvotes">
                         {question.upvotes.length - question.downvotes.length}
                     </h6>
                 {/if}
-                <button class="down-btn btn" class:blue={question.downvotes.includes(user._id)} on:click={downvote}
-                    ><i class="fas fa-sort-down" /></button
+                <button
+                    class="down-btn btn"
+                    class:blue={question.downvotes.includes(user._id)}
+                    on:click={downvote}><i class="fas fa-sort-down" /></button
                 >
             </div>
             <div class="quest-details-container">
@@ -272,7 +273,7 @@ import ProseMirror from "$lib/ProseMirror.svelte";
                             ><i class="fas fa-reply" />leave a comment</button
                         >
                     {/if}
-                    <div class="sharethis-inline-share-buttons"></div>
+                    <div class="sharethis-inline-share-buttons" />
                 </div>
             </div>
         </div>
@@ -318,7 +319,7 @@ import ProseMirror from "$lib/ProseMirror.svelte";
 </div>
 <section class="answers-sec">
     {#each question.all_answers as answer}
-        <SingleAnswer {answer} on:delete={removeAnswer}/>
+        <SingleAnswer {answer} on:delete={removeAnswer} />
     {/each}
 </section>
 
@@ -390,8 +391,12 @@ import ProseMirror from "$lib/ProseMirror.svelte";
                         </button>
                     {/if} -->
 
-                    <!-- <div bind:this={element} /> -->
-                        <ProseMirror bind:textContent={detailText}  bind:htmlContent={detailHtml} placeholder="any more details? Put it here. (drag your images here)"/>
+                <!-- <div bind:this={element} /> -->
+                <ProseMirror
+                    bind:textContent={detailText}
+                    bind:htmlContent={detailHtml}
+                    placeholder="any more details? Put it here. (drag your images here)"
+                />
                 <button type="submit" class="submit-btn">submit</button>
             </form>
         </div>
@@ -409,6 +414,12 @@ import ProseMirror from "$lib/ProseMirror.svelte";
             .question {
                 font-size: 0.8rem;
                 color: var(--text-color);
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2; /* number of lines to show */
+                line-clamp: 2;
+                -webkit-box-orient: vertical;
             }
         }
     }
@@ -426,18 +437,18 @@ import ProseMirror from "$lib/ProseMirror.svelte";
         .top-container {
             display: flex;
             margin-bottom: 10px;
+            align-items: center;
             .profile-container {
                 min-width: 60px;
                 height: 60px;
                 border-radius: 50%;
                 border: 2px solid var(--bluish);
-                padding: 5px;
                 margin-right: 10px;
                 overflow: hidden;
                 @include mqx(800px) {
                     width: 40px;
-                height: 40px;
-		}
+                    height: 40px;
+                }
             }
             .basic-container {
                 .mini-info-container {
@@ -450,8 +461,8 @@ import ProseMirror from "$lib/ProseMirror.svelte";
                         color: var(--bluish);
                         margin-right: 10px;
                         @include mqx(800px) {
-							font-size: 0.7rem;
-		}
+                            font-size: 0.7rem;
+                        }
                     }
                     .status-container {
                         padding: 3px 10px;
@@ -468,32 +479,36 @@ import ProseMirror from "$lib/ProseMirror.svelte";
                             color: var(--bluish);
                         }
                         @include mqx(800px) {
-							font-size: 0.7rem;
-		}
+                            font-size: 0.7rem;
+                        }
                     }
                     .reference {
                         font-size: 12px;
                         margin-left: 5px;
                         color: var(--greenish);
                         @include mqx(800px) {
-							font-size: 0.5rem;
-		}
+                            font-size: 0.5rem;
+                        }
                     }
                 }
-                .title-container {
-                    .quest-title {
-                        font-size: 20px;
-                        font-weight: 700;
-                        color: black;
-                        @include mqx(800px) {
-							font-size: 0.9rem;
-		}
-                        // color: var(--bluish);
-                    }
-                }
+                
             }
         }
 
+        .title-container {
+			margin-bottom: 10px;
+			.quest-title {
+				font-size: 1rem;
+				font-weight: 700;
+				color: rgb(37, 37, 37);
+			}
+			@include mqx(800px) {
+				margin-left: 0;
+				.quest-title {
+					font-size: 0.8rem;
+				}
+			}
+		}
         .middle-container {
             display: flex;
             .actions-container {
@@ -504,15 +519,18 @@ import ProseMirror from "$lib/ProseMirror.svelte";
                 align-items: center;
                 justify-content: center;
                 .btn {
-                    background-color: white;
-                    font-size: 25px;
-                    color: gray;
-                    margin: 0;
-                    &:hover {
-                        color: var(--bluish);
-                    }
-                    
-                }
+					background-color: transparent;
+					width: fit-content;
+					font-size: 25px;
+					color: gray;
+					margin: 0;
+					&:hover {
+						color: var(--bluish);
+					}
+					@include mqx(800px) {
+						font-size: 1.2rem;
+					}
+				}
                 .blue {
                     color: var(--bluish);
                 }
@@ -533,8 +551,8 @@ import ProseMirror from "$lib/ProseMirror.svelte";
                         margin-right: 10px;
                         margin-bottom: 5px;
                         @include mqx(800px) {
-							font-size: 0.7rem;
-		}
+                            font-size: 0.7rem;
+                        }
                     }
                 }
                 .bottom-container {
@@ -548,8 +566,8 @@ import ProseMirror from "$lib/ProseMirror.svelte";
                             margin-right: 5px;
                         }
                         @include mqx(800px) {
-							font-size: 0.7rem;
-		}
+                            font-size: 0.7rem;
+                        }
                     }
                     .reply-btn {
                         background-color: transparent;
@@ -563,8 +581,8 @@ import ProseMirror from "$lib/ProseMirror.svelte";
                             margin-right: 5px;
                         }
                         @include mqx(800px) {
-							font-size: 0.7rem;
-		}
+                            font-size: 0.7rem;
+                        }
                     }
                     .sharethis-inline-share-buttons {
                         position: relative;

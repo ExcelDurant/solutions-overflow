@@ -172,13 +172,16 @@
             .question-card {
                 margin-bottom: 10px;
                 .question {
-                    max-width: 200px;
+                    width: 200px;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     display: -webkit-box;
                     -webkit-line-clamp: 2; /* number of lines to show */
                     line-clamp: 2;
                     -webkit-box-orient: vertical;
+                    @include mqx(900px) {
+                        width: 100%;
+                    }
                 }
                 .subject {
                     font-size: 0.7rem;
@@ -205,6 +208,7 @@
                         width: 60px;
                         height: 60px;
                         margin-right: 10px;
+                        padding: 0;
                         .full-img {
                             width: 100%;
                             height: 100%;
