@@ -174,6 +174,11 @@
                 .question {
                     max-width: 200px;
                     overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-line-clamp: 2; /* number of lines to show */
+           line-clamp: 2; 
+   -webkit-box-orient: vertical;
                 }
                 .subject {
                     font-size: 0.7rem;
