@@ -36,6 +36,9 @@
 	export let lastPage: number;
 	export let total: number;
 	export let subjects;
+	questions = questions.sort((a, b) => {
+		return (new Date(b.created_at)).getTime() - (new Date(a.created_at)).getTime();
+	})
 	let examTypes = ["gce", "mock", "miscellaneous"];
 	let isLogged = false;
 	isLoggedIn.subscribe((value) => {
