@@ -399,7 +399,7 @@ import ProseMirror from "$lib/ProseMirror.svelte";
         .txt-container {
             padding: 30px 20px;
             .question {
-                font-size: 1.2rem;
+                font-size: 0.8rem;
                 color: var(--text-color);
             }
         }
