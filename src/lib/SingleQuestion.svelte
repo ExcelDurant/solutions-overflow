@@ -130,11 +130,16 @@ showSuccessPop,
 				</div>
 			</div>
 			<div class="bottom-container">
-				<h6 class="answers">
-					<i class="fas fa-book" />{question.answers.length} answers
+				<h6 class="answers"> <a sveltekit:prefetch
+					href="questions/{question._id}"
+					class="quest-title">
+					<i class="fas fa-book" />{question.answers.length} answers</a>
 				</h6>
 				<h6 class="answers">
-					<i class="fas fa-comment-dots" />{question.comments.length} comments
+					<a sveltekit:prefetch
+					href="questions/{question._id}"
+					class="quest-title">
+					<i class="fas fa-comment-dots" />{question.comments.length} comments</a>
 				</h6>
 			</div>
 		</div>
