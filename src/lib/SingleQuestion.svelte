@@ -6,7 +6,7 @@
 		User,
 		getReadableDate,
 		showErrorPop,
-showSuccessPop,
+		showSuccessPop,
 	} from "./utils";
 	import { appUser, isLoggedIn } from "$lib/auth";
 	import MiniSpinner from "./MiniSpinner.svelte";
@@ -130,16 +130,24 @@ showSuccessPop,
 				</div>
 			</div>
 			<div class="bottom-container">
-				<h6 class="answers"> <a sveltekit:prefetch
-					href="questions/{question._id}"
-					class="quest-title">
-					<i class="fas fa-book" />{question.answers.length} answers</a>
+				<h6 class="answers">
+					<a
+						sveltekit:prefetch
+						href="questions/{question._id}"
+						class="quest-title"
+					>
+						<i class="fas fa-book" />{question.answers.length} answers</a
+					>
 				</h6>
 				<h6 class="answers">
-					<a sveltekit:prefetch
-					href="questions/{question._id}"
-					class="quest-title">
-					<i class="fas fa-comment-dots" />{question.comments.length} comments</a>
+					<a
+						sveltekit:prefetch
+						href="questions/{question._id}"
+						class="quest-title"
+					>
+						<i class="fas fa-comment-dots" />{question.comments
+							.length} comments</a
+					>
 				</h6>
 			</div>
 		</div>
@@ -169,8 +177,8 @@ showSuccessPop,
 				overflow: hidden;
 				@include mqx(800px) {
 					width: 40px;
-				height: 40px;
-		}
+					height: 40px;
+				}
 			}
 			.basic-container {
 				.mini-info-container {
@@ -184,7 +192,7 @@ showSuccessPop,
 						margin-right: 10px;
 						@include mqx(800px) {
 							font-size: 0.7rem;
-		}
+						}
 					}
 					.status-container {
 						padding: 3px 10px;
@@ -203,7 +211,7 @@ showSuccessPop,
 						}
 						@include mqx(800px) {
 							font-size: 0.5rem;
-		}
+						}
 					}
 					.reference {
 						margin-left: 5px;
@@ -221,7 +229,7 @@ showSuccessPop,
 						}
 						@include mqx(800px) {
 							font-size: 0.9rem;
-		}
+						}
 					}
 				}
 			}
@@ -267,7 +275,7 @@ showSuccessPop,
 						margin-bottom: 5px;
 						@include mqx(800px) {
 							font-size: 0.7rem;
-		}
+						}
 					}
 				}
 				.bottom-container {
@@ -285,7 +293,7 @@ showSuccessPop,
 						}
 						@include mqx(800px) {
 							font-size: 0.8rem;
-		}
+						}
 					}
 				}
 			}

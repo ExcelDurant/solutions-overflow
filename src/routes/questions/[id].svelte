@@ -33,6 +33,7 @@ import ProseMirror from "$lib/ProseMirror.svelte";
         user = value;
     });
     let commentForm = false;
+    let commentSpin = false;
     function toggleCommentForm() {
         commentForm = !commentForm;
     }
@@ -113,6 +114,7 @@ import ProseMirror from "$lib/ProseMirror.svelte";
     }
     function postComment() {
         let commentUrl = apiUrl + "questions/comment";
+        commentSpin = true;
         let formData = {
             comment,
             question: question._id,
@@ -123,9 +125,12 @@ import ProseMirror from "$lib/ProseMirror.svelte";
                 question = value.question;
                 document.body.scrollIntoView();
                 showSuccessPop(value.message);
+                commentForm = false;
+                commentSpin = false;
             })
             .catch((err) => {
                 console.log(err);
+                commentSpin = false;
                 // window.alert("an error occured");
             });
     }
@@ -278,6 +283,9 @@ import ProseMirror from "$lib/ProseMirror.svelte";
                     <SingleComment {comment} />
                 {/each}
             </div>
+        {/if}
+        {#if commentSpin}
+            <BasicSpinner />
         {/if}
         {#if commentForm == true && isLogged == true}
             <div class="form-container">
