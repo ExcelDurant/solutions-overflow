@@ -201,8 +201,8 @@
                 />
             </div>
             <div class="basic-container">
-                <div class="mini-info-container">
-                    <h3 class="username">{question.askerDetail.username}</h3>
+                <div class="mini-info-container"><a href="/profile/{question.askerDetail._id}"><h3 class="username">{question.askerDetail.username}</h3></a>
+                    
                     <div class="status-container flex-center">
                         <h6 class="status">{question.askerDetail.status}</h6>
                     </div>

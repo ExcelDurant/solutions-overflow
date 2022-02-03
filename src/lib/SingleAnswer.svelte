@@ -115,7 +115,7 @@
         </div>
         <div class="basic-container">
             <div class="mini-info-container">
-                <h3 class="username">{answer.answererDetails.username}</h3>
+                <a href="/profile/{answer.answererDetails._id}"><h3 class="username">{answer.answererDetails.username}</h3></a>
                 <div class="status-container flex-center">
                     <h6 class="status">{answer.answererDetails.status}</h6>
                 </div>

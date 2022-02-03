@@ -89,7 +89,7 @@
                             <img src={user.photoUrl} alt="" class="full-img" />
                         </div>
                         <div class="info-container">
-                            <h3 class="username">{user.username}</h3>
+                            <a href="/profile/{user._id}"><h3 class="username">{user.username}</h3></a>
                             <h4 class="questions">
                                 {user.questionsAsked} questions
                             </h4>
