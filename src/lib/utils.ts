@@ -1,6 +1,8 @@
 import { bearerToken } from "$lib/auth";
 import { browser } from '$app/env';
 import { failureMessage, showFailure, showSuccess, successMessage } from "./store";
+import { profileUser } from './auth';
+import { goto } from "$app/navigation";
 let token = "";
 if (browser) {
     bearerToken.subscribe((value) => {
@@ -8,8 +10,8 @@ if (browser) {
     })
 }
 
-// export const apiUrl = 'http://127.0.0.1:8000/api/';
-export const apiUrl = 'https://solutions-overflow.ey.r.appspot.com/api/';
+export const apiUrl = 'http://127.0.0.1:8000/api/';
+// export const apiUrl = 'https://solutions-overflow.ey.r.appspot.com/api/';
 export const appName = 'Solutions Overflow'
 
 export async function authenticatedPost(url:string, body) {
@@ -93,6 +95,11 @@ export async function get(url:string) {
 export function getReadableDate(date:Date) {
     let newDate = new Date(date);
     return newDate.toDateString();
+}
+
+export function gotoUserProfile(user:User) {
+    profileUser.set(user);
+    // goto("/profile/"+user._id);
 }
 
 export function showErrorPop(message:string) {

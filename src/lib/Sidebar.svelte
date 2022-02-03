@@ -1,10 +1,15 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import { isLoggedIn } from "$lib/auth";
+    import { appUser, isLoggedIn } from "$lib/auth";
+import { gotoUserProfile, User } from "./utils";
     let isLogged = false;
+    let user:User;
 	isLoggedIn.subscribe((value) => {
 		isLogged = value;
 	});
+    appUser.subscribe((value) => {
+        user = value;
+    });
 </script>
 
 <aside class="sidebar">
@@ -23,9 +28,10 @@
             {#if isLogged}
             <li>
                 <a
-                    href="/profile"
+                    href={"/profile/"+user._id}
+                    on:click={() => gotoUserProfile(user)}
                     class="sidelink"
-                    class:active={$page.path === "/profile"}
+                    class:active={$page.path === "/profile/"+user._id}
                     ><i class="fas fa-id-badge" />user profile</a
                 >
             </li>

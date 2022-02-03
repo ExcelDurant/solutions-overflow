@@ -23,7 +23,7 @@ import BasicSpinner from "./BasicSpinner.svelte";
                 console.log(value);
                 setAuth(value.user, true, value.token);
                 closeLogin();
-                goto("/profile");
+                goto("/profile/"+value.user._id);
             }).catch((err) => {
                 spin = false;
                 console.log(err);

@@ -1,6 +1,11 @@
+
 <script>
     // import the core component
    import ProsemirrorEditor from 'prosemirror-svelte';
+//    import { onMount } from "svelte";
+//    onMount(async () => {
+//         const Prosemirror = await import('prosemirror-svelte');
+//     });
  
    // import helpers to work with prosemirror state
    import { createSingleLineEditor, toPlainText,toHTML, createRichTextEditor  } from 'prosemirror-svelte/state';  

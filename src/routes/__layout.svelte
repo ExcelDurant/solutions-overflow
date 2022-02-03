@@ -65,9 +65,9 @@ import PageLoader from "$lib/PageLoader.svelte";
 	
 	<Sidebar />
 	<div class="content">
-		{#if $navigating}
+		<!-- {#if $navigating}
 			<BasicSpinner />
-		{/if}
+		{/if} -->
 		<slot />
 	</div>
 	<Rightbar />

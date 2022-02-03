@@ -1,14 +1,16 @@
 <script context="module" lang="ts">
 	// export const prerender = true;
+	
+	export const router = false;
+
 	import type { Load } from "@sveltejs/kit";
 	import {
 		get,
-		authenticatedPost,
 		apiUrl,
 		Question,
 		showErrorPop,
 	} from "$lib/utils";
-	export const load: Load = async () => {
+	export const load: Load = async ({ fetch, session, stuff }) => {
 		let questionssUrl = apiUrl + "questions/all";
 		let subjectsUrl = apiUrl + "subjects/all";
 		const subjects = await get(subjectsUrl);

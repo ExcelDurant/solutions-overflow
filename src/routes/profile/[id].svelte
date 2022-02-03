@@ -1,26 +1,42 @@
+<script context="module" lang="ts">
+    // export const prerender = true;
+
+    export const router = false;
+
+    import {
+        get,
+        authenticatedPost,
+        Question,
+        User,
+        getReadableDate,
+        showErrorPop,
+        showSuccessPop,
+        apiUrl,
+    } from "$lib/utils";
+    export const load = async ({ page, fetch, session, stuff }) => {
+        console.log(page.params);
+        let profileUrl = apiUrl + "profile/" + page.params.id;
+        const response = await get(profileUrl);
+        const currentUser = response.user;
+        return {
+            props: { currentUser },
+        };
+    };
+</script>
+
 <script>
-    import {appUser, setUser} from "$lib/auth";
-import { apiUrl, authenticatedGet } from "$lib/utils";
-import { onMount } from "svelte";
+    import { appUser, isLoggedIn, setUser } from "$lib/auth";
+import ProfileEdit from "$lib/ProfileEdit.svelte";
+    import { authenticatedGet } from "$lib/utils";
+    import { onMount } from "svelte";
+import ProfileQuestions from "$lib/ProfileQuestions.svelte";
+import ProfileAnswers from "$lib/ProfileAnswers.svelte";
     let user;
+    // let isLogged = false;
+    export let currentUser;
     appUser.subscribe((value) => {
         user = value;
-    })
-    let profileUrl = apiUrl + "profile/me";
-    function getUser() {
-        authenticatedGet(profileUrl)
-            .then((value) => {
-                setUser(value.user);
-                // console.log(value);
-            })
-            // .catch((err) => {
-            //     console.log(err);
-            //     window.alert("an error occured");
-            // });
-    }
-    onMount(() => {
-		getUser();
-	});
+    });
 </script>
 
 <section class="basic-sec">
@@ -30,7 +46,7 @@ import { onMount } from "svelte";
                 <i class="fas fa-book blue" />
             </div>
             <div class="info-container">
-                <h3 class="info-num">{user.questionsAsked}</h3>
+                <h3 class="info-num">{currentUser.questionsAsked}</h3>
                 <h5 class="info-title">questions</h5>
             </div>
         </div>
@@ -39,7 +55,7 @@ import { onMount } from "svelte";
                 <i class="fas fa-comment-alt red" />
             </div>
             <div class="info-container">
-                <h3 class="info-num">{user.answersGiven}</h3>
+                <h3 class="info-num">{currentUser.answersGiven}</h3>
                 <h5 class="info-title">answers</h5>
             </div>
         </div>
@@ -48,7 +64,7 @@ import { onMount } from "svelte";
                 <i class="fas fa-comments green" />
             </div>
             <div class="info-container">
-                <h3 class="info-num">{user.comments}</h3>
+                <h3 class="info-num">{currentUser.comments}</h3>
                 <h5 class="info-title">comments</h5>
             </div>
         </div>
@@ -57,12 +73,18 @@ import { onMount } from "svelte";
                 <i class="fas fa-medal orange" />
             </div>
             <div class="info-container">
-                <h3 class="info-num">{user.points}</h3>
+                <h3 class="info-num">{currentUser.points}</h3>
                 <h5 class="info-title">points</h5>
             </div>
         </div>
     </div>
 </section>
+{#if currentUser._id == user._id}
+    <ProfileEdit />
+{/if}
+<ProfileQuestions profileUser={currentUser}/>
+<ProfileAnswers profileUser={currentUser}/>
+
 
 <style lang="scss">
     .basic-sec {

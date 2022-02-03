@@ -7,6 +7,7 @@
 		getReadableDate,
 		showErrorPop,
 		showSuccessPop,
+gotoUserProfile,
 	} from "./utils";
 	import { appUser, isLoggedIn } from "$lib/auth";
 	import MiniSpinner from "./MiniSpinner.svelte";
@@ -69,7 +70,7 @@
 		</section>
 		<div class="basic-container">
 			<div class="mini-info-container">
-				<h3 class="username">{question.askerDetail.username}</h3>
+				<a href="/profile/{question.askerDetail._id}" on:click={() => gotoUserProfile(question.askerDetail)}><h3 class="username">{question.askerDetail.username}</h3></a>
 				<div class="status-container flex-center">
 					<h6 class="status">{question.askerDetail.status}</h6>
 				</div>

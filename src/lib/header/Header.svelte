@@ -1,12 +1,17 @@
 <script lang="ts">
 	import { page } from "$app/stores";
 	import { showLogin, showSignup } from "$lib/store.js";
-	import { isLoggedIn } from "$lib/auth";
+	import { appUser, isLoggedIn } from "$lib/auth";
 	import logo from "./svelte-logo.svg";
+import type { User } from "$lib/utils";
 	let isLogged = false;
 	isLoggedIn.subscribe((value) => {
 		isLogged = value;
 	});
+	let user:User;
+	appUser.subscribe((value) => {
+        user = value;
+    });
 	function showLoginForm() {
 		showLogin.set(true);
 		showSignup.set(false);

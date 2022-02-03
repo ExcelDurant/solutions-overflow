@@ -1,4 +1,6 @@
 <script context="module" lang="ts">
+    // export const ssr = false;
+    import { browser } from "$app/env";
     import type { Load } from "@sveltejs/kit";
     import { get, authenticatedPost, apiUrl } from "$lib/utils";
     import { goto } from "$app/navigation";
@@ -18,6 +20,10 @@
     import StarterKit from "@tiptap/starter-kit";
     import { showSuccess, successMessage } from "$lib/store";
     import ProseMirror from "$lib/ProseMirror.svelte";
+    //    import { onMount } from "svelte";
+    //    onMount(async () => {
+    //         const Prosemirror = await import('prosemirror-svelte');
+    //     });
     // backend url to post to
     let askQuestionUrl = apiUrl + "questions/ask";
 
@@ -325,11 +331,14 @@
 
                     <!-- <div bind:this={element} /> -->
                     <!-- <Milkdown defaultValue="lol" /> -->
-                    <ProseMirror
-                        bind:textContent={detailText}
-                        bind:htmlContent={detailHtml}
-                        placeholder="paste your question here"
-                    />
+                    {#if browser}
+                        <ProseMirror
+                            bind:textContent={detailText}
+                            bind:htmlContent={detailHtml}
+                            placeholder="paste your question here"
+                        />
+                    {/if}
+
                     <h6 class="hint">
                         you can enter full question details here and even drag
                         an image into the field
@@ -341,11 +350,6 @@
                 <button class="submit-btn" type="submit"
                     >publish your question</button
                 >
-                {#if showContent}
-                    <div class="mb-3 in-container">
-                        {@html content.html}
-                    </div>
-                {/if}
             </form>
         </div>
     </section>

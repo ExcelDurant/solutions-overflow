@@ -4,7 +4,7 @@
     import Rightbar from "$lib/Rightbar.svelte";
     import { page } from "$app/stores";
     import "../../app.css";
-    import { appUser } from "$lib/auth";
+    import { appUser, profileUser } from "$lib/auth";
     import {
         showFailure,
         showLogin,
@@ -15,10 +15,14 @@
     import LoginForm from "$lib/LoginForm.svelte";
     import SuccessPopup from "$lib/SuccessPopup.svelte";
     import FailurePopup from "$lib/FailurePopup.svelte";
-import Footer from "$lib/Footer.svelte";
+    import Footer from "$lib/Footer.svelte";
     let user;
+    let currentProfileUser;
     appUser.subscribe((value) => {
         user = value;
+    });
+    profileUser.subscribe((value) => {
+        currentProfileUser = value;
     });
     let login = false;
     let signup = false;
@@ -58,12 +62,16 @@ import Footer from "$lib/Footer.svelte";
             <div class="info-container">
                 <div class="user-container">
                     <div class="profile-img-container no-overflow">
-                        <img src={user.photoUrl} alt="" class="full-img" />
+                        <img
+                            src={currentProfileUser.photoUrl}
+                            alt=""
+                            class="full-img"
+                        />
                     </div>
 
-                    <h5 class="username">{user.username}</h5>
+                    <h5 class="username">{currentProfileUser.username}</h5>
                     <div class="status-container flex-center">
-                        <h6 class="status">{user.status}</h6>
+                        <h6 class="status">{currentProfileUser.status}</h6>
                     </div>
                 </div>
                 <div class="misc-container" />
@@ -75,45 +83,45 @@ import Footer from "$lib/Footer.svelte";
         <div class="content">
             <nav class="profile-nav">
                 <ul class="navlist">
-                    <li>
+                    <!-- <li>
                         <a
                             href="/profile"
                             class="navlink"
                             class:active={$page.path === "/profile"}>info</a
                         >
-                    </li>
-                    <li>
+                    </li> -->
+                    <!-- <li>
                         <a
                             href="/profile/questions"
                             class="navlink"
                             class:active={$page.path === "/profile/questions"}
                             >questions</a
                         >
-                    </li>
-                    <li>
+                    </li> -->
+                    <!-- <li>
                         <a
                             href="/profile/progression"
                             class="navlink"
                             class:active={$page.path === "/profile/progression"}
                             >progression</a
                         >
-                    </li>
-                    <li>
+                    </li> -->
+                    <!-- <li>
                         <a
                             href="/profile/answers"
                             class="navlink"
                             class:active={$page.path === "/profile/answers"}
                             >answers</a
                         >
-                    </li>
-                    <li>
+                    </li> -->
+                    <!-- <li>
                         <a
                             href="/profile/edit"
                             class="navlink"
                             class:active={$page.path === "/profile/edit"}
                             >edit profile</a
                         >
-                    </li>
+                    </li> -->
                 </ul>
             </nav>
 
@@ -125,7 +133,7 @@ import Footer from "$lib/Footer.svelte";
 <Footer />
 
 <style lang="scss">
-    @import '../../styles.scss';
+    @import "../../styles.scss";
     main {
         width: 100%;
         margin: 0 auto;
@@ -183,14 +191,14 @@ import Footer from "$lib/Footer.svelte";
         display: flex;
         width: 100%;
         @include mqx(900px) {
-			flex-direction: column;
-		}
+            flex-direction: column;
+        }
     }
     .content {
         width: 64%;
         @include mqx(900px) {
-			width: 100%;
-		}
+            width: 100%;
+        }
     }
 
     .profile-nav {

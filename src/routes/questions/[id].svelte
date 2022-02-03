@@ -1,5 +1,8 @@
 <script context="module" lang="ts">
     // export const prerender = true;
+    
+	export const router = false;
+
     import {
         get,
         authenticatedPost,
@@ -48,22 +51,22 @@
     // 	console.log(question);
     // });
     // backend url to post to
-    let askQuestionUrl = apiUrl + "questions/ask";
-    const options = {
-        modules: {
-            toolbar: [
-                [{ header: [1, 2, 3, false] }],
-                ["bold", "italic", "underline", "strike", "script"],
-                ["link", "code-block", "header", "blockquote", "list"],
-                ["image", "formula"],
-            ],
-        },
-        placeholder: "Type something...",
-        theme: "snow",
-    };
+    // let askQuestionUrl = apiUrl + "questions/ask";
+    // const options = {
+    //     modules: {
+    //         toolbar: [
+    //             [{ header: [1, 2, 3, false] }],
+    //             ["bold", "italic", "underline", "strike", "script"],
+    //             ["link", "code-block", "header", "blockquote", "list"],
+    //             ["image", "formula"],
+    //         ],
+    //     },
+    //     placeholder: "Type something...",
+    //     theme: "snow",
+    // };
 
-    let element;
-    let editor;
+    // let element;
+    // let editor;
 
     export let question: Question;
     let answerForm: boolean = false;
