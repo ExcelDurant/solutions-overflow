@@ -19,16 +19,13 @@
                 <h1>Oops!</h1>
                 <h2>404 Not Found</h2>
                 <div class="error-details">
-                    Sorry, an error has occured, {title}
+                    Website under development. Please come back later for updates, or contact us
                 </div>
                 <div class="icon-container">
                     <i class="fas fa-bomb" />
                 </div>
                 <div class="error-actions">
-                    <a href="/" class="btn btn-primary btn-lg home-btn"
-                        ><span class="glyphicon glyphicon-home" />
-                        Take Me Home
-                    </a><a href="/contact" class="btn btn-default btn-lg"
+                    <a href="/contact" class="btn btn-default btn-lg"
                         ><span class="glyphicon glyphicon-envelope" /> Contact Support
                     </a>
                 </div>

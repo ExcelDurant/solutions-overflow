@@ -87,14 +87,14 @@
                         <a
                             href="/profile"
                             class="navlink"
-                            class:active={$page.path === "/profile"}>info</a
+                            class:active={$page.url.pathname === "/profile"}>info</a
                         >
                     </li> -->
                     <!-- <li>
                         <a
                             href="/profile/questions"
                             class="navlink"
-                            class:active={$page.path === "/profile/questions"}
+                            class:active={$page.url.pathname === "/profile/questions"}
                             >questions</a
                         >
                     </li> -->
@@ -102,7 +102,7 @@
                         <a
                             href="/profile/progression"
                             class="navlink"
-                            class:active={$page.path === "/profile/progression"}
+                            class:active={$page.url.pathname === "/profile/progression"}
                             >progression</a
                         >
                     </li> -->
@@ -110,7 +110,7 @@
                         <a
                             href="/profile/answers"
                             class="navlink"
-                            class:active={$page.path === "/profile/answers"}
+                            class:active={$page.url.pathname === "/profile/answers"}
                             >answers</a
                         >
                     </li> -->
@@ -118,7 +118,7 @@
                         <a
                             href="/profile/edit"
                             class="navlink"
-                            class:active={$page.path === "/profile/edit"}
+                            class:active={$page.url.pathname === "/profile/edit"}
                             >edit profile</a
                         >
                     </li> -->

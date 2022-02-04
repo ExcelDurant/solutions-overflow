@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
     // export const prerender = true;
     
-	export const router = false;
+	// export const router = false;
 
     import {
         get,
@@ -12,10 +12,11 @@
         getReadableDate,
         showErrorPop,
         showSuccessPop,
+axiosAuthPost,
     } from "$lib/utils";
-    export const load = async ({ page, fetch, session, stuff }) => {
-        console.log(page.params);
-        let questionssUrl = apiUrl + "questions/" + page.params.id;
+    export const load = async ({ url,params }) => {
+        console.log(params);
+        let questionssUrl = apiUrl + "questions/" + params.id;
         const question = await get(questionssUrl);
         return {
             props: { question },
@@ -92,7 +93,7 @@
             },
             question: question._id,
         };
-        authenticatedPost(answerUrl, formData)
+        axiosAuthPost(answerUrl, formData)
             .then((value) => {
                 // console.log(value);
                 answerSpin = false;
@@ -133,8 +134,8 @@
         let upvoteUrl = apiUrl + "questions/upvote/" + question._id;
         if (isLogged == true) {
             miniSpin = true;
-            authenticatedPost(upvoteUrl, {})
-                .then((value) => {
+            axiosAuthPost(upvoteUrl, {})
+                .then((value) => { 
                     question = value;
                     miniSpin = false;
                 })

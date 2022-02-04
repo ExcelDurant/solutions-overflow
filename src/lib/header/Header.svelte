@@ -40,21 +40,21 @@ import type { User } from "$lib/utils";
 					<a
 						href="/"
 						class="navlink"
-						class:active={$page.path === "/"}>Home</a
+						class:active={$page.url.pathname === "/"}>Home</a
 					>
 				</li>
 				<li>
 					<a
 						href="/about"
 						class="navlink"
-						class:active={$page.path === "/about"}>About Us</a
+						class:active={$page.url.pathname === "/about"}>About Us</a
 					>
 				</li>
 				<li>
 					<a
 						href="/contact"
 						class="navlink"
-						class:active={$page.path === "/contact"}>Contact Us</a
+						class:active={$page.url.pathname === "/contact"}>Contact Us</a
 					>
 				</li>
 			</ul>
@@ -101,7 +101,7 @@ import type { User } from "$lib/utils";
 						href="/"
 						class="sidelink"
 						on:click={toggleMenu}
-						class:active={$page.path === "/"}
+						class:active={$page.url.pathname === "/"}
 						><i class="fas fa-home" />home</a
 					>
 				</li>
@@ -110,7 +110,7 @@ import type { User } from "$lib/utils";
 						href="/posts"
 						class="sidelink"
 						on:click={toggleMenu}
-						class:active={$page.path === "/posts"}
+						class:active={$page.url.pathname === "/posts"}
 						><i class="fas fa-rss-square" />Add post</a
 					>
 				</li>
@@ -120,7 +120,7 @@ import type { User } from "$lib/utils";
 							href="/profile"
 							class="sidelink"
 							on:click={toggleMenu}
-							class:active={$page.path === "/profile"}
+							class:active={$page.url.pathname === "/profile"}
 							><i class="fas fa-id-badge" />user profile</a
 						>
 					</li>
@@ -131,7 +131,7 @@ import type { User } from "$lib/utils";
 						href="/communities"
 						class="sidelink"
 						on:click={toggleMenu}
-						class:active={$page.path === "/communities"}
+						class:active={$page.url.pathname === "/communities"}
 						><i class="fas fa-users" />communities</a
 					>
 				</li>
@@ -145,7 +145,7 @@ import type { User } from "$lib/utils";
 						href="/badges"
 						class="sidelink"
 						on:click={toggleMenu}
-						class:active={$page.path === "/badges"}
+						class:active={$page.url.pathname === "/badges"}
 						><i class="fas fa-medal" />badges</a
 					>
 				</li>
@@ -154,7 +154,7 @@ import type { User } from "$lib/utils";
 						href="/leaderboard"
 						class="sidelink"
 						on:click={toggleMenu}
-						class:active={$page.path === "/leaderboard"}
+						class:active={$page.url.pathname === "/leaderboard"}
 						><i class="fas fa-clipboard-list" />leaderboard</a
 					>
 				</li>
@@ -163,7 +163,7 @@ import type { User } from "$lib/utils";
 						href="/about"
 						class="sidelink"
 						on:click={toggleMenu}
-						class:active={$page.path === "/about"}
+						class:active={$page.url.pathname === "/about"}
 						><i class="fas fa-clipboard-list" />about</a
 					>
 				</li>
@@ -172,7 +172,7 @@ import type { User } from "$lib/utils";
 						href="/contact"
 						class="sidelink"
 						on:click={toggleMenu}
-						class:active={$page.path === "/contact"}
+						class:active={$page.url.pathname === "/contact"}
 						><i class="fas fa-clipboard-list" />contact</a
 					>
 				</li>

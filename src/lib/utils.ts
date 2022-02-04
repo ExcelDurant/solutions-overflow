@@ -2,6 +2,7 @@ import { bearerToken } from "$lib/auth";
 import { browser } from '$app/env';
 import { failureMessage, showFailure, showSuccess, successMessage } from "./store";
 import { profileUser } from './auth';
+import axios from 'axios';
 import { goto } from "$app/navigation";
 let token = "";
 if (browser) {
@@ -10,15 +11,34 @@ if (browser) {
     })
 }
 
-// export const apiUrl = 'http://127.0.0.1:8000/api/';
-export const apiUrl = 'https://solutions-overflow.ey.r.appspot.com/api/';
-export const appName = 'Solutions Overflow'
+export const apiUrl = 'http://127.0.0.1:8000/api/';
+// export const apiUrl = 'https://solutions-overflow.ey.r.appspot.com/api/';
+export const appName = 'Solutions Overflow';
+
+export async function axiosAuthPost(url:string, body) {
+    let config = {
+        headers:{"Content-Type": "application/json", "Authorization": `Bearer ${token}`}
+    }
+    let res = await axios.post(url, body, config)
+    if(res.status >= 200 && res.status < 300) {
+        console.log(res);
+        let data = res.data;
+        return data;
+    }
+    console.log(res);
+    const { message } = await res.data;
+    showErrorPop(message);
+    console.log(message);
+    throw new Error(message);
+} 
 
 export async function authenticatedPost(url:string, body) {
     const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
         body: JSON.stringify(body),
+        // mode:"cors"
+        // credentials:"include"
     };
     let res = await fetch(url, requestOptions);
     if (res.ok) {

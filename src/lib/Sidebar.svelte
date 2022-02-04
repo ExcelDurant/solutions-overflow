@@ -16,12 +16,12 @@ import { gotoUserProfile, User } from "./utils";
     <div class="sidelist-container">
         <ul class="sidelist">
             <li>
-                <a href="/" class="sidelink" class:active={$page.path === "/"}
+                <a href="/" class="sidelink" class:active={$page.url.pathname === "/"}
                     ><i class="fas fa-home" />home</a
                 >
             </li>
             <li>
-                <a href="/posts" class="sidelink" class:active={$page.path === "/posts"}
+                <a href="/posts" class="sidelink" class:active={$page.url.pathname === "/posts"}
                     ><i class="fas fa-rss-square" />Add post</a
                 >
             </li>
@@ -31,14 +31,14 @@ import { gotoUserProfile, User } from "./utils";
                     href={"/profile/"+user._id}
                     on:click={() => gotoUserProfile(user)}
                     class="sidelink"
-                    class:active={$page.path === "/profile/"+user._id}
+                    class:active={$page.url.pathname === "/profile/"+user._id}
                     ><i class="fas fa-id-badge" />user profile</a
                 >
             </li>
             {/if}
             
             <li>
-                <a href="/communities" class="sidelink" class:active={$page.path === "/communities"}
+                <a href="/communities" class="sidelink" class:active={$page.url.pathname === "/communities"}
                     ><i class="fas fa-users" />communities</a
                 >
             </li>
@@ -48,12 +48,12 @@ import { gotoUserProfile, User } from "./utils";
                 >
             </li>
             <li>
-                <a href="/badges" class="sidelink" class:active={$page.path === "/badges"}
+                <a href="/badges" class="sidelink" class:active={$page.url.pathname === "/badges"}
                     ><i class="fas fa-medal"></i>badges</a
                 >
             </li>
             <li>
-                <a href="/leaderboard" class="sidelink" class:active={$page.path === "/leaderboard"}
+                <a href="/leaderboard" class="sidelink" class:active={$page.url.pathname === "/leaderboard"}
                     ><i class="fas fa-clipboard-list"></i>leaderboard</a
                 >
             </li>

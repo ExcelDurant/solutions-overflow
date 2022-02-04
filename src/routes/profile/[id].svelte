@@ -13,9 +13,9 @@
         showSuccessPop,
         apiUrl,
     } from "$lib/utils";
-    export const load = async ({ page, fetch, session, stuff }) => {
-        console.log(page.params);
-        let profileUrl = apiUrl + "profile/" + page.params.id;
+    export const load = async ({ params}) => {
+        console.log(params);
+        let profileUrl = apiUrl + "profile/" + params.id;
         const response = await get(profileUrl);
         const currentUser = response.user;
         return {

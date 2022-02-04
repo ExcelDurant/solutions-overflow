@@ -19,11 +19,11 @@ const config = {
 
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#svelte',
-		vite: {
-			ssr: {
-				external: ['@xstate/svelte']
-			  }
-		   }
+		// vite: {
+		// 	ssr: {
+		// 		external: ['@xstate/svelte']
+		// 	  }
+		//    }
 	}
 };
 

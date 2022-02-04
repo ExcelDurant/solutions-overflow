@@ -22,7 +22,7 @@ import PageLoader from "$lib/PageLoader.svelte";
 	if (browser) {
 		isLoggedIn.set(JSON.parse(sessionStorage.getItem('isLoggedIn') || 'false'));
 		page.subscribe((value) => {
-			currentRoute = value.path;
+			currentRoute = value.url.pathname;
 			if(currentRoute === "/profile" && JSON.parse(sessionStorage.getItem("isLoggedIn")) != true) {
 				goto("/");
 			}
