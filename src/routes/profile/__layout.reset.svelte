@@ -16,11 +16,7 @@
     import SuccessPopup from "$lib/SuccessPopup.svelte";
     import FailurePopup from "$lib/FailurePopup.svelte";
     import Footer from "$lib/Footer.svelte";
-    let user;
     let currentProfileUser;
-    appUser.subscribe((value) => {
-        user = value;
-    });
     profileUser.subscribe((value) => {
         currentProfileUser = value;
     });
@@ -42,6 +38,10 @@
     });
 </script>
 
+<svelte:head>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</svelte:head>
+
 <Header />
 {#if signup}
     <SignupForm />
@@ -60,20 +60,22 @@
     <section class="banner-sec">
         <div class="banner-container">
             <div class="info-container">
+                {#if currentProfileUser}
                 <div class="user-container">
                     <div class="profile-img-container no-overflow">
                         <img
-                            src={currentProfileUser.photoUrl}
-                            alt=""
+                            src={currentProfileUser.photoUrl || ''}
+                            alt={currentProfileUser.username}
                             class="full-img"
                         />
                     </div>
 
-                    <h5 class="username">{currentProfileUser.username}</h5>
+                    <h5 class="username">{currentProfileUser.username || 'loading'}</h5>
                     <div class="status-container flex-center">
-                        <h6 class="status">{currentProfileUser.status}</h6>
+                        <h6 class="status">{currentProfileUser.status || ''}</h6>
                     </div>
                 </div>
+                {/if}
                 <div class="misc-container" />
             </div>
         </div>

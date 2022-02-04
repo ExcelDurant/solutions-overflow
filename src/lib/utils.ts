@@ -11,8 +11,8 @@ if (browser) {
     })
 }
 
-export const apiUrl = 'http://127.0.0.1:8000/api/';
-// export const apiUrl = 'https://solutions-overflow.ey.r.appspot.com/api/';
+// export const apiUrl = 'http://127.0.0.1:8000/api/';
+export const apiUrl = 'https://solutions-overflow.ey.r.appspot.com/api/';
 export const appName = 'Solutions Overflow';
 
 export async function axiosAuthPost(url:string, body) {
@@ -35,10 +35,8 @@ export async function axiosAuthPost(url:string, body) {
 export async function authenticatedPost(url:string, body) {
     const requestOptions = {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
-        body: JSON.stringify(body),
-        // mode:"cors"
-        // credentials:"include"
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+        body: JSON.stringify(body)
     };
     let res = await fetch(url, requestOptions);
     if (res.ok) {

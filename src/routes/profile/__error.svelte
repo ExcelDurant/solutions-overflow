@@ -19,7 +19,7 @@
                 <h1>Oops!</h1>
                 <h2>404 Not Found</h2>
                 <div class="error-details">
-                    Website under development. Please come back later for updates, or contact us
+                    Sorry, an error has occured, {title}
                 </div>
                 <div class="icon-container">
                     <i class="fas fa-bomb" />

@@ -18,11 +18,15 @@ const config = {
 		// adapter: vercel(),
 
 		// hydrate the <div id="svelte"> element in src/app.html
-		target: '#svelte',
 		// vite: {
-		// 	ssr: {
-		// 		external: ['@xstate/svelte']
-		// 	  }
+		// 	// ssr: {
+		// 	// 	external: ['@xstate/svelte']
+		// 	//   }
+		// 	server: {
+		// 		proxy: {
+
+		// 		}
+		// 	}
 		//    }
 	}
 };

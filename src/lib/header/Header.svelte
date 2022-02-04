@@ -73,7 +73,7 @@ import type { User } from "$lib/utils";
 				<div class="actions-container">
 					<button class="btn"><i class="fas fa-bell" /></button>
 					<button class="btn"><i class="fas fa-mail-bulk" /></button>
-					<a href="/profile" class="btn profile-btn"
+					<a href="/profile/{user._id}" class="btn profile-btn"
 						><i class="fas fa-user-circle" /></a
 					>
 				</div>

@@ -5,13 +5,7 @@
 
     import {
         get,
-        authenticatedPost,
-        Question,
-        User,
-        getReadableDate,
-        showErrorPop,
-        showSuccessPop,
-        apiUrl,
+        apiUrl
     } from "$lib/utils";
     export const load = async ({ params}) => {
         console.log(params);
@@ -25,7 +19,7 @@
 </script>
 
 <script>
-    import { appUser, isLoggedIn, setUser } from "$lib/auth";
+    import { appUser, isLoggedIn, profileUser, setUser } from "$lib/auth";
 import ProfileEdit from "$lib/ProfileEdit.svelte";
     import { authenticatedGet } from "$lib/utils";
     import { onMount } from "svelte";
@@ -34,6 +28,7 @@ import ProfileAnswers from "$lib/ProfileAnswers.svelte";
     let user;
     // let isLogged = false;
     export let currentUser;
+    profileUser.set(currentUser);
     appUser.subscribe((value) => {
         user = value;
     });
