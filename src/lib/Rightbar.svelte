@@ -235,7 +235,8 @@
                         .status-container {
                             padding: 3px 10px;
                             background-color: blue;
-                            margin-right: 10px;
+                            // margin-right: 10px;
+                            text-align: center;
                             .status {
                                 color: white;
                                 font-size: 10px;

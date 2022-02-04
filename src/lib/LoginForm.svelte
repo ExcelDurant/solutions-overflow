@@ -1,6 +1,6 @@
 <script>
     import { showLogin } from "$lib/store.js";
-    import { post, apiUrl } from "$lib/utils";
+    import { post, apiUrl, gotoUserProfile, showSuccessPop } from "$lib/utils";
     import {goto} from '$app/navigation';
     import {setAuth} from "$lib/auth";
 import BasicSpinner from "./BasicSpinner.svelte";
@@ -22,8 +22,9 @@ import BasicSpinner from "./BasicSpinner.svelte";
             spin = false;
                 console.log(value);
                 setAuth(value.user, true, value.token);
+                showSuccessPop("you have successfully logged in");
                 closeLogin();
-                goto("/profile/"+value.user._id);
+                gotoUserProfile(value.user);
             }).catch((err) => {
                 spin = false;
                 console.log(err);

@@ -1,7 +1,7 @@
 <script>
     import {goto} from '$app/navigation';
     import { showSignup } from "$lib/store.js";
-    import { post,apiUrl } from "$lib/utils";
+    import { post,apiUrl, gotoUserProfile, showSuccessPop } from "$lib/utils";
     import {appUser,bearerToken, isLoggedIn, setAuth} from "$lib/auth";
 import BasicSpinner from './BasicSpinner.svelte';
     function closeSignup() {
@@ -26,7 +26,8 @@ import BasicSpinner from './BasicSpinner.svelte';
                 spin = false;
                 console.log(value);
                 setAuth(value.user, true, value.token);
-                goto("/profile/"+value.user._id);
+                showSuccessPop("you have succesfully created an account");
+                gotoUserProfile(value.user);
                 closeSignup();
                 
             }).catch((err) => {

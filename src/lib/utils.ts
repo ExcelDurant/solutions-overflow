@@ -116,8 +116,8 @@ export function getReadableDate(date:Date) {
 }
 
 export function gotoUserProfile(user:User) {
-    profileUser.set(user);
-    // goto("/profile/"+user._id);
+    // profileUser.set(user);
+    goto("/profile/"+user._id);
 }
 
 export function showErrorPop(message:string) {
