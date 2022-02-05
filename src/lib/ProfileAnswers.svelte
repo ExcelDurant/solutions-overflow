@@ -60,7 +60,7 @@ import { appUser } from "./auth";
             <div class="basic-container">
                 <div class="mini-info-container">
                     <h5 class="datetext">
-                        Aswered on: <span class="date">{getReadableDate(answer.created_at)}</span>
+                        <span class="date">{getReadableDate(answer.created_at)}</span>
                     </h5>
                 </div>
             </div>
@@ -72,11 +72,11 @@ import { appUser } from "./auth";
                     {@html answer.details.html}
                 </div>
                 <div class="bottom-container">
-                    <div class="actions-container">
+                    
                         <h6 class="upvotes">
-                            {answer.upvotes.length - answer.downvotes.length}
+                            {answer.upvotes.length - answer.downvotes.length} upvotes
                         </h6>
-                    </div>
+                   
                     <button class="share-btn"
                         ><i class="fas fa-share-alt" />share</button
                     >
@@ -99,7 +99,12 @@ import { appUser } from "./auth";
     <style lang="scss">
         section {
             background-color: white;
-            padding: 5px 5px;
+            padding: 10px 5px;
+            h3,h5 {
+            color: gray;
+            font-size: 1.1rem;
+            margin-left: 10px;
+        }
         }
         .answer-container {
             background-color: white;
@@ -142,7 +147,7 @@ import { appUser } from "./auth";
                         .datetext {
                             font-size: 12px;
                             .date {
-                                color: var(--bluish);
+                                color: rgb(58, 58, 58);
                             }
                         }
                     }
@@ -160,6 +165,10 @@ import { appUser } from "./auth";
                     }
                     .bottom-container {
                         display: flex;
+                        align-items: center;
+                        .upvotes {
+                            margin-right: 10px;
+                        }
                         .share-btn,
                         .reply-btn {
                             background-color: transparent;

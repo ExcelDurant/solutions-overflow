@@ -32,7 +32,7 @@ import type { User } from "$lib/utils";
 			><i class="fas fa-bars" /></button
 		>
 		<div class="logo-container img-container">
-			<img src="logo.png" alt="" class="full-img" />
+			<a href="/"><img src="/logo.png" alt="logo" class="full-img" /></a>
 		</div>
 		<div class="half-nav">
 			<ul class="navlist">
@@ -74,7 +74,7 @@ import type { User } from "$lib/utils";
 					<button class="btn"><i class="fas fa-bell" /></button>
 					<button class="btn"><i class="fas fa-mail-bulk" /></button>
 					<a href="/profile/{user._id}" class="btn profile-btn"
-						><i class="fas fa-user-circle" /></a
+						><div class="profile-pic"><img src={user.photoUrl} alt="" class="full-img"></div></a
 					>
 				</div>
 				<a href="/ask-question" class="auth-btn reg-btn"
@@ -284,8 +284,11 @@ import type { User } from "$lib/utils";
 				font-size: 20px;
 			}
 			.profile-btn {
-				i {
-					font-size: 28px;
+				.profile-pic {
+					height: 28px;
+					width: 28px;
+					overflow: hidden;
+					border-radius: 50%;
 				}
 			}
 		}

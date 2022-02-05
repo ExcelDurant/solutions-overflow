@@ -74,6 +74,7 @@
                     <div class="status-container flex-center">
                         <h6 class="status">{currentProfileUser.status || ''}</h6>
                     </div>
+                    <button type="button" class="btn btn-primary">logout</button>
                 </div>
                 {/if}
                 <div class="misc-container" />
@@ -178,11 +179,15 @@
                 .status-container {
                     background-color: black;
                     padding: 2px 5px;
+                    margin-right: 5px;
                     .status {
                         color: white;
                         font-size: 12px;
                         text-transform: capitalize;
                     }
+                }
+                .btn-primary {
+                    background-color: var(--bluish);
                 }
             }
         }

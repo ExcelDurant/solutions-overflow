@@ -194,13 +194,15 @@ axiosAuthPost,
 <section class="question-sec">
     <div class="question-container">
         <div class="top-container">
-            <div class="profile-container">
-                <img
-                    src={question.askerDetail.photoUrl}
-                    alt=""
-                    class="full-img"
-                />
-            </div>
+            <a href="/profile/{question.askerDetail._id}">
+                <div class="profile-container">
+                    <img
+                        src={question.askerDetail.photoUrl}
+                        alt={question.askerDetail.username}
+                        class="full-img"
+                    />
+                </div>
+            </a>
             <div class="basic-container">
                 <div class="mini-info-container"><a href="/profile/{question.askerDetail._id}"><h3 class="username">{question.askerDetail.username}</h3></a>
                     

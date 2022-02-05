@@ -60,13 +60,15 @@ gotoUserProfile,
 <div class="question-container">
 	<div class="top-container">
 		<section class="profile-sec">
-			<div class="profile-container">
-				<img
-					src={question.askerDetail.photoUrl}
-					alt=""
-					class="full-img"
-				/>
-			</div>
+			<a href="/profile/{question.askerDetail._id}">
+				<div class="profile-container">
+					<img
+						src={question.askerDetail.photoUrl}
+						alt={question.askerDetail.username}
+						class="full-img"
+					/>
+				</div>
+			</a>
 		</section>
 		<div class="basic-container">
 			<div class="mini-info-container">
@@ -75,7 +77,7 @@ gotoUserProfile,
 					<h6 class="status">{question.askerDetail.status}</h6>
 				</div>
 				<h5 class="datetext">
-					Asked on: <span class="date"
+					<span class="date"
 						>{getReadableDate(question.created_at)}</span
 					>
 				</h5>

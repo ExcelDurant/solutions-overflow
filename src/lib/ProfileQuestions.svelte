@@ -71,7 +71,7 @@ User,
             <div class="basic-container">
                 <div class="mini-info-container">
                     <h5 class="datetext">
-                        Asked on: <span class="date"
+                        <span class="date"
                             >{getReadableDate(question.created_at)}</span
                         >
                     </h5>
@@ -139,7 +139,12 @@ User,
     @import "../styles.scss";
     section {
         background-color: white;
-        padding: 5px;
+        padding: 10px 5px;
+        h3,h5 {
+            color: gray;
+            font-size: 1.1rem;
+            margin-left: 10px;
+        }
     }
     .question-container {
         background-color: white;

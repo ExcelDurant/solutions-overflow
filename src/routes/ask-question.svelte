@@ -20,6 +20,7 @@
     import StarterKit from "@tiptap/starter-kit";
     import { showSuccess, successMessage } from "$lib/store";
     import ProseMirror from "$lib/ProseMirror.svelte";
+import Quill from "$lib/Quill.svelte";
     //    import { onMount } from "svelte";
     //    onMount(async () => {
     //         const Prosemirror = await import('prosemirror-svelte');
@@ -337,6 +338,7 @@
                             bind:htmlContent={detailHtml}
                             placeholder="paste your question here"
                         />
+                        <!-- <Quill /> -->
                     {/if}
 
                     <h6 class="hint">

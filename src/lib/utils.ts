@@ -112,7 +112,7 @@ export async function get(url:string) {
 
 export function getReadableDate(date:Date) {
     let newDate = new Date(date);
-    return newDate.toDateString();
+    return newDate.toDateString() +" "+ newDate.getHours()+":"+newDate.getMinutes();
 }
 
 export function gotoUserProfile(user:User) {

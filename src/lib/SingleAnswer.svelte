@@ -39,7 +39,7 @@
         commentForm = false;
         authenticatedPost(commentUrl, formData)
             .then((value) => {
-                // console.log(value);
+                answer = value.answer;
                 document.body.scrollIntoView();
                 showSuccessPop(value.message);
             })
@@ -106,13 +106,18 @@
 
 <div class="answer-container">
     <div class="top-container">
-        <div class="profile-container">
-            <img
+        
+            <a href="/profile/{answer.answererDetails._id}">
+                <div class="profile-container">
+                <img
                 src={answer.answererDetails.photoUrl}
                 alt=""
                 class="full-img"
             />
         </div>
+        </a>
+            
+        
         <div class="basic-container">
             <div class="mini-info-container">
                 <a href="/profile/{answer.answererDetails._id}"><h3 class="username">{answer.answererDetails.username}</h3></a>
@@ -120,7 +125,7 @@
                     <h6 class="status">{answer.answererDetails.status}</h6>
                 </div>
                 <h5 class="datetext">
-                    Aswered on: <span class="date"
+                    <span class="date"
                         >{getReadableDate(answer.created_at)}</span
                     >
                 </h5>
@@ -225,7 +230,6 @@
                 height: 60px;
                 border-radius: 50%;
                 border: 2px solid var(--bluish);
-                padding: 5px;
                 margin-right: 10px;
                 overflow: hidden;
                 @include mqx(800px) {

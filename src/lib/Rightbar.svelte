@@ -85,9 +85,11 @@
             <div class="top-members">
                 {#each system.highestUsers as user}
                     <div class="member">
-                        <div class="profile-container avatar">
-                            <img src={user.photoUrl} alt="" class="full-img" />
-                        </div>
+                        <a href="/profile/{user._id}">
+                            <div class="profile-container avatar">
+                                <img src={user.photoUrl} alt={user.username} class="full-img" />
+                            </div>
+                        </a>
                         <div class="info-container">
                             <a href="/profile/{user._id}"><h3 class="username">{user.username}</h3></a>
                             <h4 class="questions">

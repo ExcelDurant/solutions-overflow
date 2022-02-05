@@ -9,7 +9,7 @@ import { appName } from "./utils";
 		<div class="top-sec">
 			<div class="colu-1 colu">
 				<div class="logo-container no-overflow">
-					<img src="logo.png" alt="logo" class="full-img">
+					<img src="/logo.png" alt="logo" class="full-img">
 				</div>
 				<p class="txt">
 					{appName} is a social questions & Answers Engine which will help you solve exam related questions and permit you to help others answer their questions
@@ -92,12 +92,18 @@ import { appName } from "./utils";
 				}
 			}
 			.socials-container {
+				display: flex;
 				.social-link {
-					padding: 5px 10px;
+					height: 35px;
+					width: 35px;
+					margin-right: 5px;
 					border-radius: 50%;
 					background-color: var(--bluish);
 					color: white;
 					text-align: center;
+					display: flex;
+					align-items: center;
+					justify-content: center;
 					&:hover {
 						background-color: var(--text-color);
 					}
