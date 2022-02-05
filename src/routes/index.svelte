@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
 	// export const prerender = true;
 	
-	export const router = false;
+	// export const router = false;
 
 	import type { Load } from "@sveltejs/kit";
 	import {

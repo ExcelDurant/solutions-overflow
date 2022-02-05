@@ -98,7 +98,7 @@ axiosAuthPost,
                 // console.log(value);
                 answerSpin = false;
                 question = value.question;
-                document.body.scrollIntoView();
+                // document.body.scrollIntoView();
                 showSuccessPop(value.message);
             })
             .catch((err) => {
@@ -118,7 +118,7 @@ axiosAuthPost,
             .then((value) => {
                 console.log(value);
                 question = value.question;
-                document.body.scrollIntoView();
+                // document.body.scrollIntoView();
                 showSuccessPop(value.message);
                 commentForm = false;
                 commentSpin = false;

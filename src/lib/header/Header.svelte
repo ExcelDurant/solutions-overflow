@@ -4,6 +4,14 @@
 	import { appUser, isLoggedIn } from "$lib/auth";
 	import logo from "./svelte-logo.svg";
 import type { User } from "$lib/utils";
+import { goto } from "$app/navigation";
+let searchValue;
+function search(e) {
+	if(e.charCode === 13) {
+		console.log(searchValue);
+		goto('/questions/search');
+	}
+}
 	let isLogged = false;
 	isLoggedIn.subscribe((value) => {
 		isLogged = value;
@@ -65,6 +73,8 @@ import type { User } from "$lib/utils";
 					id=""
 					placeholder="search for something"
 					class="search-box"
+					bind:value={searchValue}
+					on:keypress={search}
 				/>
 				<i class="fas fa-search" />
 			</div>

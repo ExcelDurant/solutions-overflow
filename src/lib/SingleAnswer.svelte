@@ -40,7 +40,7 @@
         authenticatedPost(commentUrl, formData)
             .then((value) => {
                 answer = value.answer;
-                document.body.scrollIntoView();
+                // document.body.scrollIntoView();
                 showSuccessPop(value.message);
             })
             .catch((err) => {
