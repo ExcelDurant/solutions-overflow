@@ -67,14 +67,15 @@ import Quill from "$lib/Quill.svelte";
     let spin = false;
     let detailHtml;
     let detailText;
+    let editor;
     function postQuestion() {
         spin = true;
         let formData = {
             name,
             subject: selectedSubject,
             details: {
-                html: detailHtml,
-                text: detailText,
+                html: editor.outerHTML,
+                text: editor.textContent,
             },
             level: selectedLevel,
             examType: selectedType,
@@ -84,7 +85,7 @@ import Quill from "$lib/Quill.svelte";
             questionNumber: selectedQuestionNumber,
             reference,
         };
-        console.log(formData);
+        // console.log(editor.textContent);
         authenticatedPost(askQuestionUrl, formData)
             .then((value) => {
                 spin = false;
@@ -333,12 +334,12 @@ import Quill from "$lib/Quill.svelte";
                     <!-- <div bind:this={element} /> -->
                     <!-- <Milkdown defaultValue="lol" /> -->
                     {#if browser}
-                        <ProseMirror
+                        <!-- <ProseMirror
                             bind:textContent={detailText}
                             bind:htmlContent={detailHtml}
                             placeholder="paste your question here"
-                        />
-                        <!-- <Quill /> -->
+                        /> -->
+                        <Quill bind:editor/>
                     {/if}
 
                     <h6 class="hint">

@@ -89,7 +89,7 @@ gotoUserProfile,
 	</div>
 	<div class="title-container">
 		<a
-			
+		sveltekit:prefetch
 			href="questions/{question._id}"
 			class="quest-title"
 		>

@@ -35,6 +35,7 @@ axiosAuthPost,
     import MiniSpinner from "$lib/MiniSpinner.svelte";
     import BasicSpinner from "$lib/BasicSpinner.svelte";
     import ProseMirror from "$lib/ProseMirror.svelte";
+import Quill from "$lib/Quill.svelte";
     let isLogged = false;
     let user: User;
     isLoggedIn.subscribe((value) => {
@@ -81,6 +82,7 @@ axiosAuthPost,
     let answerSpin = false;
     let detailHtml;
     let detailText;
+    let editor;
     function postAnswer() {
         let answerUrl = apiUrl + "questions/answer";
         answerSpin = true;
@@ -88,8 +90,8 @@ axiosAuthPost,
         let formData = {
             answer,
             details: {
-                html: detailHtml,
-                text: detailText,
+                html: editor.outerHTML,
+                text: editor.textContent,
             },
             question: question._id,
         };
@@ -210,7 +212,7 @@ axiosAuthPost,
                         <h6 class="status">{question.askerDetail.status}</h6>
                     </div>
                     <h5 class="datetext">
-                        Asked on: <span class="date"
+                        <span class="date"
                             >{getReadableDate(question.created_at)}</span
                         >
                     </h5>
@@ -398,11 +400,12 @@ axiosAuthPost,
                     {/if} -->
 
                 <!-- <div bind:this={element} /> -->
-                <ProseMirror
+                <!-- <ProseMirror
                     bind:textContent={detailText}
                     bind:htmlContent={detailHtml}
                     placeholder="any more details? Put it here. (drag your images here)"
-                />
+                /> -->
+                <Quill bind:editor/>
                 <button type="submit" class="submit-btn">submit</button>
             </form>
         </div>
@@ -544,7 +547,7 @@ axiosAuthPost,
             .quest-details-container {
                 .quest-details {
                     width: 100%;
-                    max-height: 500px;
+                    // max-height: 500px;
                     overflow: auto;
                 }
                 .tags-container {

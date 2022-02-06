@@ -17,9 +17,13 @@
     import FailurePopup from "$lib/FailurePopup.svelte";
     import Footer from "$lib/Footer.svelte";
     let currentProfileUser;
+    let user;
     profileUser.subscribe((value) => {
         currentProfileUser = value;
     });
+    appUser.subscribe((value) => {
+        user = value;
+    })
     let login = false;
     let signup = false;
     let success = false;
@@ -74,7 +78,9 @@
                     <div class="status-container flex-center">
                         <h6 class="status">{currentProfileUser.status || ''}</h6>
                     </div>
+                    {#if currentProfileUser._id == user._id}
                     <button type="button" class="btn btn-primary">logout</button>
+                    {/if}
                 </div>
                 {/if}
                 <div class="misc-container" />
