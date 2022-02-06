@@ -545,6 +545,7 @@ import Quill from "$lib/Quill.svelte";
                 }
             }
             .quest-details-container {
+                width: 100%;
                 .quest-details {
                     width: 100%;
                     // max-height: 500px;
