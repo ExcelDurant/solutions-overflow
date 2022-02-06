@@ -523,6 +523,7 @@ import Quill from "$lib/Quill.svelte";
         .middle-container {
             display: flex;
             width: 100%;
+            overflow-x: scroll;
             .actions-container {
                 height: 100px;
                 margin-right: 10px;

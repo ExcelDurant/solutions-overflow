@@ -79,17 +79,17 @@ import ProfileAnswers from "$lib/ProfileAnswers.svelte";
     </div>
     <div class="socials-container">
         <div class="socials-icons-container">
-            {#if user.facebookUrl}
-            <a href={user.facebookUrl} target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            {#if currentUser.facebookUrl}
+            <a href={currentUser.facebookUrl} target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
             {/if}
-            {#if user.twitterUrl}
-            <a href={user.twitterUrl} target="_blank" class="social-link"><i class="fab fa-twitter"></i></a>
+            {#if currentUser.twitterUrl}
+            <a href={currentUser.twitterUrl} target="_blank" class="social-link"><i class="fab fa-twitter"></i></a>
             {/if}
-            {#if user.instagramUrl}
-            <a href={user.instagramUrl} target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+            {#if currentUser.instagramUrl}
+            <a href={currentUser.instagramUrl} target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
             {/if}
-            {#if user.youtubeUrl}
-            <a href={user.youtubeUrl} target="_blank" class="social-link"><i class="fab fa-youtube"></i></a>
+            {#if currentUser.youtubeUrl}
+            <a href={currentUser.youtubeUrl} target="_blank" class="social-link"><i class="fab fa-youtube"></i></a>
             {/if}
             
         </div>

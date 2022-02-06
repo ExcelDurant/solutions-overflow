@@ -263,6 +263,7 @@ gotoUserProfile,
 		}
 		.middle-container {
 			display: flex;
+			overflow: hidden;
 			.actions-container {
 				height: 100px;
 				margin-right: 10px;
@@ -289,6 +290,7 @@ gotoUserProfile,
 				}
 			}
 			.quest-details-container {
+				width: 100%;
 				.quest-details {
 					width: 100%;
 					max-height: 150px;
