@@ -455,8 +455,10 @@ import Quill from "$lib/Quill.svelte";
                 margin-right: 10px;
                 overflow: hidden;
                 @include mqx(800px) {
-                    width: 40px;
-                    height: 40px;
+                    min-width: 40px;
+                    min-height: 40px;
+                    max-width: 40px;
+                    max-height: 40px;
                 }
             }
             .basic-container {
@@ -520,6 +522,7 @@ import Quill from "$lib/Quill.svelte";
 		}
         .middle-container {
             display: flex;
+            width: 100%;
             .actions-container {
                 height: 100px;
                 margin-right: 10px;
@@ -545,7 +548,7 @@ import Quill from "$lib/Quill.svelte";
                 }
             }
             .quest-details-container {
-                width: 100%;
+                width: 90%;
                 .quest-details {
                     width: 100%;
                     // max-height: 500px;
