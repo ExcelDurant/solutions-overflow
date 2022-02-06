@@ -548,7 +548,7 @@ import Quill from "$lib/Quill.svelte";
                 .quest-details {
                     width: 100%;
                     // max-height: 500px;
-                    overflow: auto;
+                    overflow-x: scroll;
                 }
                 .tags-container {
                     display: flex;
