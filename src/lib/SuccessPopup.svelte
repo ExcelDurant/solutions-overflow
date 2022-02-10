@@ -33,7 +33,6 @@ import { showSuccess, successMessage } from "./store";
     }
     .popup-container {
         width: 40%;
-        padding: 20px 40px;
         background-color: white;
         display: flex;
         flex-direction: column;
