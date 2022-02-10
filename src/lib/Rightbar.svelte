@@ -113,8 +113,11 @@
 <style lang="scss">
     @import "../styles.scss";
     .rightbar {
-        width: 250px;
+        width: 18%;
         background-color: #f2f2f2;
+        // position: sticky;
+        // right: 0;
+        // top: 10;
         @include mqx(900px) {
             width: 100%;
         }
