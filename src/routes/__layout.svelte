@@ -20,10 +20,10 @@ import BasicSpinner from "$lib/BasicSpinner.svelte";
 import PageLoader from "$lib/PageLoader.svelte";
 	let currentRoute = "";
 	if (browser) {
-		isLoggedIn.set(JSON.parse(sessionStorage.getItem('isLoggedIn') || 'false'));
+		isLoggedIn.set(JSON.parse(localStorage.getItem('isLoggedIn') || 'false'));
 		page.subscribe((value) => {
 			currentRoute = value.url.pathname;
-			if(currentRoute === "/profile" && JSON.parse(sessionStorage.getItem("isLoggedIn")) != true) {
+			if(currentRoute === "/profile" && JSON.parse(localStorage.getItem("isLoggedIn")) != true) {
 				goto("/");
 			}
 		});

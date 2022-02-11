@@ -2,20 +2,20 @@ import { writable } from 'svelte/store';
 import { browser } from '$app/env';
 import type { User } from './utils';
 
-export const isLoggedIn = writable(browser? JSON.parse(sessionStorage.getItem('isLoggedIn') || 'false'):false);
-export const appUser = writable(browser? JSON.parse(sessionStorage.getItem('user') || '{}') : {}  as User);
-export const bearerToken = writable(browser? JSON.parse(sessionStorage.getItem('token')):'');
+export const isLoggedIn = writable(browser? JSON.parse(localStorage.getItem('isLoggedIn') || 'false'):false);
+export const appUser = writable(browser? JSON.parse(localStorage.getItem('user') || '{}') : {}  as User);
+export const bearerToken = writable(browser? JSON.parse(localStorage.getItem('token')):'');
 export const profileUser = writable({} as User);
 export function setAuth(user:User, loggedIn:boolean, token:string) {
-    sessionStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('user', JSON.stringify(user));
     appUser.set(user);
-    sessionStorage.setItem('isLoggedIn', JSON.stringify(loggedIn));
+    localStorage.setItem('isLoggedIn', JSON.stringify(loggedIn));
     isLoggedIn.set(loggedIn);
-    sessionStorage.setItem('token', JSON.stringify(token));
+    localStorage.setItem('token', JSON.stringify(token));
     bearerToken.set(token);
 }
 export function setUser(user:User) {
-    sessionStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('user', JSON.stringify(user));
     appUser.set(user);
 }
 
