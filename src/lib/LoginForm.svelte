@@ -34,7 +34,6 @@ import BasicSpinner from "./BasicSpinner.svelte";
 
 <div class="form-overlay">
     <form action="" class="login-form" on:submit|preventDefault={login}>
-        <button class="close-btn" on:click={closeLogin}>X</button>
         <div class="form-head flex-center">
             <h2 class="title">Login</h2>
         </div>
@@ -65,6 +64,7 @@ import BasicSpinner from "./BasicSpinner.svelte";
                 <BasicSpinner />
             {/if}
             <button class="login-btn" type="submit">login</button>
+            <button class="btn btn-danger" on:click={closeLogin}>close</button>
         </div>
     </form>
 </div>
@@ -85,19 +85,6 @@ import BasicSpinner from "./BasicSpinner.svelte";
         background-color: white;
         position: relative;
         z-index: 100;
-        .close-btn {
-            position: absolute;
-            top: 0;
-            right: -10%;
-            color: white;
-            background-color: transparent;
-            font-weight: 900;
-            font-size: 1.5rem;
-            @include mqx(700px) {
-            right: 2%;
-            color: white;
-        }
-        }
         .form-head {
             width: 100%;
             height: 200px;
@@ -115,6 +102,12 @@ import BasicSpinner from "./BasicSpinner.svelte";
             flex-direction: column;
             .login-btn {
                 background-color: var(--bluish);
+                padding: 5px 0;
+                width: 200px;
+                color: white;
+                margin: 10px auto;
+            }
+            .btn-danger {
                 padding: 5px 0;
                 width: 200px;
                 color: white;
