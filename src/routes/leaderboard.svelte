@@ -150,6 +150,7 @@
         width: 100%;
         display: flex;
         flex-wrap: wrap;
+        justify-content: center;
         .page-btn {
             padding: 10px 20px;
             background-color: var(--bluish);
