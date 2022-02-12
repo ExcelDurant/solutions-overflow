@@ -33,19 +33,21 @@
     export let total: number;
 
     let spin = false;
-    function moveToPage(page) {
+    let currentPage = page;
+    function moveToPage(nextpage) {
         users = [];
         spin = true;
         let searchUrl =
             apiUrl +
             "leaderboard?" +
-            new URLSearchParams([["page", `${page}`]]);
+            new URLSearchParams([["page", `${nextpage}`]]);
         get(searchUrl)
             .then((value) => {
                 spin = false;
                 console.log(value);
                 users = value.questions;
                 page = value.page;
+                currentPage = nextpage;
                 lastPage = value.last_page;
                 total = value.total;
             })
@@ -127,11 +129,12 @@
         {#each Array(lastPage) as pageBtn, i}
             <button
                 class="page-btn"
-                class:active-btn={page == i + 1}
+                class:active-btn={(i+1) === currentPage}
                 on:click={() => moveToPage(i + 1)}>{i + 1}</button
             >
         {/each}
     </div>
+    current page:{currentPage}
 </section>
 
 <style lang="scss">

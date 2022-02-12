@@ -1,6 +1,4 @@
-<script context="module" lang="ts">
-	// export const prerender = true;
-	
+<script context="module" lang="ts">	
 	export const router = false;
 
 	import type { Load } from "@sveltejs/kit";
@@ -59,19 +57,22 @@
 	let selectedSubject;
 	let selectedExam;
 	let spin = false;
-	function moveToPage(page) {
+	let currentPage = page;
+	function moveToPage(nextpage) {
 		questions = [];
 		spin = true;
 		let searchUrl =
 			apiUrl +
 			"questions/all?" +
-			new URLSearchParams([["page", `${page}`]]);
+			new URLSearchParams([["page", `${nextpage}`]]);
 		get(searchUrl)
 			.then((value) => {
 				spin = false;
-				console.log(value);
+				// console.log(value.page);
 				questions = value.questions;
 				page = value.page;
+				currentPage = nextpage;
+				console.log(currentPage);
 				lastPage = value.last_page;
 				total = value.total;
 			})
@@ -224,11 +225,12 @@
 			{#each Array(lastPage) as pageBtn, i}
 				<button
 					class="page-btn"
-					class:active-btn={page == i + 1}
+					class:active-btn={(i+1) === currentPage}
 					on:click={() => moveToPage(i + 1)}>{i + 1}</button
 				>
 			{/each}
 		</div>
+		current page:{currentPage}
 	</section>
 </div>
 
@@ -357,7 +359,7 @@
 			}
 		}
 		.active-btn {
-			background-color: var(--text-color);
+			background-color: red;
 		}
 	}
 </style>
