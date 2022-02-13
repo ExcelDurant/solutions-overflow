@@ -1,6 +1,7 @@
 <script>
     // @ts-ignore
 import { onMount } from "svelte";
+import { onDestroy } from 'svelte';
   
     export let editor;
       
@@ -21,9 +22,12 @@ import { onMount } from "svelte";
           toolbar: toolbarOptions
         },
         theme: "snow",
-        placeholder: "Write your story..."
+        placeholder: "",
+        contenteditable:false
       });
     });
+
+    // onDestroy(() => quill.disable());
   </script>
   
   <style>

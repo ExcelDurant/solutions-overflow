@@ -90,7 +90,7 @@ import Quill from "$lib/Quill.svelte";
         let formData = {
             answer,
             details: {
-                html: editor.outerHTML,
+                html: editor.firstChild.innerHTML,
                 text: editor.textContent,
             },
             question: question._id,

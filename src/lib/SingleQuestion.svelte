@@ -118,7 +118,7 @@ gotoUserProfile,
 			>
 		</div>
 		<div class="quest-details-container">
-			<div class="quest-details">
+			<div class="quest-details" contenteditable=false>
 				{@html question.details.html}
 			</div>
 			<div class="tags-container">

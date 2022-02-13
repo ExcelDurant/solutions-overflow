@@ -74,7 +74,7 @@ import Quill from "$lib/Quill.svelte";
             name,
             subject: selectedSubject,
             details: {
-                html: editor.outerHTML,
+                html: editor.firstChild.innerHTML,
                 text: editor.textContent,
             },
             level: selectedLevel,
@@ -85,7 +85,7 @@ import Quill from "$lib/Quill.svelte";
             questionNumber: selectedQuestionNumber,
             reference,
         };
-        // console.log(editor.textContent);
+        // console.log(editor);
         authenticatedPost(askQuestionUrl, formData)
             .then((value) => {
                 spin = false;
